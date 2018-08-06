@@ -1,0 +1,96 @@
+/* General Reset Start*/
+
+html, body {
+  font-family: $open-sans;
+  overflow-x: hidden;
+}
+
+:focus,a:focus {
+  outline: none;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+  outline: none;
+  outline-offset: 0;
+}
+
+a {
+  display: block;
+}
+
+.form-container {
+  position: relative;
+  color: $white;
+  input {
+    font-family: $montserrat;
+    font-size: 16px;
+    font-weight: 300;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid $white;
+    background-color: transparent;
+    line-height: 3;
+    outline: 0;
+    padding-left: 5px;
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: $white;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: $white;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+      color: $white;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      color: $white;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+  .subscriber-error {
+    border-bottom-color: $danger;
+
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: $danger;
+      text-transform: uppercase;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: $danger;
+      text-transform: uppercase;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+      color: $danger;
+      text-transform: uppercase;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      color: $danger;
+      text-transform: uppercase;
+    }
+  }
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    outline: 0;
+    border: 0;
+    background: transparent;
+
+    span {
+      color: $white;
+      font-size: 30px;
+      transition: all 0.5s ease;
+    }
+    &:hover {
+      span {
+        color: #2c6083;
+      }
+    }
+  }
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+}
+
+/* General Reset End*/

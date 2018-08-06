@@ -1,0 +1,273 @@
+@import 'base/variables';
+@import 'base/colors_variable';
+@import 'base/mixin';
+
+/* Navigation */
+.navbar-default.top-nav-collapse .navbar-nav > .active > a {
+  color: $aqua;
+}
+
+/* Button */
+.btn {
+  &.btn-fill {
+    background: $aqua;
+    border: 2px solid $aqua;
+    &:hover, &:focus {
+      background: transparent;
+      color: $aqua;
+    }
+  }
+  &.btn-bordered {
+    &:hover, &:focus {
+      background: $white;
+      color: $aqua;
+    }
+  }
+
+  &.btn-green-bordered {
+    color: $aqua;
+    border: 2px solid $aqua;
+    &:hover, &:focus {
+      color: $white;
+      background: $aqua;
+    }
+  }
+}
+
+/* HEADER */
+
+.header-background {
+  background: $aqua;
+  background-image: url("../images/bg-line.png"), -moz-linear-gradient(93deg, lighten($aqua, 5%) 0%, $aqua 46%, darken($aqua, 1%));
+  background-image: url("../images/bg-line.png"), -webkit-linear-gradient(93deg, lighten($aqua, 5%) 0%, $aqua 46%, darken($aqua, 1%));
+
+}
+
+/* ABOUT SECTION */
+
+.about-section {
+  .icon-bg {
+    color: $aqua;
+    font-size: 22px;
+    background: $white;
+  }
+  .style-line {
+    @include linear-gradient(to right, rgba($aqua, .3), darken($aqua, 10%), rgba($aqua, .0));
+  }
+  .icon-bg-green {
+    color: #30c779;
+  }
+}
+
+.about-info {
+
+  .info-box {
+    border: 2px solid $aqua;
+    &.info-content {
+      background-color: $aqua;
+    }
+    .circle-icon {
+      background-color: $aqua;
+    }
+    .info-line {
+      border-top: 2px solid $aqua;
+    }
+  }
+}
+
+/* Features Section */
+
+.heading-background {
+  .overlay {
+    background-color: $aqua;
+  }
+}
+
+.features {
+  .circle-features {
+    border: 2px solid $aqua;
+    color: $aqua;
+  }
+}
+
+.feature-block {
+  &:hover {
+    .circle-features {
+      background-color: $aqua;
+    }
+  }
+}
+
+/* Pricing Section */
+.pricing-section {
+  .content-section {
+    .main-container {
+      .green-container {
+        background-color: $aqua;
+        &.basic-first {
+          background-color: darken($aqua, 10%);
+
+        }
+      }
+    }
+    .container-class {
+      .standard-block {
+        background-color: darken($aqua, 10%);
+      }
+
+      .compare-text-digit {
+        &.standard-block-2 {
+          background-color: $aqua;
+        }
+      }
+      .feature-heading {
+        .name {
+          color: $aqua !important;
+        }
+      }
+
+    }
+  }
+}
+
+/* Compare Pricing Plans Section */
+
+.compare-pricing-plans {
+  .icon-bg {
+    color: $aqua !important;
+
+  }
+  .heading {
+    color: $aqua;
+  }
+  .style-line {
+    @include linear-gradient(to right, rgba($aqua, .3), darken($aqua, 10%), rgba($aqua, .0));
+  }
+  + .compare-plans {
+    @extend .content-section;
+    .features {
+      margin-top: 4px;
+      .container-heading {
+        .plan-features-2 {
+          color: $aqua;
+        }
+      }
+    }
+  }
+}
+
+/* Testimonial */
+
+.testimonials {
+  .icon-bg {
+    color: $aqua;
+  }
+  .container-padding {
+    .heading {
+      color: $aqua;
+    }
+    .style-line {
+      @include linear-gradient(to right, rgba($aqua, .3), darken($aqua, 10%), rgba($aqua, .0));
+    }
+  }
+
+  /*Caraousal */
+  .carousel-indicators {
+    .active {
+      background-color: $aqua;
+    }
+  }
+
+  .carousel-caption {
+    &.name {
+      color: $aqua;
+    }
+  }
+}
+
+/* contact */
+.contact-section {
+  .contact-info {
+    .style {
+      color: $aqua;
+    }
+    .heading-info {
+      color: $aqua;
+    }
+    .block-content {
+      width: 30%;
+    }
+  }
+}
+
+.infoBox {
+  background: $aqua;
+
+  &:after {
+    border-top-color: $aqua;
+  }
+}
+
+/* SUBSCRIBE */
+.form-container {
+  button {
+    &:hover {
+      span {
+        color: #2c6083;
+      }
+    }
+  }
+}
+
+/* FOOTER */
+.footer {
+  .heading {
+    li {
+      &:first-child {
+        color: $aqua;
+      }
+      .social-icons {
+        a {
+          &:hover, &:focus {
+            border: 2px solid $aqua;
+            color: $aqua;
+          }
+        }
+      }
+    }
+  }
+  .recent-post {
+    li {
+      &:first-child {
+        color: $aqua;
+      }
+      p {
+        a {
+          color: $aqua;
+        }
+      }
+    }
+  }
+}
+
+.footer-bottom {
+  p {
+    color: $aqua;
+  }
+}
+
+.btn-primary {
+  background: $aqua;
+  border: 2px solid $aqua;
+  &:hover, &:focus {
+    background: transparent;
+    color: $aqua;
+  }
+}
+
+/* Login Form */
+.forget-password {
+  &:hover, &:focus, &:active{
+    color: $aqua;
+  }
+}

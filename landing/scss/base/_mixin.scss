@@ -1,0 +1,184 @@
+@import "functions";
+
+//Gradient
+@mixin linear-gradient($direction, $color-stops...) {
+  // Direction has been omitted and happens to be a color-stop
+  @if is-direction($direction) == false {
+    $color-stops: $direction, $color-stops;
+    $direction: 180deg;
+  }
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+//button
+@mixin button-bg($bg) {
+  background: $bg;
+  &:hover {
+    background: darken($bg, 8%);
+    transition: all 0.3s ease;
+    color: $white;
+  }
+  &:active {
+    background: darken($bg, 25%);
+  }
+}
+
+//Text-shadow
+@mixin text-shadow-custom($horizOffset, $vertOffset, $blur, $color) {
+  text-shadow: $horizOffset $vertOffset $blur $color;
+}
+
+//PX to REM
+$baseline_px: 16px;
+@mixin rem($property, $px_values) {
+
+  // Convert the baseline into rems
+  $baseline_rem: ($baseline_px / 1rem);
+
+  // Print the first line in pixel values
+  #{$property}: $px_values;
+
+  // If there is only one (numeric) value, return the property/value line for it.
+  @if type-of($px_values) == 'number' {
+    #{$property}: $px_values / $baseline_rem;
+  }
+
+    // If there is more than one value, create a list and perform equations on each value
+  @else {
+
+    // Create an empty list that we can dump values into
+    $rem_values: ();
+
+    @each $value in $px_values {
+
+      // If the value is zero, return 0
+      @if $value == 0 {
+        $rem_values: append($rem_values, $value);
+      }
+
+        // If the value is not zero, convert it from px to rem
+      @else {
+        $rem_values: append($rem_values, ($value / $baseline_rem));
+      }
+
+    }
+
+    // Return the property and its list of converted values
+    #{$property}: $rem_values;
+
+  }
+
+}
+
+//Scaling
+$mobile-320: 320px;
+$tablet-768: 767px;
+$desktop-992: 991px;
+$wide-1024: 1023px;
+$lg-1200: 1199px;
+$lg-1366: 1365px;
+$lg-1440: 1439px;
+$lg-1680: 1679px;
+$lg-1920: 1919px;
+$lg-2048: 2047px;
+$lg-2560: 2559px;
+$lg-2880: 2880px;
+@mixin media-query($media) {
+  @if $media == mobile {
+    @media only screen and (max-width: $tablet-768) {
+      @content;
+    }
+  } @else if $media == tablet {
+    @media only screen and (min-width: $tablet-768 + 1) and (max-width: $desktop-992) {
+      @content;
+    }
+  } @else if $media == desktop {
+    @media only screen and (min-width: $desktop-992 + 1) and (max-width: $wide-1024) {
+      @content;
+    }
+  } @else if $media == wide-screens {
+    @media only screen and (min-width: $wide-1024 + 1) and (max-width: $lg-1200) {
+      @content;
+    }
+  } @else if $media == lg-1200 {
+    @media only screen and (min-width: $lg-1200 + 1) and (max-width: $lg-1366) {
+      @content;
+    }
+  } @else if $media == lg-1366 {
+    @media only screen and (min-width: $lg-1366 + 1) and (max-width: $lg-1440) {
+      @content;
+    }
+  } @else if $media == lg-1400 {
+    @media only screen and (min-width: $lg-1440 + 1) and (max-width: $lg-1680) {
+      @content;
+    }
+  } @else if $media == lg-1680 {
+    @media only screen and (min-width: $lg-1680 + 1) and (max-width: $lg-1920) {
+      @content;
+    }
+  } @else if $media == lg-1920 {
+    @media only screen and (min-width: $lg-1920 + 1) and (max-width: $lg-2048) {
+      @content;
+    }
+  } @else if $media == lg-2048 {
+    @media only screen and (min-width: $lg-2048 + 1) and (max-width: $lg-2560) {
+      @content;
+    }
+  } @else if $media == lg-2560 {
+    @media only screen and (min-width: $lg-2560 + 1) and (max-width: $lg-2880) {
+      @content;
+    }
+  }
+}
+
+//breakpoint media query
+$xs: 544px;
+$sm: 768px;
+$ws: 992px;
+$md: 1050px;
+$lg: 1200px;
+$wsl: 1400px;
+$tv: 1800px;
+$lgtv: 2400px;
+$xltv: 2800px;
+@mixin mq($media) {
+  @if $media == xs {
+    @media (min-width: $xs) {
+      @content;
+    }
+  } @else if $media == sm {
+    @media (min-width: $sm) {
+      @content;
+    }
+  } @else if $media == ws {
+    @media (min-width: $ws) {
+      @content;
+    }
+  } @else if $media == md {
+    @media (min-width: $md) {
+      @content;
+    }
+  } @else if $media == lg {
+    @media (min-width: $lg) {
+      @content;
+    }
+  } @else if $media == wsl {
+    @media (min-width: $wsl) {
+      @content;
+    }
+  } @else if $media == tv {
+    @media (min-width: $tv) {
+      @content;
+    }
+  } @else if $media == lgtv {
+    @media (min-width: $lgtv) {
+      @content;
+    }
+  } @else if $media == xltv {
+    @media (min-width: $xltv) {
+      @content;
+    }
+  }
+}

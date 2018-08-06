@@ -1,0 +1,216 @@
+/* Navigation */
+.navbar-default.top-nav-collapse .navbar-nav > .active > a {
+  color: #038b8c;
+}
+
+/* Button */
+.btn.btn-fill {
+  background: #038b8c;
+  border: 2px solid #038b8c;
+}
+
+.btn.btn-fill:hover, .btn.btn-fill:focus {
+  background: transparent;
+  color: #038b8c;
+}
+
+.btn.btn-bordered:hover, .btn.btn-bordered:focus {
+  background: #ffffff;
+  color: #038b8c;
+}
+
+.btn.btn-green-bordered {
+  color: #038b8c;
+  border: 2px solid #038b8c;
+}
+
+.btn.btn-green-bordered:hover, .btn.btn-green-bordered:focus {
+  color: #ffffff;
+  background: #038b8c;
+}
+
+/* HEADER */
+.header-background {
+  background: #038b8c;
+  background-image: url("../images/bg-line.png"), -webkit-linear-gradient(93deg, #04a4a5 0%, #038b8c 46%, #038687);
+}
+
+/* ABOUT SECTION */
+.about-section .icon-bg {
+  color: #038b8c;
+  font-size: 22px;
+  background: #ffffff;
+}
+
+.about-section .style-line {
+  background: rgba(3, 139, 140, 0.3);
+  background: linear-gradient(to right, rgba(3, 139, 140, 0.3), #02595a, rgba(3, 139, 140, 0));
+}
+
+.about-section .icon-bg-green {
+  color: #30c779;
+}
+
+.about-info .info-box {
+  border: 2px solid #038b8c;
+}
+
+.about-info .info-box.info-content {
+  background-color: #038b8c;
+}
+
+.about-info .info-box .circle-icon {
+  background-color: #038b8c;
+}
+
+.about-info .info-box .info-line {
+  border-top: 2px solid #038b8c;
+}
+
+/* Features Section */
+.heading-background .overlay {
+  background-color: #038b8c;
+}
+
+.features .circle-features {
+  border: 2px solid #038b8c;
+  color: #038b8c;
+}
+
+.feature-block:hover .circle-features {
+  background-color: #038b8c;
+}
+
+/* Pricing Section */
+.pricing-section .content-section .main-container .green-container, .pricing-section .compare-pricing-plans + .compare-plans .main-container .green-container {
+  background-color: #038b8c;
+}
+
+.pricing-section .content-section .main-container .green-container.basic-first, .pricing-section .compare-pricing-plans + .compare-plans .main-container .green-container.basic-first {
+  background-color: #02595a;
+}
+
+.pricing-section .content-section .container-class .standard-block, .pricing-section .compare-pricing-plans + .compare-plans .container-class .standard-block {
+  background-color: #02595a;
+}
+
+.pricing-section .content-section .container-class .compare-text-digit.standard-block-2, .pricing-section .compare-pricing-plans + .compare-plans .container-class .compare-text-digit.standard-block-2 {
+  background-color: #038b8c;
+}
+
+.pricing-section .content-section .container-class .feature-heading .name, .pricing-section .compare-pricing-plans + .compare-plans .container-class .feature-heading .name {
+  color: #038b8c !important;
+}
+
+/* Compare Pricing Plans Section */
+.compare-pricing-plans .icon-bg {
+  color: #038b8c !important;
+}
+
+.compare-pricing-plans .heading {
+  color: #038b8c;
+}
+
+.compare-pricing-plans .style-line {
+  background: rgba(3, 139, 140, 0.3);
+  background: linear-gradient(to right, rgba(3, 139, 140, 0.3), #02595a, rgba(3, 139, 140, 0));
+}
+
+.compare-pricing-plans + .compare-plans .features {
+  margin-top: 4px;
+}
+
+.compare-pricing-plans + .compare-plans .features .container-heading .plan-features-2 {
+  color: #038b8c;
+}
+
+/* Testimonial */
+.testimonials {
+  /*Caraousal */
+}
+
+.testimonials .icon-bg {
+  color: #038b8c;
+}
+
+.testimonials .container-padding .heading {
+  color: #038b8c;
+}
+
+.testimonials .container-padding .style-line {
+  background: rgba(3, 139, 140, 0.3);
+  background: linear-gradient(to right, rgba(3, 139, 140, 0.3), #02595a, rgba(3, 139, 140, 0));
+}
+
+.testimonials .carousel-indicators .active {
+  background-color: #038b8c;
+}
+
+.testimonials .carousel-caption.name {
+  color: #038b8c;
+}
+
+/* contact */
+.contact-section .contact-info .style {
+  color: #038b8c;
+}
+
+.contact-section .contact-info .heading-info {
+  color: #038b8c;
+}
+
+.contact-section .contact-info .block-content {
+  width: 30%;
+}
+
+.infoBox {
+  background: #038b8c;
+}
+
+.infoBox:after {
+  border-top-color: #038b8c;
+}
+
+/* SUBSCRIBE */
+.form-container button:hover span {
+  color: #2c6083;
+}
+
+/* FOOTER */
+.footer .heading li:first-child {
+  color: #038b8c;
+}
+
+.footer .heading li .social-icons a:hover, .footer .heading li .social-icons a:focus {
+  border: 2px solid #038b8c;
+  color: #038b8c;
+}
+
+.footer .recent-post li:first-child {
+  color: #038b8c;
+}
+
+.footer .recent-post li p a {
+  color: #038b8c;
+}
+
+.footer-bottom p {
+  color: #038b8c;
+}
+
+.btn-primary {
+  background: #038b8c;
+  border: 2px solid #038b8c;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background: transparent;
+  color: #038b8c;
+}
+
+/* Login Form */
+.forget-password:hover, .forget-password:focus, .forget-password:active {
+  color: #038b8c;
+}
+
+/*# sourceMappingURL=aqua.css.map */

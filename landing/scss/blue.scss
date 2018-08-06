@@ -1,0 +1,273 @@
+@import 'base/variables';
+@import 'base/colors_variable';
+@import 'base/mixin';
+
+/* Navigation */
+.navbar-default.top-nav-collapse .navbar-nav > .active > a {
+  color: $blue;
+}
+
+/* btn */
+.btn {
+  &.btn-fill {
+    background: $blue;
+    border: 2px solid $blue;
+    &:hover, &:focus {
+      background: transparent;
+      color: $blue;
+    }
+  }
+  &.btn-bordered {
+    &:hover, &:focus {
+      background: $white;
+      color: $blue;
+    }
+  }
+
+  &.btn-green-bordered {
+    color: $blue;
+    border: 2px solid $blue;
+    &:hover, &:focus {
+      color: $white;
+      background: $blue;
+    }
+  }
+}
+
+/* HEADER */
+
+.header-background {
+  background: $blue;
+  background-image: url("../images/bg-line.png"), -moz-linear-gradient(93deg, darken($blue, 5%) 0%, $blue 46%, lighten($blue, 5%));
+  background-image: url("../images/bg-line.png"), -webkit-linear-gradient(93deg, darken($blue, 5%) 0%, $blue 46%, lighten($blue, 5%));
+
+}
+
+/* ABOUT SECTION */
+
+.about-section {
+  .icon-bg {
+    color: $blue;
+    font-size: 22px;
+    background: $white;
+  }
+  .style-line {
+    @include linear-gradient(to right, rgba($blue, .3), darken($blue, 10%), rgba($blue, .0));
+  }
+  .icon-bg-green {
+    color: #30c779;
+  }
+}
+
+.about-info {
+
+  .info-box {
+    border: 2px solid $blue;
+    &.info-content {
+      background-color: $blue;
+    }
+    .circle-icon {
+      background-color: $blue;
+    }
+    .info-line {
+      border-top: 2px solid $blue;
+    }
+  }
+}
+
+/* Features Section */
+
+.heading-background {
+  .overlay {
+    background-color: $blue;
+  }
+}
+
+.features {
+  .circle-features {
+    border: 2px solid $blue;
+    color: $blue;
+  }
+}
+
+.feature-block {
+  &:hover {
+    .circle-features {
+      background-color: $blue;
+    }
+  }
+}
+
+/* Pricing Section */
+.pricing-section {
+  .content-section {
+    .main-container {
+      .green-container {
+        background-color: $blue;
+        &.basic-first {
+          background-color: darken($blue, 10%);
+
+        }
+      }
+    }
+    .container-class {
+      .standard-block {
+        background-color: darken($blue, 20%);
+      }
+
+      .compare-text-digit {
+        &.standard-block-2 {
+          background-color: $blue;
+        }
+      }
+      .feature-heading {
+        .name {
+          color: $blue !important;
+        }
+      }
+
+    }
+  }
+}
+
+/* Compare Pricing Plans Section */
+
+.compare-pricing-plans {
+  .icon-bg {
+    color: $blue !important;
+
+  }
+  .heading {
+    color: $blue;
+  }
+  .style-line {
+    @include linear-gradient(to right, rgba($blue, .3), darken($blue, 10%), rgba($blue, .0));
+  }
+  + .compare-plans {
+    @extend .content-section;
+    .features {
+      margin-top: 4px;
+      .container-heading {
+        .plan-features-2 {
+          color: $blue;
+        }
+      }
+    }
+  }
+}
+
+/* Testimonial */
+
+.testimonials {
+  .icon-bg {
+    color: $blue;
+  }
+  .container-padding {
+    .heading {
+      color: $blue;
+    }
+    .style-line {
+      @include linear-gradient(to right, rgba($blue, .3), darken($blue, 10%), rgba($blue, .0));
+    }
+  }
+
+  /* Caraousal */
+  .carousel-indicators {
+    .active {
+      background-color: $blue;
+    }
+  }
+
+  .carousel-caption {
+    &.name {
+      color: $blue;
+    }
+  }
+}
+
+/* contact */
+.contact-section {
+  .contact-info {
+    .style {
+      color: $blue;
+    }
+    .heading-info {
+      color: $blue;
+    }
+    .block-content {
+      width: 30%;
+    }
+  }
+}
+
+.infoBox {
+  background: $blue;
+
+  &:after {
+    border-top-color: $blue;
+  }
+}
+
+/* SUBSCRIBE */
+.form-container {
+  button {
+    &:hover {
+      span {
+        color: #2c6083;
+      }
+    }
+  }
+}
+
+/* FOOTER */
+.footer {
+  .heading {
+    li {
+      &:first-child {
+        color: $blue;
+      }
+      .social-icons {
+        a {
+          &:hover, &:focus {
+            border: 2px solid $blue;
+            color: $blue;
+          }
+        }
+      }
+    }
+  }
+  .recent-post {
+    li {
+      &:first-child {
+        color: $blue;
+      }
+      p {
+        a {
+          color: $blue;
+        }
+      }
+    }
+  }
+}
+
+.footer-bottom {
+  p {
+    color: $blue;
+  }
+}
+
+.btn-primary {
+  background: $blue;
+  border: 2px solid $blue;
+  &:hover, &:focus {
+    background: transparent;
+    color: $blue;
+  }
+}
+
+/* Login Form */
+.forget-password {
+  &:hover, &:focus, &:active{
+    color: $blue;
+  }
+}

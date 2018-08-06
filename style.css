@@ -1,0 +1,148 @@
+.NormalText {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: normal;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+.MainBubbleText {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-style: italic;
+	font-weight: bold;
+	color: #333333;
+	text-decoration: none;
+}
+.BreadCrumb {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: normal;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.LetterNormal {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 18px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.LetterHeading {
+
+	font-family: "Times New Roman", Times, serif;
+	font-size: 18px;
+	font-weight: normal;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.TableBody {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: normal;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+	width: 1px;
+	border: thin solid #CCCCCC;
+	letter-spacing: normal;
+	vertical-align: middle;
+	word-spacing: normal;
+	white-space: normal;
+	display: table;
+
+
+
+}
+.NormalHeading {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: normal;
+	font-weight: bold;
+	color: #007CC4;
+	text-decoration: none;
+}
+a:link {
+	color: #BE3526;
+	font-weight: bold;
+	text-decoration: none;
+
+}
+a:visited {
+	color: #BE3526;
+	font-weight: bold;
+	text-decoration: none;
+
+}
+a:hover {
+	color: #820000;
+	font-weight: bold;
+	text-decoration: none;
+
+}
+a:active {
+	color: #BE3526;
+	font-weight: bold;
+	text-decoration: none;
+
+}
+.SmallText {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: normal;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.TableHeader {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: normal;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+	width: 1px;
+	border: thin solid #CC00CC;
+	background-color: #CCCCCC;
+	padding: 4px;
+	cursor: hand;
+
+}
+.ToolTipText {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: normal;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.NormalRed {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: normal;
+	font-weight: normal;
+	color: #FF0000;
+	text-decoration: none;
+}
+.NormaBoldGreen {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: normal;
+	font-weight: normal;
+	color: #009933;
+	text-decoration: none;
+}
+#icon img {
+
+  height: 32px;
+  width: 32px;
+  border: 0px;
+
+}

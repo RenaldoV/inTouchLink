@@ -1,0 +1,217 @@
+/* Navigation */
+.navbar-default.top-nav-collapse .navbar-nav > .active > a {
+  color: #FF7F50;
+}
+
+/* Button */
+.btn.btn-fill {
+  background: #FF7F50;
+  border: 2px solid #FF7F50;
+}
+
+.btn.btn-fill:hover, .btn.btn-fill:focus {
+  background: transparent;
+  color: #FF7F50;
+}
+
+.btn.btn-bordered:hover, .btn.btn-bordered:focus {
+  background: #ffffff;
+  color: #FF7F50;
+}
+
+.btn.btn-green-bordered {
+  color: #FF7F50;
+  border: 2px solid #FF7F50;
+}
+
+.btn.btn-green-bordered:hover, .btn.btn-green-bordered:focus {
+  color: #ffffff;
+  background: #FF7F50;
+}
+
+/* HEADER */
+.header-background {
+  background: #FF7F50;
+  background-image: url("../images/bg-line.png"), -webkit-linear-gradient(93deg, #FF7F50 0%, #FF7F50 46%, #ff8355);
+}
+
+/* ABOUT SECTION */
+.about-section .icon-bg {
+  color: #FF7F50;
+  font-size: 22px;
+  background: #ffffff;
+}
+
+.about-section .style-line {
+  background: rgba(255, 127, 80, 0.3);
+  background: linear-gradient(to right, rgba(255, 127, 80, 0.3), #ff5a1d, rgba(255, 127, 80, 0));
+}
+
+.about-section .icon-bg-green {
+  color: #30c779;
+}
+
+.about-info .info-box {
+  border: 2px solid #FF7F50;
+}
+
+.about-info .info-box.info-content {
+  background-color: #FF7F50;
+}
+
+.about-info .info-box .circle-icon {
+  background-color: #FF7F50;
+}
+
+.about-info .info-box .info-line {
+  border-top: 2px solid #FF7F50;
+}
+
+/* Features Section */
+.heading-background .overlay {
+  background-color: coral;
+  opacity: .8;
+}
+
+.features .circle-features {
+  border: 2px solid #FF7F50;
+  color: #FF7F50;
+}
+
+.feature-block:hover .circle-features {
+  background-color: #FF7F50;
+}
+
+/* Pricing Section */
+.pricing-section .content-section .main-container .green-container, .pricing-section .compare-pricing-plans + .compare-plans .main-container .green-container {
+  background-color: #FF7F50;
+}
+
+.pricing-section .content-section .main-container .green-container.basic-first, .pricing-section .compare-pricing-plans + .compare-plans .main-container .green-container.basic-first {
+  background-color: #ff7441;
+}
+
+.pricing-section .content-section .container-class .standard-block, .pricing-section .compare-pricing-plans + .compare-plans .container-class .standard-block {
+  background-color: #ce6039;
+}
+
+.pricing-section .content-section .container-class .compare-text-digit.standard-block-2, .pricing-section .compare-pricing-plans + .compare-plans .container-class .compare-text-digit.standard-block-2 {
+  background-color: #FF7F50;
+}
+
+.pricing-section .content-section .container-class .feature-heading .name, .pricing-section .compare-pricing-plans + .compare-plans .container-class .feature-heading .name {
+  color: #FF7F50 !important;
+}
+
+/* Compare Pricing Plans Section */
+.compare-pricing-plans .icon-bg {
+  color: #FF7F50 !important;
+}
+
+.compare-pricing-plans .heading {
+  color: #FF7F50;
+}
+
+.compare-pricing-plans .style-line {
+  background: rgba(255, 127, 80, 0.3);
+  background: linear-gradient(to right, rgba(255, 127, 80, 0.3), #ff5a1d, rgba(255, 127, 80, 0));
+}
+
+.compare-pricing-plans + .compare-plans .features {
+  margin-top: 4px;
+}
+
+.compare-pricing-plans + .compare-plans .features .container-heading .plan-features-2 {
+  color: #FF7F50;
+}
+
+/* Testimonial */
+.testimonials {
+  /* Caraousal */
+}
+
+.testimonials .icon-bg {
+  color: #FF7F50;
+}
+
+.testimonials .container-padding .heading {
+  color: #FF7F50;
+}
+
+.testimonials .container-padding .style-line {
+  background: rgba(255, 127, 80, 0.3);
+  background: linear-gradient(to right, rgba(255, 127, 80, 0.3), #ff5a1d, rgba(255, 127, 80, 0));
+}
+
+.testimonials .carousel-indicators .active {
+  background-color: #FF7F50;
+}
+
+.testimonials .carousel-caption.name {
+  color: #FF7F50;
+}
+
+/* Contact */
+.contact-section .contact-info .style {
+  color: #FF7F50;
+}
+
+.contact-section .contact-info .heading-info {
+  color: #FF7F50;
+}
+
+.contact-section .contact-info .block-content {
+  width: 30%;
+}
+
+.infoBox {
+  background: #FF7F50;
+}
+
+.infoBox:after {
+  border-top-color: #FF7F50;
+}
+
+/* SUBSCRIBE */
+.form-container button:hover span {
+  color: #2c6083;
+}
+
+/* FOOTER */
+.footer .heading li:first-child {
+  color: #FF7F50;
+}
+
+.footer .heading li .social-icons a:hover, .footer .heading li .social-icons a:focus {
+  border: 2px solid #FF7F50;
+  color: #FF7F50;
+}
+
+.footer .recent-post li:first-child {
+  color: #FF7F50;
+}
+
+.footer .recent-post li p a {
+  color: #FF7F50;
+}
+
+.footer-bottom p {
+  color: #FF7F50;
+}
+
+.btn-primary {
+  background: #FF7F50;
+  border: 2px solid #FF7F50;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background: transparent;
+  color: #FF7F50;
+}
+
+/* Login Form */
+.forget-password:hover, .forget-password:focus, .forget-password:active {
+  color: #FF7F50;
+}
+
+/*# sourceMappingURL=orange.css.map */

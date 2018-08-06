@@ -1,0 +1,50 @@
+/* ALERT BOX RESET */
+.alert {
+  padding: 10px 15px 10px 40px;
+  border-radius: 3px;
+  position: relative;
+  text-align: left;
+  letter-spacing: 1px;
+  &:before {
+    font-family: $font-awesome;
+    font-size: 15px;
+    position: absolute;
+    left: 15px;
+  }
+  &.alert-info {
+    color: $white;
+    background-color: $info;
+    border-color: $info;
+    &:before {
+      content: "\f05a";
+      color: rgba(76, 76, 76, 0.6);
+    }
+  }
+  &.alert-warning {
+    color: #6b6b6b;
+    background-color: $warning;
+    border-color: $warning;
+    &:before {
+      content: "\f071";
+      color: rgba(76, 76, 76, 0.6);
+    }
+  }
+  &.alert-danger {
+    color: $white;
+    background-color: $danger;
+    border-color: $danger;
+    &:before {
+      content: "\f05e";
+      color: rgba(76, 76, 76, 0.6);
+    }
+  }
+  &.alert-success {
+    color: #f7f7f7;
+    background-color: #00caa4;
+    border-color: #00caa4;
+    &:before {
+      content: "\f058";
+      color: rgba(76, 76, 76, 0.6);
+    }
+  }
+}

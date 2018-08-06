@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="notes" value="1. Add the Sum values to all the last three sections of the SalesSummary report. Add a sumid list as in 'select sum(col1) as 'col1', sum(col2) as 'col2' from sales where sumid in ('1','2','3')'" />
+</info>
