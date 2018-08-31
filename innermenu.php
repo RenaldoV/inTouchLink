@@ -10,6 +10,17 @@
 ***********************************************/
 </script>
 <style>
+    ul.dropdown-menu {
+        overflow: auto;
+        max-height: 75vh;
+    }
+    li.dropdown-header {
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+    .navbar-nav>li>ul.dropdown-menu>li.divider {
+        padding: 0px;
+    }
     .style3 {
         font-family: 'Nunito', sans-serif;!important;
         font-size: 13px;
@@ -336,23 +347,37 @@
         <li class="dropdown <?php if(strpos($_REQUEST["p"], 'report') !== false) { echo 'active'; } ?>">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="index.php?p=report_databrowser">Data Browser</a></li>
-            <li><a href="index.php?p=report_dataexception">Data Exception</a></li>
-            <li><a href="index.php?p=report_salessummary">Sales Summary</a></li>
-            <li><a href="index.php?p=report_totalsummary">Total Summary</a></li>
-            <li><a href="index.php?p=report_totalcomparison">Total Comparison</a></li>
-            <li><a href="index.php?p=report_growthcomparison">Growth Comparison</a></li>
-            <li><a href="index.php?p=report_comps">Comps</a></li>
-            <li><a href="index.php?p=report_voids">Voids</a></li>
-            <li><a href="index.php?p=report_productmix">Product Mix</a></li>
-            <li><a href="index.php?p=report_payments">Payments</a></li>
-            <li><a href="index.php?p=report_hourlysalesandlabour">Hourly Sales and Labour</a></li>
-            <li><a href="index.php?p=report_revenuecentersales">Revenue Center Sales</a></li>
-            <li><a href="index.php?p=report_serversales">Employee Sales</a></li>
-            <li><a href="index.php?p=report_speedofservice">Speed of Service</a></li>
-            <li><a href="index.php?p=report_storeperformance">Store Performance</a></li>
-            <li><a href="index.php?p=report_instockpurchases">Purchases</a></li>
-            <li><a href="index.php?p=report_exceptions">Exceptions Report</a></li>
+              <li><a href="index.php?p=report_databrowser">Data Browser</a></li>
+              <li><a href="index.php?p=report_dataexception">Data Exception</a></li>
+              <li class="dropdown-header">Sales Reports</li>
+              <li role="separator" class="divider"></li>
+                <li><a href="index.php?p=report_salessummary">Sales Summary</a></li>
+                <li><a href="index.php?p=report_totalsummary">Total Summary</a></li>
+                <li><a href="index.php?p=report_revenuecentersales">Revenue Center Sales</a></li>
+                <li><a href="#">Promos (Coming Soon)</a></li>
+                <li><a href="index.php?p=report_comps">Comps</a></li>
+                <li><a href="index.php?p=report_voids">Voids</a></li>
+                <li><a href="index.php?p=report_payments">Payments</a></li>
+                <li><a href="index.php?p=report_speedofservice">Speed of Service</a></li>
+              <li class="dropdown-header">Stock Reports</li>
+              <li role="separator" class="divider"></li>
+                <li><a href="#">Cos Report (Coming Soon)</a></li>
+                <li><a href="#">Stock Unit (Coming Soon)</a></li>
+                <li><a href="index.php?p=report_instockpurchases">Purchases</a></li>
+                <li><a href="index.php?p=report_productmix">Product Mix</a></li>
+              <li class="dropdown-header">Comparison Reports</li>
+              <li role="separator" class="divider"></li>
+                <li><a href="index.php?p=report_totalcomparison">Total Comparison</a></li>
+                <li><a href="index.php?p=report_growthcomparison">Growth Comparison</a></li>
+              <li class="dropdown-header">Labour Reports</li>
+              <li role="separator" class="divider"></li>
+                <li><a href="index.php?p=report_hourlysalesandlabour">Hourly Sales and Labour</a></li>
+                <li><a href="index.php?p=report_serversales">Employee Sales</a></li>
+                <li><a href="#">Labour (Coming Soon)</a></li>
+              <li class="dropdown-header">Audit Reports</li>
+              <li role="separator" class="divider"></li>
+                <li><a href="index.php?p=report_exceptions">Audit Report</a></li>
+                <li><a href="index.php?p=report_storeperformance">Store Performance</a></li>
             <!--a href="index.php?p=report_Purchases">Supplier Purchases</a-->
             <!--a href="index.php?p=form_exceptionbs">Capture Exceptions</a-->
           </ul>
