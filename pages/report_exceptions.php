@@ -81,7 +81,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h3 style="text-transform: uppercase;" class="text-left">
-                        Store Exceptions Report
+                        Audit Report
                     </h3>
                 </div>
             </div>

@@ -347,8 +347,6 @@
         <li class="dropdown <?php if(strpos($_REQUEST["p"], 'report') !== false) { echo 'active'; } ?>">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
           <ul class="dropdown-menu">
-              <li><a href="index.php?p=report_databrowser">Data Browser</a></li>
-              <li><a href="index.php?p=report_dataexception">Data Exception</a></li>
               <li class="dropdown-header">Sales Reports</li>
               <li role="separator" class="divider"></li>
                 <li><a href="index.php?p=report_salessummary">Sales Summary</a></li>
@@ -361,10 +359,11 @@
                 <li><a href="index.php?p=report_speedofservice">Speed of Service</a></li>
               <li class="dropdown-header">Stock Reports</li>
               <li role="separator" class="divider"></li>
-                <li><a href="#">Cos Report (Coming Soon)</a></li>
-                <li><a href="#">Stock Unit (Coming Soon)</a></li>
-                <li><a href="index.php?p=report_instockpurchases">Purchases</a></li>
+                <li><a href="index.php?p=report_instockpurchases">Purchases Detail Report</a></li>
+                <li><a href="#">Purchases Summary Report (Coming Soon)</a></li>
                 <li><a href="index.php?p=report_productmix">Product Mix</a></li>
+                <li><a href="#">Group Costing Report (Coming Soon)</a></li>
+                <li><a href="#">Stock Unit (Coming Soon)</a></li>
               <li class="dropdown-header">Comparison Reports</li>
               <li role="separator" class="divider"></li>
                 <li><a href="index.php?p=report_totalcomparison">Total Comparison</a></li>
@@ -378,6 +377,8 @@
               <li role="separator" class="divider"></li>
                 <li><a href="index.php?p=report_exceptions">Audit Report</a></li>
                 <li><a href="index.php?p=report_storeperformance">Store Performance</a></li>
+                <li><a href="index.php?p=report_databrowser">Data Browser</a></li>
+                <li><a href="index.php?p=report_dataexception">Data Exception</a></li>
             <!--a href="index.php?p=report_Purchases">Supplier Purchases</a-->
             <!--a href="index.php?p=form_exceptionbs">Capture Exceptions</a-->
           </ul>

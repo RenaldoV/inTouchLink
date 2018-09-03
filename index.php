@@ -37,6 +37,7 @@ $strid = $_REQUEST["str"];
 $saveexception =$_REQUEST["saveexception"];
 if ($saveexception=='1')
 {
+    $_SESSION['cmbstore'] = $_REQUEST["cmbstore"];
  $exceptionstore = $_REQUEST["cmbstore"];
  $voids =$_REQUEST["txtVoids"];
  $refunds =$_REQUEST["txtRefunds"];

@@ -51,18 +51,61 @@
                         </div>
                         <div class="col-sm-8">
                             <input hidden name="radStores" type="radio" value="store" checked='checked'/>
-                            <select name="cmbstore" class="form-control" id="cmbstore">
+                            <select name="cmbstore" class="form-control" id="cmbstore" >
                                 <?php
+                                $voidsval = 0;
+                                $refundsval = 0;
+                                $splitsval = 0;
+                                $clearsval = 0;
+                                $transfersval = 0;
+                                $reopenedchecksval = 0;
                                 $save = $_REQUEST["save"];
                                 $result = GetStoresThatUserCanAccess($_SESSION["usrid"]); // Get user's stores
                                 while($row = mysql_fetch_array($result)) {
                                     $output = "<option value='".$row["strid"]."'";
-                                    if($_SESSION["cmbstore"] == $row["strid"]) {
-                                        $output =  $output." selected ";
+                                    if(isset($_REQUEST["store"])) {
+                                        if($_REQUEST["store"] == $row["strid"]) {
+                                            $output =  $output." selected ";
+                                        }
+                                    }else {
+                                        if($_SESSION["cmbstore"] == $row["strid"]) {
+                                            $output =  $output." selected ";
+                                        }
                                     }
                                     $output = $output.">".$row["strname"]."</option>";
                                     echo $output;
                                 }
+                                if(isset($_REQUEST['store']) && $saveexception < '1') {
+                                    $storeexceptions = GetExceptionsForStore($_REQUEST['store']);
+                                    while ($row2 = mysql_fetch_array($storeexceptions))
+                                    {
+                                        $voidsval = $row2["voids"];
+                                        $refundsval = $row2["refunds"];
+                                        $splitsval = $row2["splits"];
+                                        $clearsval = $row2["clears"];
+                                        $transfersval = $row2["transfers"];
+                                        $reopenedchecksval = $row2["reopenedchecks"];
+                                    }
+                                }else if($_SESSION['cmbstore'] && $saveexception < '1') {
+                                    $storeexceptions = GetExceptionsForStore($_SESSION['cmbstore']);
+                                    while ($row2 = mysql_fetch_array($storeexceptions))
+                                    {
+                                        $voidsval = $row2["voids"];
+                                        $refundsval = $row2["refunds"];
+                                        $splitsval = $row2["splits"];
+                                        $clearsval = $row2["clears"];
+                                        $transfersval = $row2["transfers"];
+                                        $reopenedchecksval = $row2["reopenedchecks"];
+                                    }
+                                }else {
+                                    $voidsval = $voids;
+                                    $refundsval = $refunds;
+                                    $splitsval = $splits;
+                                    $clearsval = $clears;
+                                    $transfersval = $transfers;
+                                    $reopenedchecksval = $reopenedchecks;
+                                }
+
                                 ?>
                             </select>
                         </div>
@@ -73,7 +116,7 @@
                         </div>
 
                         <div class="col-sm-8">
-                            <input type="text" name="txtVoids" id="txtVoids" class="form-control" />
+                            <input value="<?php echo $voidsval ?>" type="text" name="txtVoids" id="txtVoids" class="form-control" />
                         </div>
                     </div>
                     <div class="row" style="margin-top: 5px">
@@ -82,7 +125,7 @@
                         </div>
 
                         <div class="col-sm-8">
-                            <input type="text" name="txtRefunds" id="txtRefunds" class="form-control"/>
+                            <input value="<?php echo $refundsval ?>" type="text" name="txtRefunds" id="txtRefunds" class="form-control"/>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 5px">
@@ -91,7 +134,7 @@
                         </div>
 
                         <div class="col-sm-8">
-                            <input type="text" name="txtSplits" id="txtSplits" class="form-control"/>
+                            <input value="<?php echo $splitsval ?>" type="text" name="txtSplits" id="txtSplits" class="form-control"/>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 5px">
@@ -100,7 +143,7 @@
                         </div>
 
                         <div class="col-sm-8">
-                            <input type="text" name="txtClears" id="txtClears" class="form-control"/>
+                            <input value="<?php echo $clearsval ?>" type="text" name="txtClears" id="txtClears" class="form-control"/>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 5px">
@@ -109,7 +152,7 @@
                         </div>
 
                         <div class="col-sm-8">
-                            <input type="text" name="txtTransfers" id="txtTransfers" class="form-control"/>
+                            <input value="<?php echo $transfersval ?>" type="text" name="txtTransfers" id="txtTransfers" class="form-control"/>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 5px">
@@ -118,16 +161,7 @@
                         </div>
 
                         <div class="col-sm-8">
-                            <input type="text" name="txtReopenedChecks" id="txtReopenedChecks" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 5px">
-                        <div class="col-sm-4">
-                            <label for="cmbstore">Reopened Checks Count</label>
-                        </div>
-
-                        <div class="col-sm-8">
-                            <input type="text" name="txtReopenedChecks" id="txtReopenedChecks" class="form-control"/>
+                            <input value="<?php echo $reopenedchecksval ?>" type="text" name="txtReopenedChecks" id="txtReopenedChecks" class="form-control"/>
                         </div>
                     </div>
                     <input name="Submit" type="submit" class="btn btn-default" value="Submit"
@@ -188,6 +222,18 @@
 
 
 <script language="JavaScript1.2">
+
+    $(document).ready(function(){
+        $('#cmbstore').change(function(){
+            //Selected value
+            var inputValue = $(this).val();
+            //Ajax for calling php function
+            $.post('pages/setStore.php', { dropdownValue: inputValue }, function(data){
+                window.location.href = '/inTouchLink/index.php?p=form_exceptions&store=' + data;
+                //do after submission operation in DOM
+            });
+        });
+    });
 
 function SetSpecificDateFocus() {
 
