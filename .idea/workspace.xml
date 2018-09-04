@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0c04f46-1563-4a59-843a-fcaeedd626f2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/setStore.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/innermenu.php" beforeDir="false" afterPath="$PROJECT_DIR$/innermenu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/form_exceptions.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/form_exceptions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/report_exceptions.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/report_exceptions.php" afterDir="false" />
-    </list>
+    <list default="true" id="e0c04f46-1563-4a59-843a-fcaeedd626f2" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -273,16 +266,15 @@
       <workItem from="1529677640280" duration="2653000" />
       <workItem from="1529928525235" duration="5126000" />
       <workItem from="1535547113105" duration="7419000" />
-      <workItem from="1535974878622" duration="8434000" />
+      <workItem from="1535974878622" duration="8664000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="243706000" />
+    <option name="totallyTimeSpent" value="243936000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.29725364" />
       <window_info anchor="bottom" id="TODO" order="6" />
