@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-sm-8">
                             <input hidden name="radStores" type="radio" value="store" checked='checked'/>
-                            <select name="cmbstore" class="form-control" id="cmbstore" >
+                            <select name="cmbstore" class="form-control" id="cmbstore">
                                 <?php
                                 $voidsval = 0;
                                 $refundsval = 0;
@@ -61,6 +61,8 @@
                                 $reopenedchecksval = 0;
                                 $save = $_REQUEST["save"];
                                 $result = GetStoresThatUserCanAccess($_SESSION["usrid"]); // Get user's stores
+                                $firstStore = GetStoresThatUserCanAccess($_SESSION["usrid"]); // Get first store
+                                $firstStore = mysql_fetch_array($firstStore)[0];
                                 while($row = mysql_fetch_array($result)) {
                                     $output = "<option value='".$row["strid"]."'";
                                     if(isset($_REQUEST["store"])) {
@@ -86,8 +88,8 @@
                                         $transfersval = $row2["transfers"];
                                         $reopenedchecksval = $row2["reopenedchecks"];
                                     }
-                                }else if($_SESSION['cmbstore'] && $saveexception < '1') {
-                                    $storeexceptions = GetExceptionsForStore($_SESSION['cmbstore']);
+                                }else if($_SESSION['store'] && $saveexception < '1') {
+                                    $storeexceptions = GetExceptionsForStore($_SESSION['store']);
                                     while ($row2 = mysql_fetch_array($storeexceptions))
                                     {
                                         $voidsval = $row2["voids"];
@@ -98,14 +100,26 @@
                                         $reopenedchecksval = $row2["reopenedchecks"];
                                     }
                                 }else {
-                                    $voidsval = $voids;
-                                    $refundsval = $refunds;
-                                    $splitsval = $splits;
-                                    $clearsval = $clears;
-                                    $transfersval = $transfers;
-                                    $reopenedchecksval = $reopenedchecks;
+                                    if($voids) {
+                                        $voidsval = $voids;
+                                        $refundsval = $refunds;
+                                        $splitsval = $splits;
+                                        $clearsval = $clears;
+                                        $transfersval = $transfers;
+                                        $reopenedchecksval = $reopenedchecks;
+                                    }else {
+                                        $storeexceptions = GetExceptionsForStore($firstStore);
+                                        while ($row2 = mysql_fetch_array($storeexceptions))
+                                        {
+                                            $voidsval = $row2["voids"];
+                                            $refundsval = $row2["refunds"];
+                                            $splitsval = $row2["splits"];
+                                            $clearsval = $row2["clears"];
+                                            $transfersval = $row2["transfers"];
+                                            $reopenedchecksval = $row2["reopenedchecks"];
+                                        }
+                                    }
                                 }
-
                                 ?>
                             </select>
                         </div>

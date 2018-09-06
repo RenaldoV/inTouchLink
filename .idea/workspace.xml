@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0c04f46-1563-4a59-843a-fcaeedd626f2" name="Default" comment="" />
+    <list default="true" id="e0c04f46-1563-4a59-843a-fcaeedd626f2" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/form_exceptions.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/form_exceptions.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,11 +17,8 @@
       <file leaf-file-name="innermenu.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/innermenu.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="362" column="79" lean-forward="true" selection-start-line="362" selection-start-column="79" selection-end-line="362" selection-end-column="79" />
-              <folding>
-                <element signature="n#style#0;n#!!top" />
-              </folding>
+            <state relative-caret-position="5430">
+              <caret line="362" column="79" selection-start-line="362" selection-start-column="79" selection-end-line="362" selection-end-column="79" />
             </state>
           </provider>
         </entry>
@@ -26,12 +26,8 @@
       <file leaf-file-name="report_exceptions.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/report_exceptions.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
+            <state relative-caret-position="5235">
               <caret line="349" column="81" selection-start-line="349" selection-start-column="57" selection-end-line="349" selection-end-column="81" />
-              <folding>
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -39,12 +35,8 @@
       <file leaf-file-name="form_exceptions.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/form_exceptions.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="62" column="110" selection-start-line="62" selection-start-column="110" selection-end-line="62" selection-end-column="110" />
-              <folding>
-                <element signature="n#style#0;n#!!top" />
-                <element signature="e#12546#14254#0#HTML" />
-              </folding>
+            <state relative-caret-position="285">
+              <caret line="108" column="77" selection-start-line="108" selection-start-column="77" selection-end-line="108" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -52,14 +44,8 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
+            <state relative-caret-position="585">
               <caret line="39" column="4" lean-forward="true" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
-              <folding>
-                <element signature="e#7316#8359#0#PHP" />
-                <element signature="e#8361#8688#0#PHP" />
-                <element signature="e#8689#8940#0#PHP" />
-                <element signature="e#8941#9178#0#PHP" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -178,10 +164,12 @@
     </packageJsonPaths>
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="y" value="23" />
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1280" />
-    <option name="height" value="777" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -267,16 +255,19 @@
       <workItem from="1529928525235" duration="5126000" />
       <workItem from="1535547113105" duration="7419000" />
       <workItem from="1535974878622" duration="8664000" />
+      <workItem from="1536153738118" duration="194000" />
+      <workItem from="1536209802697" duration="2597000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="243936000" />
+    <option name="totallyTimeSpent" value="246727000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="6" />
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.29725364" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.21243942" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32905984" />
@@ -622,22 +613,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/innermenu.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="362" column="79" lean-forward="true" selection-start-line="362" selection-start-column="79" selection-end-line="362" selection-end-column="79" />
-          <folding>
-            <element signature="n#style#0;n#!!top" />
-          </folding>
+        <state relative-caret-position="5430">
+          <caret line="362" column="79" selection-start-line="362" selection-start-column="79" selection-end-line="362" selection-end-column="79" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/report_exceptions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
+        <state relative-caret-position="5235">
           <caret line="349" column="81" selection-start-line="349" selection-start-column="57" selection-end-line="349" selection-end-column="81" />
-          <folding>
-            <element signature="n#div#0;n#!!top" />
-            <element signature="n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -650,25 +634,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
+        <state relative-caret-position="585">
           <caret line="39" column="4" lean-forward="true" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
-          <folding>
-            <element signature="e#7316#8359#0#PHP" />
-            <element signature="e#8361#8688#0#PHP" />
-            <element signature="e#8689#8940#0#PHP" />
-            <element signature="e#8941#9178#0#PHP" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/form_exceptions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="62" column="110" selection-start-line="62" selection-start-column="110" selection-end-line="62" selection-end-column="110" />
-          <folding>
-            <element signature="n#style#0;n#!!top" />
-            <element signature="e#12546#14254#0#HTML" />
-          </folding>
+        <state relative-caret-position="285">
+          <caret line="108" column="77" selection-start-line="108" selection-start-column="77" selection-end-line="108" selection-end-column="77" />
         </state>
       </provider>
     </entry>
