@@ -1015,7 +1015,7 @@ function GetExceptionsReport($dates,$strid)
     }
     if ($exception=="1")
     {
-        $SQL= "select * from storeperformancenm where SummaryID in (".$exceptionsummaryid .")";
+        $SQL= "select * from storeperformancenm where SummaryID in (".$exceptionsummaryid .") and sumdate in (".$dates.")";
         $retresult= db_execsql($SQL);
     }
     return $retresult;

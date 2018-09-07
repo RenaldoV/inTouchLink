@@ -115,34 +115,6 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top: 5px;">
-                    <div class="col-sm-4">
-                        <label for="cmbstoregroup">Store Group</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <input name="radStores" type="radio"
-                                       value="storegroup" <?php if ($radStores == "storegroup") {
-                                    echo "checked='checked'";
-                                } ?> onclick="Javascript: SetStoreGroupFocus();"/>
-                            </span>
-                            <select name="cmbstoregroup" class="form-control" id="cmbstoregroup">
-                                <?php
-                                $result = GetStoreGroupsThatUserCanAccess($_SESSION["usrid"]);
-                                while ($row = mysql_fetch_array($result)) {
-                                    $output = "<option value='" . $row["grpid"] . "'";
-                                    if ($_SESSION["cmbstoregroup"] == $row["grpid"]) {
-                                        $output = $output . " selected ";
-                                    }
-                                    $output = $output . ">" . $row["grpname"] . "</option>";
-                                    echo $output;
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 5px;">
                     <div class="col-sm-4"><label for="date">Specific Date</label></div>
                     <div class="col-sm-8">
                         <div class="input-group">
@@ -413,7 +385,6 @@
 
                         $qty = 0;
                         $amount = 0;
-
                         $result = GetExceptionsReport("'" . $_SESSION["dateyear"] . "/" . $_SESSION["datemonth"] . "/" . $_SESSION["dateday"] . "'", $_SESSION["store"]);//GetCompsSummary($sumid);
                         while ($row = mysql_fetch_array($result)) {
                             //$qty = $qty + intval($row["NoOfChecks"]);
