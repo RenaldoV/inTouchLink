@@ -804,6 +804,7 @@
             // ************************************
             ?>
             </h5>
+
             <?php
             // Check if orderby is set, if not then set it to the item name
 
@@ -817,9 +818,12 @@
 
             $catname = "";
             $oldcatname = "";
+            $itemcosttotal = 0;
             $itemsoldtotal = 0;
             $itempricesoldtotal = 0;
             $itemamountotal = 0;
+			$GPPercentagetotal = 0;
+			$CostPercentagetotal = 0;
 
             while($row = mysql_fetch_array($result)) {
                 if($catname == "") { // FIRST HEADER
@@ -856,13 +860,25 @@
                                 $headings = array($title, '');
                                 $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
+                                $title = "Cost Price";
+                                $headings = array($title, '');
+                                $worksheet->write_row('F'.$rownumber, $headings, $LeftNormalTotalBold);
+
                                 $title = "Price Sold";
                                 $headings = array($title, '');
-                                $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
+                                $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
 
                                 $title = "Amount";
                                 $headings = array($title, '');
-                                $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+                                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = "GP%";
+                                $headings = array($title, '');
+                                $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = "Cost%";
+                                $headings = array($title, '');
+                                $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
 
                                 // end excel
                                 ?></td>
@@ -871,8 +887,11 @@
                             <td width="107" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
                             <td width="463" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
                             <td width="98" bgcolor="#F2F2F2"><div align="right" class="style5"># Sold </div></td>
+                            <td width="118" bgcolor="#F2F2F2"><span class="style5">Cost Price </span></td>
                             <td width="118" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
                             <td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
+							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
+							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
                         </tr>
                     </table>
                     <?php
@@ -890,8 +909,14 @@
                             <td width="108" bgcolor="#F2F2F2" class="style6">&nbsp;</td>
                             <td width="463" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
                             <td width="99" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?></strong></div></td>
+                            <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
                             <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
                             <td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal;?></strong></div></td>
+
+							<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
+							<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
+
+
                             <?php
                             $rownumber++;
                             $title = "Total";
@@ -902,13 +927,25 @@
                             $headings = array($title, '');
                             $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
-                            $title = number_format($itempricesoldtotal,"2",".","");
+                            $title = number_format($itemcosttotal,"2",".","");
                             $headings = array($title, '');
                             $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
 
-                            $title = $itemamountotal;
+                            $title = number_format($itempricesoldtotal,"2",".","");
                             $headings = array($title, '');
                             $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+
+                            $title = $itemamountotal;
+                            $headings = array($title, '');
+                            $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                            $title = $GPPercentagetotal;
+                            $headings = array($title, '');
+                            $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                            $title = $CostPercentagetotal;
+                            $headings = array($title, '');
+                            $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
 
                             ?>
                         </tr>
@@ -942,13 +979,25 @@
                                 $headings = array($title, '');
                                 $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "Price Sold";
+                                $title = "Cost Price";
                                 $headings = array($title, '');
                                 $worksheet->write_row('F'.$rownumber, $headings,$RightNumberTotalBold);
 
+                                $title = "Price Sold";
+                                $headings = array($title, '');
+                                $worksheet->write_row('G'.$rownumber, $headings,$RightNumberTotalBold);
+
                                 $title = "Amount";
                                 $headings = array($title, '');
-                                $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+                                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = "GP%";
+                                $headings = array($title, '');
+                                $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = "Cost%";
+                                $headings = array($title, '');
+                                $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
 
                                 // end excel
 
@@ -958,16 +1007,22 @@
                             <td width="107" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
                             <td width="463" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
                             <td width="98" bgcolor="#F2F2F2""><div align="right" class="style5"># Sold </div></td>
+                            <td width="118" bgcolor="#F2F2F2"><span class="style5">Cost Price </span></td>
                             <td width="118" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
                             <td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
+							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
+							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
                         </tr>
                     </table>
                     <?php
                     $oldcatname  =  $catname;
                     // Reset Counters
                     $itemsoldtotal = 0;
+                    $itemcosttotal = 0;
                     $itempricesoldtotal = 0;
                     $itemamountotal = 0;
+					//$GPPercentagetotal = 0;
+					//$CostPercentagetotal = 0;
                 }
                 ?>
 
@@ -978,8 +1033,12 @@
                             <div align="left"></div></td>
                         <td width="467" class="NormalText"><div align="left"><?php echo $row["ibritemname"];?></div></td>
                         <td width="99" class="NormalText"><div align="right"><?php echo $row["ibrnumsold"];?></div></td>
+                        <td width="128" class="NormalText"><div align="right"><?php echo number_format($row["ibritemcost"],"2",".",""); ?></div></td>
                         <td width="119" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"] / $row["ibrnumsold"],"2",".",""); ?></div></td>
                         <td width="128" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"],"2",".",""); ?></div></td>
+
+						<td width="128" class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]),"2",".",""); ?></div></td>
+						<td width="128" class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"]/$row["ibramount"]),"2",".",""); ?></div></td>
                         <?php
                         // ************************************************
                         // Excel
@@ -998,13 +1057,25 @@
                         $headings = array($title, '');
                         $worksheet->write_row('E'.$rownumber,$headings,$NormalRightAlign);
 
-                        $title = number_format($row["ibramount"] / $row["ibrnumsold"],"2",".","");
+                        $title = $row["ibritemcost"];
                         $headings = array($title, '');
                         $worksheet->write_row('F'.$rownumber,$headings,$num1_format);
 
-                        $title = $row["ibramount"];
+                        $title = number_format($row["ibramount"] / $row["ibrnumsold"],"2",".","");
                         $headings = array($title, '');
                         $worksheet->write_row('G'.$rownumber,$headings,$num1_format);
+
+                        $title = $row["ibramount"];
+                        $headings = array($title, '');
+                        $worksheet->write_row('H'.$rownumber,$headings,$num1_format);
+
+                        $title = (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                        $headings = array($title, '');
+                        $worksheet->write_row('I'.$rownumber,$headings,$num1_format);
+
+                        $title = ($row["ibritemcost"]/$row["ibramount"]);
+                        $headings = array($title, '');
+                        $worksheet->write_row('J'.$rownumber,$headings,$num1_format);
 
                         ?>
                     </tr>
@@ -1014,8 +1085,11 @@
 // Count Totals
 
                 $itemsoldtotal =  $itemsoldtotal + $row["ibrnumsold"];
+                $itemcosttotal =  $itemcosttotal + $row["ibritemcost"];
                 $itempricesoldtotal = $itempricesoldtotal + ($row["ibramount"] / $row["ibrnumsold"]);
                 $itemamountotal = $itemamountotal + $row["ibramount"];
+				$GPPercentagetotal = $GPPercentagetotal + (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+				$CostPercentagetotal = $CostPercentagetotal + ($row["ibritemcost"]/$row["ibramount"]);
 
             } ?>
 
@@ -1024,8 +1098,11 @@
                     <td width="108" bgcolor="#F2F2F2" class="style6 bold">&nbsp;</td>
                     <td width="463" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
                     <td width="99" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal;?></strong></div></td>
+                    <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
                     <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
                     <td width="127" bgcolor="#F2F2F2" ><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal; ?></strong></div></td>
+					<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
+					<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
                 </tr>
                 <?php
                 // *** EXCEL ********************************
@@ -1038,13 +1115,25 @@
                 $headings = array($title, '');
                 $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
-                $title = number_format($itempricesoldtotal,"2",".","");
+                $title = number_format($itemcosttotal,"2",".","");
                 $headings = array($title, '');
                 $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
 
-                $title = $itemamountotal;
+                $title = number_format($itempricesoldtotal,"2",".","");
                 $headings = array($title, '');
                 $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+
+                $title = $itemamountotal;
+                $headings = array($title, '');
+                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                $title = $GPPercentagetotal;
+                $headings = array($title, '');
+                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                $title = $CostPercentagetotal;
+                $headings = array($title, '');
+                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
                 // ********************
                 ?>
             </table>
@@ -1074,15 +1163,15 @@
 
                 $title = "# Sold";
                 $headings = array($title, '');
-                $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
+                $worksheet->write_row('D'.$rownumber, $headings, $RightNumberTotalBold);
 
                 $title = "Amount";
                 $headings = array($title, '');
-                $worksheet->write_row('F'.$rownumber, $headings,$RightNumberTotalBold);
+                $worksheet->write_row('E'.$rownumber, $headings,$RightNumberTotalBold);
 
                 $title = "% Sold";
                 $headings = array($title, '');
-                $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+                $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
 
 // end excel
                 ?>
@@ -1123,15 +1212,15 @@
 
                         $title = $row["ibrnumsold"];
                         $headings = array($title, '');
-                        $worksheet->write_row('E'.$rownumber,$headings,$NormalRightAlign);
+                        $worksheet->write_row('D'.$rownumber,$headings,$NormalRightAlign);
 
                         $title = $row["ibramount"];
                         $headings = array($title, '');
-                        $worksheet->write_row('F'.$rownumber,$headings,$num1_format);
+                        $worksheet->write_row('E'.$rownumber,$headings,$num1_format);
 
                         $title = number_format(($row["ibramount"] / $grandtotal) * 100, 2, '.', '');
                         $headings = array($title, '');
-                        $worksheet->write_row('G'.$rownumber,$headings,$num1_format);
+                        $worksheet->write_row('F'.$rownumber,$headings,$num1_format);
 // *********************************************
 
                     }
@@ -1143,15 +1232,15 @@
 
                     $title = $soldtotal;
                     $headings = array($title, '');
-                    $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
+                    $worksheet->write_row('D'.$rownumber, $headings, $RightNumberTotalBold);
 
                     $title = $amounttotal;
                     $headings = array($title, '');
-                    $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
+                    $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
                     $title = "100.00";
                     $headings = array($title, '');
-                    $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+                    $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
 
                     ?>
                     <tr>
