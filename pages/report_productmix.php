@@ -5,6 +5,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
       integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 <style type="text/css">
     <!--
     .style1 {
@@ -636,6 +638,50 @@
                         </select>
                     </div>
                 </div>
+
+				<div class="row" style="margin-top: 5px;">
+                <input name="btnShowEmployees" type="button" class="btn btn-default" value="Get Employees"
+                       style="color: white; background-color: #007CC4" onclick="getEmployeesAjax();"/>
+				</div>
+
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-sm-4"><label for="cmbemployee">Employee</label></div>
+                    <div class="col-sm-8">
+
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input name="radEmployee" type="radio" value="employee">
+                            </span>
+
+                            <select name="cmbemployee" class="form-control" id="cmbemployee">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-sm-4"><label for="selectpicker">Employee Range</label></div>
+                    <div class="col-sm-8">
+
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input name="radEmployee" type="radio" value="employees">
+                            </span>
+							<div class="form-group">
+								<select name="chkemployees[]" id="chkemployees" class="selectpicker form-group dropdown" data-width="100%" multiple data-actions-box="true">
+								</select>
+							</div>
+                        </div>
+                    </div>
+                </div>
+
+                <input name="radDate" type="hidden" id="radEmployee" value=""/>
+
+				<div id="testEmployees">
+				</div>
+
+
+
+
                 <input name="Submit" type="submit" class="btn btn-default" value="Submit"
                        style="color: white; background-color: #007CC4"/>
             </form>
@@ -1398,5 +1444,54 @@ var result = true;
 	}
 return result;
 } 
+
+
+
+
+
+
+$(document).ready(function () {
+
+	var radEmployeeOptions = document.getElementsByName('radEmployee');
+	var employeeRadio;
+	var x = 0;
+	for(x = 0; x < radEmployeeOptions.length; x++){
+	  radEmployeeOptions[x].onclick = function() {
+		if(employeeRadio == this){
+		  this.checked = false;
+		  employeeRadio = null;
+		} else {
+		  employeeRadio = this;
+		}
+	  };
+	}
+});
+
+
+
+
+	function getEmployeesAjax(){
+
+	  //alert("gaan nou ajax na : " + "index.php?p=report_productmixgetemployeesAjax&date=" + date.value + "&str=" + cmbstore.value);
+
+	  $.ajax({
+		method: "GET", url: "index.php?p=report_productmixgetemployeesAjax&date="+date.value+"&str="+cmbstore.value, 
+	  }).done(function( data ) {
+		  //alert(data);
+
+		   var result = $.parseJSON(data);
+		   var employeeSelect = $('#cmbemployee');
+		   var employeesSelect = $('#chkemployees');
+  
+		   $.each( result, function( key, value ) {
+				employeeSelect.append($("<option />").val(value['eibemployeeid']).text(value['eibemployeename']));
+				employeesSelect.append($("<option />").val(value['eibemployeeid']).text(value['eibemployeename']));
+			});
+
+			$('.selectpicker').selectpicker('refresh');
+
+		});
+	};
+
 
 </script>

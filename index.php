@@ -315,6 +315,37 @@ $radStores="store";
 
 }
 
+if($p == "report_productmixgetemployeesAjax") {
+
+    $dateArr = explode("/", $_REQUEST["date"]);
+    $datemonth = $dateArr[0];
+    $dateday = $dateArr[1];
+    $dateyear = $dateArr[2];
+
+	$result_array = array();
+
+	$employeesResult = GetEmployeesItemSales($dateyear."/".$datemonth."/".$dateday, '"'.$strid.'"');
+	//$employeesResult = GetEmployeesItemSales("2018/06/28", "149");
+	
+
+
+	if ($employeesResult->num_rows > 0) {
+
+		while($row = $employeesResult->fetch_assoc()) {
+
+			array_push($result_array, $row);
+		}
+	}
+
+	while ($row = mysql_fetch_array($employeesResult)) {
+		array_push($result_array, $row);
+	}    
+
+//	/* send a JSON encded array to client */
+	echo json_encode($result_array);
+	return;
+}
+
 ?>
 
 <script language="JavaScript1.2">
@@ -378,6 +409,7 @@ function openNewWindow(windowaddress,windowname) {
 
 </head>
 <body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
     <?php
         if($_SESSION["loggedin"] == 1) {
             require_once('innermenu.php'); // Logged in so get report menu
@@ -527,8 +559,6 @@ function openNewWindow(windowaddress,windowname) {
         </div>
       </div>
     </nav>
-
-
     <!--START LOG IN-->
     <div class='col-sm-12' style="margin-top: 90px;">
         <div class="row form-row">
@@ -581,10 +611,10 @@ function openNewWindow(windowaddress,windowname) {
     <!--END FOOTER-->
 
     <!--SCRIPTS-->
-		<script src="landing/js/jquery-2.2.4.min.js"></script>
-		<script src="landing/js/wow.min.js"></script>
+		<script src="landing/js/jquery-2.2.4.min.js"></script> 
+		<script src="landing/js/wow.min.js"></script> 
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyASbZGps9iVQs7H7gK0TRiunz1v7hvlyjU"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyASbZGps9iVQs7H7gK0TRiunz1v7hvlyjU"></script> 
 		<script src="landing/js/infobox.js"></script>
 		<script src="landing/js/jquery.easing.min.js"></script>
 		<script src="landing/js/classie.js"></script>

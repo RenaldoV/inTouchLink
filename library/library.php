@@ -745,6 +745,14 @@ $result = db_execsql($SQL);
 return $result;
 }
 
+
+function GetEmployeesItemSales($date, $sumid) {
+$SQL = "select eibemployeeid, eibemployeename from summary s, empitemsbreakdown emp where s.sumid = emp.sumid and s.strid in ($sumid) and sumdate = '$date' group by emp.eibemployeeid,emp.eibemployeename";
+$result = db_execsql($SQL);
+return $result;
+}
+
+
 // REVENUE SALES REPORT ////////////////////////////////////////////////
 
 function GetRevenueCenterNames($sumid) {
