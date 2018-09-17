@@ -139,6 +139,23 @@ if($_REQUEST["radDate"] != "") {
 if($_REQUEST["radStores"] != "") {
 	$_SESSION["radStores"] = $_REQUEST["radStores"];
 }
+//radEmployee can be null/undefined
+$_SESSION["radEmployee"] = $_REQUEST["radEmployee"];
+
+if ($_REQUEST["radEmployee"] == "employee"){
+	$_SESSION["employeeid"] = $_REQUEST["cmbemployee"];
+}
+else if ($_REQUEST["radEmployee"] == "employees"){
+	
+	$employeeList = $_REQUEST["chkemployees"];
+	$_SESSION["employeeid"] = "'".$employeeList[0]."'"; // Set the first ID.
+
+	while (list ($key, $val) = @each($employeeList)) {
+		if ($employeeList[0] != $val)
+			$_SESSION["employeeid"] = $_SESSION["employeeid"] . ",'" . $val . "'";
+	}
+}
+
 // Update Data Exception Report Pref
 if($cmbdataexpetionorder != null) {
 SetUserPref("usrpref_exceptionreportorder","$cmbdataexpetionorder",$_SESSION["usrid"]);
@@ -162,6 +179,7 @@ if($p == "report_totalcomparison" || $p == "report_totalcomparison_print" ) {
 
 $radDate = $_SESSION["radDate"];
 $radStores = $_SESSION["radStores"];
+$radEmployee = $_SESSION["radEmployee"];
 
 
 //  Report
@@ -315,20 +333,55 @@ $radStores="store";
 
 }
 
+//NB!! AJAX Calls must be first (except for Exception handling) functions in index.php to keep DB consistency use
+//Begin sectino of AJAX calls.
 if($p == "report_productmixgetemployeesAjax") {
 
-    $dateArr = explode("/", $_REQUEST["date"]);
-    $datemonth = $dateArr[0];
-    $dateday = $dateArr[1];
-    $dateyear = $dateArr[2];
-
 	$result_array = array();
+	$strid = "";
 
-	$employeesResult = GetEmployeesItemSales($dateyear."/".$datemonth."/".$dateday, '"'.$strid.'"');
-	//$employeesResult = GetEmployeesItemSales("2018/06/28", "149");
+
+	if ($_REQUEST["radStore"] == "store"){//Specific Store
+		$strid = "'".$_REQUEST["radStoreValue"]."'";
+	}
+	else if ($_REQUEST["radStore"] == "storegroup"){
+		$grpid = $_REQUEST["radStoreValue"]; // Store the group id
+		$result = GetStoreIDsForGroup($grpid); // Get all the Store IDs inside that group
+		$row = mysql_fetch_array($result);
+		$strid = "'".$row["strid"]."'"; // Set the first ID.
+		while ($row = mysql_fetch_array($result)) { // Add all IDs into the store session as a string
+			$strid = $strid.",'".$row["strid"]."'";
+		}
+	}
+
+	if ($_REQUEST["radDate"] == "date"){
+		$dateArr = explode("/", $_REQUEST["date"]);
+		$datemonth = $dateArr[0];
+		$dateday = $dateArr[1];
+		$dateyear = $dateArr[2];
+
+		$employeesResult = GetEmployeesItemSalesSpecificDate($dateyear."/".$datemonth."/".$dateday, $strid);
+		//$employeesResult = GetEmployeesItemSales("2018/06/28", "149");
+
+	}
+	else if ($_REQUEST["radDate"] == "daterange"){
+
+		$daterangeArr = explode(" - ", $_REQUEST["radDateValue"]);
+
+		$startDateArr = explode("/", $daterangeArr[0]);
+		$endDateArr = explode("/", $daterangeArr[1]);
+
+		$startDateMonth = $startDateArr[0];
+		$startDateDay = $startDateArr[1];
+		$startDateYear = $startDateArr[2];
+
+		$endDateMonth = $endDateArr[0];
+		$endDateDay = $endDateArr[1];
+		$endDateYear = $endDateArr[2];
+
+		$employeesResult = GetEmployeesItemSalesDateRange($startDateYear."/".$startDateMonth."/".$startDateDay, $endDateYear."/".$endDateMonth."/".$endDateDay, $strid);
+	}
 	
-
-
 	if ($employeesResult->num_rows > 0) {
 
 		while($row = $employeesResult->fetch_assoc()) {
@@ -341,10 +394,11 @@ if($p == "report_productmixgetemployeesAjax") {
 		array_push($result_array, $row);
 	}    
 
-//	/* send a JSON encded array to client */
 	echo json_encode($result_array);
 	return;
 }
+
+//End Ajax Calls
 
 ?>
 
@@ -611,10 +665,10 @@ function openNewWindow(windowaddress,windowname) {
     <!--END FOOTER-->
 
     <!--SCRIPTS-->
-		<script src="landing/js/jquery-2.2.4.min.js"></script> 
+		<script src="landing/js/jquery-2.2.4.min.js"></script>  
 		<script src="landing/js/wow.min.js"></script> 
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyASbZGps9iVQs7H7gK0TRiunz1v7hvlyjU"></script> 
+		<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyASbZGps9iVQs7H7gK0TRiunz1v7hvlyjU"></script>  
 		<script src="landing/js/infobox.js"></script>
 		<script src="landing/js/jquery.easing.min.js"></script>
 		<script src="landing/js/classie.js"></script>

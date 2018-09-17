@@ -3,10 +3,16 @@
 set_time_limit(0); // Remove timeout
 // Database functions
 function db_connect() {// Connects to Database
+
 $HOSTNAME = 'dedi44.flk1.host-h.net';
 $USERNAME = 'intouchroot';
 $PASSWORD = 'aH73nMjk9';
 $DATABASE = 'intouchlink';
+
+/*$HOSTNAME = 'localhost';
+$USERNAME = 'root';
+$PASSWORD = 'root';
+$DATABASE = 'intouchlink';*/
 
 /*$HOSTNAME = '188.40.0.194';
 $USERNAME = 'wwwtaj_1';
@@ -263,7 +269,7 @@ return $result;
 }
 
 function GetProductMixSummary($sumid) {
-$SQL = "select lcase(ibrcategoryname) as 'ibrcategoryname', sum(ibrnumsold) as 'ibrnumsold',ibrpricesold as 'ibrpricesold',sum(ibramount) as 'ibramount',sum(ibrsalespercent) as 'ibrsalespercent' from itemsbreakdown where sumid in (".$sumid.") and ibrtimesold >= '".$_SESSION["timefrom"]."' and ibrtimesold < '".$_SESSION["timeto"]."' group by lcase(ibrcategoryname)";
+$SQL = "select lcase(ibrcategoryname) as 'ibrcategoryname', sum(ibrnumsold) as 'ibrnumsold', sum(ibritemcost) as 'ibritemcost',ibrpricesold as 'ibrpricesold',sum(ibramount) as 'ibramount',sum(ibrsalespercent) as 'ibrsalespercent' from itemsbreakdown where sumid in (".$sumid.") and ibrtimesold >= '".$_SESSION["timefrom"]."' and ibrtimesold < '".$_SESSION["timeto"]."' group by lcase(ibrcategoryname)";
 //echo "   ".$SQL;
 $result = db_execsql($SQL);
 return $result;
@@ -271,6 +277,29 @@ return $result;
 
 function GetProductMixSummaryTotal($sumid) {
 $SQL = "select sum(ibramount) as 'ibramount' from itemsbreakdown where sumid in (".$sumid.") and ibrtimesold >= '".$_SESSION["timefrom"]."' and ibrtimesold < '".$_SESSION["timeto"]."'";
+//echo $SQL;
+$result = db_execsql($SQL);
+return $result;
+}
+
+
+function GetProductMixPerEmployee($sumid, $orderby,$employeeid) {
+$SQL = "select eibemployeename ,lcase(eibcategoryname) as 'ibrcategoryname', eibitemplu as 'ibritenplu', eibitemname as 'ibritemname', eibitemcost  as 'ibritemcost', sum(eibnumsold) as 'ibrnumsold', eibpricesold as 'ibrpricesold', sum(eibamount) as 'ibramount', sum(eibsalespercent) as 'ibrsalespercent' from empitemsbreakdown where sumid in (".$sumid.") and eibtimesold >= '".$_SESSION["timefrom"]."' and eibtimesold < '".$_SESSION["timeto"]."' and eibemployeeid in (".$employeeid.") group by lcase(eibcategoryname),eibitemname, eibemployeename order by eibemployeename, eibcategoryname,".$orderby;
+	   
+//echo $SQL;
+$result = db_execsql($SQL);
+return $result;
+}
+
+function GetProductMixSummaryPerEmployee($sumid, $employeeid) {
+$SQL = "select lcase(eibcategoryname) as 'ibrcategoryname', sum(eibnumsold) as 'ibrnumsold', sum(eibitemcost) as 'ibritemcost',eibpricesold as 'ibrpricesold',sum(eibamount) as 'ibramount',sum(eibsalespercent) as 'ibrsalespercent', eibemployeename from empitemsbreakdown where sumid in (".$sumid.") and eibemployeeid in (".$employeeid.") and eibtimesold >= '".$_SESSION["timefrom"]."' and eibtimesold < '".$_SESSION["timeto"]."' group by lcase(eibcategoryname), eibemployeename";
+//echo "   ".$SQL;
+$result = db_execsql($SQL);
+return $result;
+}
+
+function GetProductMixSummaryTotalPerEmployee($sumid, $employeeid) {
+$SQL = "select sum(eibamount) as 'ibramount' from empitemsbreakdown where sumid in (".$sumid.") and eibemployeeid in (".$employeeid.") and eibtimesold >= '".$_SESSION["timefrom"]."' and eibtimesold < '".$_SESSION["timeto"]."'";
 //echo $SQL;
 $result = db_execsql($SQL);
 return $result;
@@ -746,8 +775,14 @@ return $result;
 }
 
 
-function GetEmployeesItemSales($date, $sumid) {
-$SQL = "select eibemployeeid, eibemployeename from summary s, empitemsbreakdown emp where s.sumid = emp.sumid and s.strid in ($sumid) and sumdate = '$date' group by emp.eibemployeeid,emp.eibemployeename";
+function GetEmployeesItemSalesSpecificDate($date, $strid) {
+$SQL = "select eibemployeeid, eibemployeename from summary s, empitemsbreakdown emp where s.sumid = emp.sumid and s.strid in ($strid) and sumdate = '$date' group by emp.eibemployeeid,emp.eibemployeename";
+$result = db_execsql($SQL);
+return $result;
+}
+
+function GetEmployeesItemSalesDateRange($startDate, $endDate, $strid) {
+$SQL = "select eibemployeeid, eibemployeename from summary s, empitemsbreakdown emp where s.sumid = emp.sumid and s.strid in ($strid) and sumdate >= '$startDate' and sumdate <= '$endDate' group by emp.eibemployeeid,emp.eibemployeename";
 $result = db_execsql($SQL);
 return $result;
 }

@@ -122,7 +122,7 @@
                 <div class="row" style="margin-top: 5px;">
                     <div class="col-sm-4">
                         <label for="cmbstoregroup">Store Group</label>
-                    </div>
+                    </div> 
                     <div class="col-sm-8">
                         <div class="input-group">
                             <span class="input-group-addon">
@@ -650,7 +650,11 @@
 
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <input name="radEmployee" type="radio" value="employee">
+                                <input name="radEmployee" type="radio" value="employee"
+								<?php if ($radEmployee == "employee") {
+                                    echo "checked='checked'";
+                                } ?>
+								>
                             </span>
 
                             <select name="cmbemployee" class="form-control" id="cmbemployee">
@@ -664,7 +668,11 @@
 
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <input name="radEmployee" type="radio" value="employees">
+                                <input name="radEmployee" type="radio" value="employees"
+								<?php if ($radEmployee == "employees") {
+                                    echo "checked='checked'";
+                                } ?>
+								>
                             </span>
 							<div class="form-group">
 								<select name="chkemployees[]" id="chkemployees" class="selectpicker form-group dropdown" data-width="100%" multiple data-actions-box="true">
@@ -716,8 +724,16 @@
             $fname = str_replace("\\","/",$fname);
             $workbook =& new writeexcel_workbook($fname);
             $worksheet =& $workbook->addworksheet('Report');
+
             // Set Columns widths
-            $worksheet->set_column('A:B', 0.10);
+			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+				$worksheet->set_column('A:A', 0.10);
+				$worksheet->set_column('B:B', 36.14);
+			}
+			else{
+				$worksheet->set_column('A:B', 0.10);
+			}
+
             $worksheet->set_column('C:C', 12); // First usuable column
             $worksheet->set_column('D:D', 36.14);
             $worksheet->set_column('E:E', 8.71);
@@ -800,7 +816,7 @@
                 //echo "here";
                 $sumid = ReturnDayOfWeekSUMIDs($sumid);
             }
-            //echo "SUMID : ".$sumid;
+            
             //$row = mysql_fetch_array($result);
             ?>
 
@@ -814,6 +830,7 @@
                     echo GetStoreGroupName($grpid) . $_SESSION["storegroupscount"];
                     $excelreport_title = GetStoreName($_SESSION["store"]).$_SESSION["storegroupscount"]; // EXCEL
                 }
+				
 
                 ?>
             </h3>
@@ -857,7 +874,20 @@
             if($_SESSION["orderby"] == null) {
                 $_SESSION["orderby"] = "ibritemname";
             }
-            $result = GetProductMix($sumid,$_SESSION["orderby"]) ;
+			
+			$result = "";
+
+        
+
+
+
+			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+				$result = GetProductMixPerEmployee($sumid,$_SESSION["orderby"], $_SESSION["employeeid"]) ;
+			}
+			else{
+				$result = GetProductMix($sumid,$_SESSION["orderby"]) ;
+			}
+            
             ?>
             <br />
             <?php
@@ -879,8 +909,17 @@
                     ?>
                     <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
                         <tr>
-                            <td colspan="5" style="background-color: #487CC4; color: white">
+							<?php
+								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+									echo '<td colspan="1" style="background-color: #487CC4; color: white">';
+									echo ucfirst("Employee Name");
+									echo "</td>";
+								}
+							?>
+
+                            <td colspan="8" style="background-color: #487CC4; color: white">
                                 <?php
+								
                                 echo ucfirst($row["ibrcategoryname"]);
 
                                 // EXCEL
@@ -889,6 +928,12 @@
                                 // Write Table Headers for GROUP
                                 $rownumber++;
                                 $rownumber++;
+								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+									$title = ucfirst("Employee Name");
+									$headings = array($title, '');
+									$worksheet->write_row('B'.$rownumber, $headings, $heading2);
+								}
+
                                 $title = ucfirst($row["ibrcategoryname"]);
                                 $headings = array($title, '');
                                 $worksheet->write_row('C'.$rownumber, $headings, $heading2);
@@ -930,6 +975,7 @@
                                 ?></td>
                         </tr>
                         <tr>
+							<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="300" bgcolor="#F2F2F2"></td>'; } ?>
                             <td width="107" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
                             <td width="463" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
                             <td width="98" bgcolor="#F2F2F2"><div align="right" class="style5"># Sold </div></td>
@@ -985,13 +1031,13 @@
                             $headings = array($title, '');
                             $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
 
-                            $title = $GPPercentagetotal;
+                            $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
                             $headings = array($title, '');
-                            $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+                            $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
 
-                            $title = $CostPercentagetotal;
+                            $title = ($itemcosttotal / $itemamountotal);
                             $headings = array($title, '');
-                            $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+                            $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
 
                             ?>
                         </tr>
@@ -999,7 +1045,15 @@
 
                     <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
                         <tr>
-                            <td colspan="5" style="background-color: #487CC4; color: white">
+							<?php
+								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+									echo '<td colspan="1" style="background-color: #487CC4; color: white">';
+									echo ucfirst("Employee Name");
+									echo "</td>";
+								}
+							?>
+
+                            <td colspan="8" style="background-color: #487CC4; color: white">
                                 <?php
                                 echo ucfirst($row["ibrcategoryname"]);
                                 // EXCEL
@@ -1007,6 +1061,12 @@
                                 // Write Table Headers for GROUP
                                 $rownumber++;
                                 $rownumber++;
+								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+									$title = ucfirst("Employee Name");
+									$headings = array($title, '');
+									$worksheet->write_row('B'.$rownumber, $headings, $heading2);									
+								}
+
                                 $title = ucfirst($row["ibrcategoryname"]);
                                 $headings = array($title, '');
                                 $worksheet->write_row('C'.$rownumber, $headings, $heading2);
@@ -1050,6 +1110,7 @@
                                 ?></td>
                         </tr>
                         <tr>
+							<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="300" bgcolor="#F2F2F2"></td>'; } ?>
                             <td width="107" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
                             <td width="463" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
                             <td width="98" bgcolor="#F2F2F2""><div align="right" class="style5"># Sold </div></td>
@@ -1075,6 +1136,7 @@
                 <table height="22" border="0" align="center" cellpadding="2" cellspacing="0">
 
                     <tr>
+						<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="300" height="22" class="NormalText"><div align="left">'.$row["eibemployeename"].'</div>';} ?>
                         <td width="102" height="22" class="NormalText"><div align="left"><?php echo $row["ibritenplu"];?></div>
                             <div align="left"></div></td>
                         <td width="467" class="NormalText"><div align="left"><?php echo $row["ibritemname"];?></div></td>
@@ -1090,6 +1152,12 @@
                         // Excel
 
                         $rownumber++;
+
+						if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+							$title = $row["eibemployeename"];
+							$headings = array($title, '');
+							$worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);							
+						}
 
                         $title = $row["ibritenplu"];
                         $headings = array($title, '');
@@ -1173,23 +1241,35 @@
                 $headings = array($title, '');
                 $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
 
-                $title = $GPPercentagetotal;
+                $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
                 $headings = array($title, '');
-                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+                $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
 
-                $title = $CostPercentagetotal;
+                $title = ($itemcosttotal / $itemamountotal);
                 $headings = array($title, '');
-                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+                $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
                 // ********************
                 ?>
             </table>
             <div align="center">
             <?php
-            $resulttemp = GetProductMixSummaryTotal($sumid);
+			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+				$resulttemp = GetProductMixSummaryTotalPerEmployee($sumid, $_SESSION["employeeid"]) ;
+			}
+			else{
+				$resulttemp = GetProductMixSummaryTotal($sumid);
+			}
+
+            
             $row = mysql_fetch_array($resulttemp);
             $grandtotal = $row["ibramount"];
 
-            $result = GetProductMixSummary($sumid);
+			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+				$result = GetProductMixSummaryPerEmployee($sumid, $_SESSION["employeeid"]) ;
+			}
+			else{
+				$result = GetProductMixSummary($sumid);
+			}
             if(mysql_num_rows($result) > 0) { // only display if there is data
 
 // ************************************************
@@ -1203,6 +1283,12 @@
                 $worksheet->write_row('D'.$rownumber, $headings, $heading);
                 $rownumber++;
 
+				if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+					$title = "Employee Name";
+					$headings = array($title, '');
+					$worksheet->write_row('B'.$rownumber, $headings, $LeftNormalTotalBold);
+				}
+
                 $title = "Name";
                 $headings = array($title, '');
                 $worksheet->write_row('C'.$rownumber, $headings, $LeftNormalTotalBold);
@@ -1211,33 +1297,57 @@
                 $headings = array($title, '');
                 $worksheet->write_row('D'.$rownumber, $headings, $RightNumberTotalBold);
 
-                $title = "Amount";
+                $title = "Cost Price";
                 $headings = array($title, '');
                 $worksheet->write_row('E'.$rownumber, $headings,$RightNumberTotalBold);
 
+                $title = "Amount";
+                $headings = array($title, '');
+                $worksheet->write_row('F'.$rownumber, $headings,$RightNumberTotalBold);
+
+                $title = "GP%";
+                $headings = array($title, '');
+                $worksheet->write_row('G'.$rownumber, $headings,$RightNumberTotalBold);
+
+                $title = "Cost%";
+                $headings = array($title, '');
+                $worksheet->write_row('H'.$rownumber, $headings,$RightNumberTotalBold);
+
                 $title = "% Sold";
                 $headings = array($title, '');
-                $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
+                $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
 
 // end excel
                 ?>
                 <h4 style="color:#757575" class="text-center"> Summary</h4>
                 <table width="74%" border="0" align="center" class="table table-condensed">
                     <tr>
-                        <td width="43%" bgcolor="#487CC4"><div align="left" class="style1">Name</div></td>
+						<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="13%" bgcolor="#487CC4"><div align="left" class="style1">Employee Name</div></td>'; } ?>
+                        <td width="21%" bgcolor="#487CC4"><div align="left" class="style1">Name</div></td>
                         <td width="19%" bgcolor="#487CC4"><div align="right" class="style1"># Sold</div></td>
+						<td width="19%" bgcolor="#487CC4"><div align="right" class="style1">Cost Price</div></td>
                         <td width="18%" bgcolor="#487CC4"><div align="right" class="style1">Amount</div></td>
+						<td width="18%" bgcolor="#487CC4"><div align="right" class="style1">GP%</div></td>
+						<td width="18%" bgcolor="#487CC4"><div align="right" class="style1">Cost%</div></td>
                         <td width="20%" bgcolor="#487CC4"><div align="right" class="style1">% Sales</div></td>
                     </tr>
                     <?php
                     $soldtotal = 0;
                     $amounttotal = 0;
                     $salestotal = 0;
+					$costitemtotal = 0;
                     while($row = mysql_fetch_array($result)) { ?>
                         <tr>
+							<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td class="NormalText"><strong>'.$row["eibemployeename"].'</strong></td>'; } ?>
                             <td class="NormalText"><strong><?php echo ucfirst($row["ibrcategoryname"]); ?></strong></td>
                             <td class="NormalText"><div align="right"><?php echo $row["ibrnumsold"]; ?></div></td>
-                            <td class="NormalText"><div align="right"><?php echo $row["ibramount"]; ?></div></td>
+							<td class="NormalText"><div align="right"><?php echo $row["ibritemcost"]; ?></div></td>
+							<td class="NormalText"><div align="right"><?php echo $row["ibramount"]; ?></div></td>
+
+							<td class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]) * 100, 2, '.', ''); ?></div></td>
+							<td class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"] / $row["ibramount"]) * 100, 2, '.', ''); ?></div></td>
+
+                            
                             <td class="NormalText"><div align="right">
                                     <?php
                                     echo number_format(($row["ibramount"] / $grandtotal) * 100, 2, '.', '') ; $salestotal = $salestotal + $perctotal;
@@ -1249,9 +1359,16 @@
                         <?php
                         $soldtotal = $soldtotal + $row["ibrnumsold"];
                         $amounttotal = $amounttotal + $row["ibramount"];
+						$costitemtotal = $costitemtotal + $row["ibritemcost"];
 
 // EXCEL *************************************
                         $rownumber ++;
+						if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+							$title = ucfirst($row["eibemployeename"]);
+							$headings = array($title, '');
+							$worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);
+						}
+
                         $title = ucfirst($row["ibrcategoryname"]);
                         $headings = array($title, '');
                         $worksheet->write_row('C'.$rownumber, $headings, $NormalLeftAlign);
@@ -1260,13 +1377,25 @@
                         $headings = array($title, '');
                         $worksheet->write_row('D'.$rownumber,$headings,$NormalRightAlign);
 
-                        $title = $row["ibramount"];
+                        $title = $row["ibritemcost"];
                         $headings = array($title, '');
                         $worksheet->write_row('E'.$rownumber,$headings,$num1_format);
 
-                        $title = number_format(($row["ibramount"] / $grandtotal) * 100, 2, '.', '');
+                        $title = $row["ibramount"];
                         $headings = array($title, '');
                         $worksheet->write_row('F'.$rownumber,$headings,$num1_format);
+
+                        $title = (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                        $headings = array($title, '');
+                        $worksheet->write_row('G'.$rownumber,$headings,$num1_format);
+
+                        $title = ($row["ibritemcost"] / $row["ibramount"]);
+                        $headings = array($title, '');
+                        $worksheet->write_row('H'.$rownumber,$headings,$num1_format);
+
+                        $title = number_format(($row["ibramount"] / $grandtotal) * 100, 2, '.', '');
+                        $headings = array($title, '');
+                        $worksheet->write_row('I'.$rownumber,$headings,$num1_format);
 // *********************************************
 
                     }
@@ -1280,19 +1409,35 @@
                     $headings = array($title, '');
                     $worksheet->write_row('D'.$rownumber, $headings, $RightNumberTotalBold);
 
-                    $title = $amounttotal;
+                    $title = $costitemtotal;
                     $headings = array($title, '');
                     $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
-                    $title = "100.00";
+                    $title = $amounttotal;
                     $headings = array($title, '');
                     $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = (($amounttotal - $costitemtotal) / $amounttotal);
+                    $headings = array($title, '');
+                    $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = ($costitemtotal / $amounttotal);
+                    $headings = array($title, '');
+                    $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = "100.00";
+                    $headings = array($title, '');
+                    $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
 
                     ?>
                     <tr>
                         <td class="NormalText bold"><div align="right"><strong>Total</strong></div></td>
+						<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td class="NormalText bold"><div align="right"><strong></strong></div></td>'; } ?>
                         <td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($soldtotal, 2, '.', '');?></strong></div></td>
+						<td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($costitemtotal, 2, '.', '');?></strong></div></td>
                         <td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($amounttotal, 2, '.', '');?></strong></div></td>
+						<td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format((($amounttotal - $costitemtotal) / $amounttotal), 2, '.', '');?></strong></div></td>
+						<td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format(($costitemtotal / $amounttotal), 2, '.', '');?></strong></div></td>
                         <td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong>100.00</strong></div></td>
                     </tr>
                 </table>
@@ -1472,11 +1617,38 @@ $(document).ready(function () {
 
 	function getEmployeesAjax(){
 
-	  //alert("gaan nou ajax na : " + "index.php?p=report_productmixgetemployeesAjax&date=" + date.value + "&str=" + cmbstore.value);
+		//Clear Employee Selections
+		$('#cmbemployee').find('option').remove().end();
+		$('#chkemployees').find('option').remove().end();
+
+
+
+		var radStoreSelected = $('[name="radStores"]:checked').val();
+		var radStoreValue = "";
+		var radDateSelected = $('[name="radDate"]:checked').val();
+		var radDateValue = "";
+
+		if(radStoreSelected == "store") {
+			radStoreValue = cmbstore.value;
+		}
+		else if (radStoreSelected = "storegroup"){
+			radStoreValue = cmbstoregroup.value;
+		}
+
+		if(radDateSelected == "date") {
+			radDateValue = date.value;
+		}
+		else if (radDateSelected = "daterange"){
+			radDateValue = daterange.value;
+		}
+
+
+
+	  //alert("gaan nou ajax na : " + "index.php?p=report_productmixgetemployeesAjax&date=" + date.value + "&radStore=" + radStoreSelected + "&radStoreValue=" + radStoreValue + "&radDate=" + radDateSelected + "&radDateValue=" + radDateValue);
 
 	  $.ajax({
-		method: "GET", url: "index.php?p=report_productmixgetemployeesAjax&date="+date.value+"&str="+cmbstore.value, 
-	  }).done(function( data ) {
+		method: "GET", url: "index.php?p=report_productmixgetemployeesAjax&date=" + date.value + "&radStore=" + radStoreSelected + "&radStoreValue=" + radStoreValue + "&radDate=" + radDateSelected + "&radDateValue=" + radDateValue, 
+		}).done(function( data ) {
 		  //alert(data);
 
 		   var result = $.parseJSON(data);
@@ -1488,10 +1660,46 @@ $(document).ready(function () {
 				employeesSelect.append($("<option />").val(value['eibemployeeid']).text(value['eibemployeename']));
 			});
 
+
+			
+			<?php
+			if ($_SESSION["radEmployee"] == "employee"){
+				echo "$('#cmbemployee option[value=".$_SESSION["employeeid"]."]').attr('selected','');";
+			}
+			else if ($_SESSION["radEmployee"] == "employees"){
+
+				$employeeIds = $_SESSION["employeeid"];
+
+				$employeeIds = str_replace("'","",$employeeIds);
+
+				$employeeIds = explode(",",$employeeIds);
+
+				while (list ($key, $val) = @each($employeeIds)) {
+					echo "$('#chkemployees option[value=".$val."]').attr('selected','');";
+				}
+			}
+			
+			?>
+
+
+
+			
+
 			$('.selectpicker').selectpicker('refresh');
 
 		});
+
+
+
+
+
+
 	};
+
+
+			<?php if ($_SESSION["radEmployee"] != ""){
+				echo "getEmployeesAjax();";	
+		} ?>
 
 
 </script>
