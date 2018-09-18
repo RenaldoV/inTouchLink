@@ -167,6 +167,10 @@
     div.dropdown-menu.open {
         border-top: solid 3px #2ea3f2;
     }
+    .input-group.disabled div.bootstrap-select button.dropdown-toggle {
+        background-color: #d6d6d6;!important;
+        cursor: no-drop;
+    }
     input.form-control[disabled], select.form-control[disabled] {
         background-color: #d6d6d6;!important;
     }

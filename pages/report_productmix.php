@@ -640,44 +640,45 @@
                 </div>
 
 				<div class="row" style="margin-top: 5px;">
-                <input name="btnShowEmployees" type="button" class="btn btn-default" value="Get Employees"
-                       style="color: white; background-color: #007CC4" onclick="getEmployeesAjax();"/>
+                    <div class="col-sm-12">
+                        <input name="btnShowEmployees" type="button" class="btn btn-default" value="Get Employees"
+                               style="color: white; background-color: #007CC4" onclick="getEmployeesAjax();"/>
+                    </div>
 				</div>
 
-                <div class="row" style="margin-top: 5px;">
-                    <div class="col-sm-4"><label for="cmbemployee">Employee</label></div>
-                    <div class="col-sm-8">
+                <div class="employeeContainer">
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-sm-4"><label for="cmbemployee">Employee</label></div>
+                        <div class="col-sm-8">
 
-                        <div class="input-group">
+                            <div class="input-group">
                             <span class="input-group-addon">
-                                <input name="radEmployee" type="radio" value="employee"
-								<?php if ($radEmployee == "employee") {
-                                    echo "checked='checked'";
-                                } ?>
-								>
+                                <input name="radEmployee" id="specificEmp" type="radio" value="employee"
+                                    <?php if ($radEmployee == "employee") {
+                                        echo "checked='checked'";
+                                    } ?>
+                                >
                             </span>
 
-                            <select name="cmbemployee" class="form-control" id="cmbemployee">
-                            </select>
+                                <select name="cmbemployee" class="form-control" id="cmbemployee">
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row" style="margin-top: 5px;">
-                    <div class="col-sm-4"><label for="selectpicker">Employee Range</label></div>
-                    <div class="col-sm-8">
-
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <input name="radEmployee" type="radio" value="employees"
-								<?php if ($radEmployee == "employees") {
-                                    echo "checked='checked'";
-                                } ?>
-								>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-sm-4"><label for="selectpicker">Employee Range</label></div>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <input name="radEmployee" type="radio" id="empRange" value="employees"
+                                    <?php if ($radEmployee == "employees") {
+                                        echo "checked='checked'";
+                                    } ?>
+                                >
                             </span>
-							<div class="form-group">
-								<select name="chkemployees[]" id="chkemployees" class="selectpicker form-group dropdown" data-width="100%" multiple data-actions-box="true">
-								</select>
-							</div>
+                                <select name="chkemployees[]" id="chkemployees" class="selectpicker dropdown form-group" data-width="100%" multiple data-actions-box="true">
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -690,7 +691,7 @@
 
 
 
-                <input name="Submit" type="submit" class="btn btn-default" value="Submit"
+                <input name="Submit" type="submit" class="btn btn-default" value="Submit Report"
                        style="color: white; background-color: #007CC4"/>
             </form>
         </div>
@@ -698,7 +699,7 @@
 </div>
 
 
-<div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+<div class="col-sm-10 col-sm-offset-1">
     <?php
     // -------------- See if any data is in Summary Table -----------------------
     if ($a == 's') {
@@ -1513,6 +1514,24 @@
         $("#cmbstore").parent().addClass('disabled');
         $("#cmbstoregroup").parent().removeClass('disabled');
     }
+    function setEmployeeFocus() {
+        $("#chkemployees").prop('disabled', true);
+        $("#cmbemployee").prop('disabled', false);
+        $("#chkemployees").parent().parent().addClass('disabled');
+        $("#cmbemployee").parent().removeClass('disabled');
+    }
+    function setEmployeeRangeFocus() {
+        $("#cmbemployee").prop('disabled', true);
+        $("#chkemployees").prop('disabled', false);
+        $("#cmbemployee").parent().addClass('disabled');
+        $("#chkemployees").parent().parent().removeClass('disabled');
+    }
+    function DisableEmployees() {
+        $(".employeeContainer").prop('hidden', true);
+    }
+    function EnableEmployees() {
+        $(".employeeContainer").prop('hidden', false);
+    }
 
 <?php 
 if($radDate == "date") {
@@ -1607,9 +1626,23 @@ $(document).ready(function () {
 		  employeeRadio = null;
 		} else {
 		  employeeRadio = this;
+		  if (employeeRadio.value == 'employee') {
+		      setEmployeeFocus();
+          }else {
+		      setEmployeeRangeFocus();
+          }
 		}
 	  };
 	}
+	// check when original form changes, clear employee controls and hide
+    $("form :input").change(function() {
+        var inputName = $(this)[0].name;
+        if (inputName != "radEmployee" && inputName != "cmbemployee" && inputName != "chkemployees[]") {
+            if (!$(".employeeContainer").prop('hidden')) {
+                DisableEmployees();
+            }
+        }
+    });
 });
 
 
@@ -1678,28 +1711,20 @@ $(document).ready(function () {
 					echo "$('#chkemployees option[value=".$val."]').attr('selected','');";
 				}
 			}
-			
 			?>
 
-
-
-			
-
 			$('.selectpicker').selectpicker('refresh');
-
+			EnableEmployees();
 		});
-
-
-
-
-
 
 	};
 
 
 			<?php if ($_SESSION["radEmployee"] != ""){
-				echo "getEmployeesAjax();";	
-		} ?>
+				echo "getEmployeesAjax();";
+		}else {
+			    echo 'DisableEmployees();';
+            } ?>
 
 
 </script>

@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e0c04f46-1563-4a59-843a-fcaeedd626f2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/library.php" beforeDir="false" afterPath="$PROJECT_DIR$/library/library.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/report_exceptions.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/report_exceptions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/innermenu.php" beforeDir="false" afterPath="$PROJECT_DIR$/innermenu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/report_productmix.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/report_productmix.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,26 +15,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="report_exceptions.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/report_exceptions.php">
+      <file leaf-file-name="report_productmix.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/report_productmix.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
+            <state relative-caret-position="373">
+              <caret line="999" column="70" lean-forward="true" selection-start-line="999" selection-start-column="70" selection-end-line="999" selection-end-column="70" />
               <folding>
-                <element signature="n#script#3;n#!!top" />
+                <element signature="n#script#4;n#!!top" />
+                <element signature="n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+                <element signature="n#select#0;n#div#1;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+                <element signature="n#select#0;n#div#3;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+                <element signature="n#select#0;n#div#1;n#div#5;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+                <element signature="n#style#0;n#div#6;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#span#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#td#0;n#tr#0;n#table#0;n#div#1;n#!!top" />
+                <element signature="n#table#2;n#div#1;n#!!top" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#table#3;n#div#1;n#!!top" />
+                <element signature="n#table#4;n#div#1;n#!!top" />
+                <element signature="n#table#0;n#div#0;n#div#1;n#!!top" />
+                <element signature="e#82698#84836#0#HTML" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="library.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/library/library.php">
+      <file leaf-file-name="report_serversales.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/report_serversales.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="1018" column="37" selection-start-line="1018" selection-start-column="37" selection-end-line="1018" selection-end-column="37" />
-              <folding>
-                <element signature="e#41140#41865#0#PHP" />
-              </folding>
+            <state relative-caret-position="446">
+              <caret line="183" column="51" lean-forward="true" selection-start-line="183" selection-start-column="51" selection-end-line="183" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="innermenu.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/innermenu.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="171" column="23" selection-start-line="171" selection-start-column="23" selection-end-line="171" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -50,11 +70,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>#006600</find>
-      <find>#ff7961</find>
-      <find>#bef67a</find>
-      <find>timefrom</find>
-      <find>cmborder</find>
       <find>exportbutton</find>
       <find>Brea</find>
       <find>&quot;</find>
@@ -80,6 +95,11 @@
       <find>Totals</find>
       <find>Total&lt;</find>
       <find>getexception</find>
+      <find>SetSpecificDateRange</find>
+      <find>setEm</find>
+      <find>chkem</find>
+      <find>select</find>
+      <find>table</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -117,18 +137,18 @@
         <option value="$PROJECT_DIR$/pages/report_growthcomparison.php" />
         <option value="$PROJECT_DIR$/pages/report_comps.php" />
         <option value="$PROJECT_DIR$/pages/report_voids.php" />
-        <option value="$PROJECT_DIR$/pages/report_productmix.php" />
         <option value="$PROJECT_DIR$/pages/report_payments.php" />
         <option value="$PROJECT_DIR$/pages/report_hourlysalesandlabour.php" />
         <option value="$PROJECT_DIR$/pages/report_revenuecentersales.php" />
         <option value="$PROJECT_DIR$/pages/report_serversales.php" />
         <option value="$PROJECT_DIR$/pages/report_speedofservice.php" />
-        <option value="$PROJECT_DIR$/innermenu.php" />
         <option value="$PROJECT_DIR$/pages/setStore.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/pages/form_exceptions.php" />
         <option value="$PROJECT_DIR$/pages/report_exceptions.php" />
         <option value="$PROJECT_DIR$/library/library.php" />
+        <option value="$PROJECT_DIR$/innermenu.php" />
+        <option value="$PROJECT_DIR$/pages/report_productmix.php" />
       </list>
     </option>
   </component>
@@ -167,7 +187,7 @@
             <path>
               <item name="inTouchLink" type="b2602c69:ProjectViewProjectNode" />
               <item name="inTouchLink" type="462c0819:PsiDirectoryNode" />
-              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -242,17 +262,18 @@
       <workItem from="1535974878622" duration="8664000" />
       <workItem from="1536153738118" duration="194000" />
       <workItem from="1536209802697" duration="6843000" />
+      <workItem from="1537250805689" duration="7790000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250973000" />
+    <option name="totallyTimeSpent" value="258763000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.21243942" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.21567044" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32905984" />
@@ -540,13 +561,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/report_productmix.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14520">
-          <caret line="968" column="39" selection-start-line="968" selection-start-column="34" selection-end-line="968" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/report_payments.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6450">
@@ -558,13 +572,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6765">
           <caret line="451" column="68" selection-start-line="451" selection-start-column="68" selection-end-line="451" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/report_serversales.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8310">
-          <caret line="554" column="76" selection-start-line="554" selection-start-column="76" selection-end-line="554" selection-end-column="76" />
         </state>
       </provider>
     </entry>
@@ -589,13 +596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/innermenu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5430">
-          <caret line="362" column="79" selection-start-line="362" selection-start-column="79" selection-end-line="362" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/setStore.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -617,22 +617,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/report_exceptions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
-          <folding>
-            <element signature="n#script#3;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/library/library.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="463">
-          <caret line="1018" column="37" selection-start-line="1018" selection-start-column="37" selection-end-line="1018" selection-end-column="37" />
+          <caret line="1018" column="5" selection-start-line="1018" selection-start-column="5" selection-end-line="1018" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/report_exceptions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/innermenu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="171" column="23" selection-start-line="171" selection-start-column="23" selection-end-line="171" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/report_serversales.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="183" column="51" lean-forward="true" selection-start-line="183" selection-start-column="51" selection-end-line="183" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/report_productmix.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="999" column="70" lean-forward="true" selection-start-line="999" selection-start-column="70" selection-end-line="999" selection-end-column="70" />
           <folding>
-            <element signature="e#41140#41865#0#PHP" />
+            <element signature="n#script#4;n#!!top" />
+            <element signature="n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+            <element signature="n#select#0;n#div#1;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+            <element signature="n#select#0;n#div#3;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+            <element signature="n#select#0;n#div#1;n#div#5;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+            <element signature="n#style#0;n#div#6;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#span#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#td#0;n#tr#0;n#table#0;n#div#1;n#!!top" />
+            <element signature="n#table#2;n#div#1;n#!!top" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#table#3;n#div#1;n#!!top" />
+            <element signature="n#table#4;n#div#1;n#!!top" />
+            <element signature="n#table#0;n#div#0;n#div#1;n#!!top" />
+            <element signature="e#82698#84836#0#HTML" />
           </folding>
         </state>
       </provider>
