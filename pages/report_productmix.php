@@ -91,7 +91,7 @@
                 </div>
             </div>
             <form id="frmparameters" name="frmparameters" method="post" action="index.php?p=report_productmix&a=s"
-                  onSubmit="if(CheckDateRange(this) && CheckTimeRanges()) {return true;} else {return false;}">
+                  onSubmit="if(CheckEmployeesSelected() && CheckTimeRanges()) {return true;} else {return false;}">
                 <div class="row">
                     <div class="col-sm-4">
                         <label for="cmbstore">Store</label>
@@ -640,54 +640,50 @@
                 </div>
 
 				<div class="row" style="margin-top: 5px;">
-                <input name="btnShowEmployees" type="button" class="btn btn-default" value="Get Employees"
-                       style="color: white; background-color: #007CC4" onclick="getEmployeesAjax();"/>
+                    <div class="col-12">
+                        <input name="btnShowEmployees" type="button" class="btn btn-default" value="Get Employees"
+                               style="color: white; background-color: #007CC4" onclick="getEmployeesAjax();"/>
+                    </div>
 				</div>
 
 				<span class='NormalRed' id="getEmployeeResultText"></span>
-				
-                <div class="row" style="margin-top: 5px;">
-                    <div class="col-sm-4"><label for="cmbemployee">Employee</label></div>
-                    <div class="col-sm-8">
 
-                        <div class="input-group">
+                <div class="employeesSection">
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-sm-4"><label for="cmbemployee">Employee</label></div>
+                        <div class="col-sm-8">
+
+                            <div class="input-group">
                             <span class="input-group-addon">
                                 <input name="radEmployee" type="radio" value="employee" id="radEmployeeSelect"
-								<?php if ($radEmployee == "employee") {
-                                    echo "checked='checked'";
-                                } ?>
-								>
+                                    <?php if ($radEmployee == "employee") {
+                                        echo "checked='checked'";
+                                    } ?>
+                                >
                             </span>
 
-                            <select name="cmbemployee" class="form-control" id="cmbemployee">
-                            </select>
+                                <select name="cmbemployee" class="form-control" id="cmbemployee">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-sm-4"><label for="selectpicker">Employee Range</label></div>
+                        <div class="col-sm-8">
+                            <div class="employeesMulti">
+                            <span class="radio-addon">
+                                <input name="radEmployee" type="radio" value="employees" class="empRadBtns" id="radEmployeesSelect"
+                                    <?php if ($radEmployee == "employees") {
+                                        echo "checked='checked'";
+                                    } ?>
+                                >
+                            </span>
+                                <select name="chkemployees[]" id="chkemployees" class="selectpicker form-group dropdown" data-width="100%" multiple data-actions-box="true">
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 5px;">
-                    <div class="col-sm-4"><label for="selectpicker">Employee Range</label></div>
-                    <div class="col-sm-8">
-
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <input name="radEmployee" type="radio" value="employees" id="radEmployeesSelect"
-								<?php if ($radEmployee == "employees") {
-                                    echo "checked='checked'";
-                                } ?>
-								>
-                            </span>
-							<div class="form-group">
-								<select name="chkemployees[]" id="chkemployees" class="selectpicker form-group dropdown" data-width="100%" multiple data-actions-box="true">
-								</select>
-							</div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
 
                 <input name="Submit" type="submit" class="btn btn-default" value="Submit"
                        style="color: white; background-color: #007CC4"/>
@@ -697,7 +693,7 @@
 </div>
 
 
-<div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
     <?php
     // -------------- See if any data is in Summary Table -----------------------
     if ($a == 's') {
@@ -725,13 +721,13 @@
             $worksheet =& $workbook->addworksheet('Report');
 
             // Set Columns widths
-			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-				$worksheet->set_column('A:A', 0.10);
-				$worksheet->set_column('B:B', 36.14);
-			}
-			else{
-				$worksheet->set_column('A:B', 0.10);
-			}
+            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                $worksheet->set_column('A:A', 0.10);
+                $worksheet->set_column('B:B', 36.14);
+            }
+            else{
+                $worksheet->set_column('A:B', 0.10);
+            }
 
             $worksheet->set_column('C:C', 12); // First usuable column
             $worksheet->set_column('D:D', 36.14);
@@ -815,7 +811,7 @@
                 //echo "here";
                 $sumid = ReturnDayOfWeekSUMIDs($sumid);
             }
-            
+
             //$row = mysql_fetch_array($result);
             ?>
 
@@ -829,7 +825,7 @@
                     echo GetStoreGroupName($grpid) . $_SESSION["storegroupscount"];
                     $excelreport_title = GetStoreName($_SESSION["store"]).$_SESSION["storegroupscount"]; // EXCEL
                 }
-				
+
 
                 ?>
             </h3>
@@ -845,26 +841,26 @@
                     $excelreport_title = $excelreport_title." for date ".$_SESSION["datefromday"]."/".$_SESSION["datefrommonth"]."/".$_SESSION["datefromyear"]." to ".$_SESSION["datetoday"]."/".$_SESSION["datetomonth"]."/".$_SESSION["datetoyear"]; // EXCEL
                 }
                 ?>
-            <?php
-            // ************************************
-            // EXCEL - Set up report title
-            // *
-            // Report Title
-            $title = "Product Mix Report for ";
-            $headings = array($title, '');
-            $worksheet->write_row('D6', $headings, $heading);
-            // Report Specs
-            $$excelreport_title = $excelreport_title;
-            if($_SESSION["dayofweek"] != "All Days") {
-                echo " (".$_SESSION["dayofweek"]."s only)";
-                $excelreport_title = $excelreport_title." (".$_SESSION["dayofweek"]."s only)";
-            }
-            $headings = array($excelreport_title, '');
-            $worksheet->write_row('D7', $headings, $heading);
-            $num1_format =& $workbook->addformat(array(num_format => '0.00',size  => 11));  //Basic number format
-            $rownumber = 8;
-            // ************************************
-            ?>
+                <?php
+                // ************************************
+                // EXCEL - Set up report title
+                // *
+                // Report Title
+                $title = "Product Mix Report for ";
+                $headings = array($title, '');
+                $worksheet->write_row('D6', $headings, $heading);
+                // Report Specs
+                $$excelreport_title = $excelreport_title;
+                if($_SESSION["dayofweek"] != "All Days") {
+                    echo " (".$_SESSION["dayofweek"]."s only)";
+                    $excelreport_title = $excelreport_title." (".$_SESSION["dayofweek"]."s only)";
+                }
+                $headings = array($excelreport_title, '');
+                $worksheet->write_row('D7', $headings, $heading);
+                $num1_format =& $workbook->addformat(array(num_format => '0.00',size  => 11));  //Basic number format
+                $rownumber = 8;
+                // ************************************
+                ?>
             </h5>
 
             <?php
@@ -873,20 +869,20 @@
             if($_SESSION["orderby"] == null) {
                 $_SESSION["orderby"] = "ibritemname";
             }
-			
-			$result = "";
 
-        
+            $result = "";
 
 
 
-			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-				$result = GetProductMixPerEmployee($sumid,$_SESSION["orderby"], $_SESSION["employeeid"]) ;
-			}
-			else{
-				$result = GetProductMix($sumid,$_SESSION["orderby"]) ;
-			}
-            
+
+
+            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                $result = GetProductMixPerEmployee($sumid,$_SESSION["orderby"], $_SESSION["employeeid"]) ;
+            }
+            else{
+                $result = GetProductMix($sumid,$_SESSION["orderby"]) ;
+            }
+
             ?>
             <br />
             <?php
@@ -897,8 +893,8 @@
             $itemsoldtotal = 0;
             $itempricesoldtotal = 0;
             $itemamountotal = 0;
-			$GPPercentagetotal = 0;
-			$CostPercentagetotal = 0;
+            $GPPercentagetotal = 0;
+            $CostPercentagetotal = 0;
 
             while($row = mysql_fetch_array($result)) {
                 if($catname == "") { // FIRST HEADER
@@ -908,17 +904,17 @@
                     ?>
                     <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
                         <tr>
-							<?php
-								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-									echo '<td colspan="1" style="background-color: #487CC4; color: white">';
-									echo ucfirst("Employee Name");
-									echo "</td>";
-								}
-							?>
+                            <?php
+                            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                echo '<td colspan="1" style="background-color: #487CC4; color: white">';
+                                echo ucfirst("Employee Name");
+                                echo "</td>";
+                            }
+                            ?>
 
                             <td colspan="8" style="background-color: #487CC4; color: white">
                                 <?php
-								
+
                                 echo ucfirst($row["ibrcategoryname"]);
 
                                 // EXCEL
@@ -927,11 +923,11 @@
                                 // Write Table Headers for GROUP
                                 $rownumber++;
                                 $rownumber++;
-								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-									$title = ucfirst("Employee Name");
-									$headings = array($title, '');
-									$worksheet->write_row('B'.$rownumber, $headings, $heading2);
-								}
+                                if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                    $title = ucfirst("Employee Name");
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('B'.$rownumber, $headings, $heading2);
+                                }
 
                                 $title = ucfirst($row["ibrcategoryname"]);
                                 $headings = array($title, '');
@@ -974,15 +970,15 @@
                                 ?></td>
                         </tr>
                         <tr>
-							<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="300" bgcolor="#F2F2F2"></td>'; } ?>
-                            <td width="107" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
-                            <td width="463" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
-                            <td width="98" bgcolor="#F2F2F2"><div align="right" class="style5"># Sold </div></td>
-                            <td width="118" bgcolor="#F2F2F2"><span class="style5">Cost Price </span></td>
-                            <td width="118" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
-                            <td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
-							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
-							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
+                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                            <td width="12%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
+                            <td width="17%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5"># Sold </div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Cost Price </span></div></td>
+                            <td width="10%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
+                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
                         </tr>
                     </table>
                     <?php
@@ -997,15 +993,15 @@
                     ?>
                     <table class="table table-striped table-condensed">
                         <tr>
-                            <td width="108" bgcolor="#F2F2F2" class="style6">&nbsp;</td>
-                            <td width="463" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
-                            <td width="99" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?></strong></div></td>
-                            <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
-                            <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
-                            <td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal;?></strong></div></td>
-
-							<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
-							<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
+                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                            <td width="12%" bgcolor="#F2F2F2" class="style6">&nbsp;</td>
+                            <td width="17%" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?></strong></div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
+                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
+                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal;?></strong></div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
 
 
                             <?php
@@ -1044,13 +1040,13 @@
 
                     <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
                         <tr>
-							<?php
-								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-									echo '<td colspan="1" style="background-color: #487CC4; color: white">';
-									echo ucfirst("Employee Name");
-									echo "</td>";
-								}
-							?>
+                            <?php
+                            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                echo '<td colspan="1" style="background-color: #487CC4; color: white">';
+                                echo ucfirst("Employee Name");
+                                echo "</td>";
+                            }
+                            ?>
 
                             <td colspan="8" style="background-color: #487CC4; color: white">
                                 <?php
@@ -1060,11 +1056,11 @@
                                 // Write Table Headers for GROUP
                                 $rownumber++;
                                 $rownumber++;
-								if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-									$title = ucfirst("Employee Name");
-									$headings = array($title, '');
-									$worksheet->write_row('B'.$rownumber, $headings, $heading2);									
-								}
+                                if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                    $title = ucfirst("Employee Name");
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('B'.$rownumber, $headings, $heading2);
+                                }
 
                                 $title = ucfirst($row["ibrcategoryname"]);
                                 $headings = array($title, '');
@@ -1109,15 +1105,15 @@
                                 ?></td>
                         </tr>
                         <tr>
-							<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="300" bgcolor="#F2F2F2"></td>'; } ?>
-                            <td width="107" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
-                            <td width="463" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
-                            <td width="98" bgcolor="#F2F2F2""><div align="right" class="style5"># Sold </div></td>
-                            <td width="118" bgcolor="#F2F2F2"><span class="style5">Cost Price </span></td>
-                            <td width="118" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
-                            <td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
-							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
-							<td width="129" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
+                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                            <td width="12%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
+                            <td width="17%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
+                            <td width="8%" bgcolor="#F2F2F2""><div align="right" class="style5"># Sold </div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><span class="style5">Cost Price </span></td>
+                            <td width="10%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
+                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
+                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
                         </tr>
                     </table>
                     <?php
@@ -1127,36 +1123,34 @@
                     $itemcosttotal = 0;
                     $itempricesoldtotal = 0;
                     $itemamountotal = 0;
-					//$GPPercentagetotal = 0;
-					//$CostPercentagetotal = 0;
+                    //$GPPercentagetotal = 0;
+                    //$CostPercentagetotal = 0;
                 }
                 ?>
 
-                <table height="22" border="0" align="center" cellpadding="2" cellspacing="0">
-
+                <table style="width: 100%" border="0" align="center" cellspacing="0">
                     <tr>
-						<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="300" height="22" class="NormalText"><div align="left">'.$row["eibemployeename"].'</div>';} ?>
-                        <td width="102" height="22" class="NormalText"><div align="left"><?php echo $row["ibritenplu"];?></div>
+                        <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" height="22" class="NormalText"><div align="left">'.$row["eibemployeename"].'</div>';} ?>
+                        <td width="12%" height="22" class="NormalText"><div align="left"><?php echo $row["ibritenplu"];?></div>
                             <div align="left"></div></td>
-                        <td width="467" class="NormalText"><div align="left"><?php echo $row["ibritemname"];?></div></td>
-                        <td width="99" class="NormalText"><div align="right"><?php echo $row["ibrnumsold"];?></div></td>
-                        <td width="128" class="NormalText"><div align="right"><?php echo number_format($row["ibritemcost"],"2",".",""); ?></div></td>
-                        <td width="119" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"] / $row["ibrnumsold"],"2",".",""); ?></div></td>
-                        <td width="128" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"],"2",".",""); ?></div></td>
-
-						<td width="128" class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]),"2",".",""); ?></div></td>
-						<td width="128" class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"]/$row["ibramount"]),"2",".",""); ?></div></td>
+                        <td width="17%" class="NormalText"><div align="left"><?php echo $row["ibritemname"];?></div></td>
+                        <td width="8%" class="NormalText"><div align="right"><?php echo $row["ibrnumsold"];?></div></td>
+                        <td width="8%" class="NormalText"><div align="right"><?php echo number_format($row["ibritemcost"],"2",".",""); ?></div></td>
+                        <td width="10%" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"] / $row["ibrnumsold"],"2",".",""); ?></div></td>
+                        <td width="10%" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"],"2",".",""); ?></div></td>
+                        <td width="8%" class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]),"2",".",""); ?></div></td>
+                        <td width="8%" class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"]/$row["ibramount"]),"2",".",""); ?></div></td>
                         <?php
                         // ************************************************
                         // Excel
 
                         $rownumber++;
 
-						if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-							$title = $row["eibemployeename"];
-							$headings = array($title, '');
-							$worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);							
-						}
+                        if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                            $title = $row["eibemployeename"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);
+                        }
 
                         $title = $row["ibritenplu"];
                         $headings = array($title, '');
@@ -1201,21 +1195,22 @@
                 $itemcosttotal =  $itemcosttotal + $row["ibritemcost"];
                 $itempricesoldtotal = $itempricesoldtotal + ($row["ibramount"] / $row["ibrnumsold"]);
                 $itemamountotal = $itemamountotal + $row["ibramount"];
-				$GPPercentagetotal = $GPPercentagetotal + (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
-				$CostPercentagetotal = $CostPercentagetotal + ($row["ibritemcost"]/$row["ibramount"]);
+                $GPPercentagetotal = $GPPercentagetotal + (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                $CostPercentagetotal = $CostPercentagetotal + ($row["ibritemcost"]/$row["ibramount"]);
 
             } ?>
 
             <table class="table table-striped table-condensed">
                 <tr>
-                    <td width="108" bgcolor="#F2F2F2" class="style6 bold">&nbsp;</td>
-                    <td width="463" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
-                    <td width="99" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal;?></strong></div></td>
-                    <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
-                    <td width="118" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
-                    <td width="127" bgcolor="#F2F2F2" ><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal; ?></strong></div></td>
-					<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
-					<td width="127" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
+                    <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                    <td width="12%" bgcolor="#F2F2F2" class="style6 bold">&nbsp;</td>
+                    <td width="17%" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
+                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal;?></strong></div></td>
+                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
+                    <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
+                    <td width="10%" bgcolor="#F2F2F2" ><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal; ?></strong></div></td>
+                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
+                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
                 </tr>
                 <?php
                 // *** EXCEL ********************************
@@ -1252,23 +1247,23 @@
             </table>
             <div align="center">
             <?php
-			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-				$resulttemp = GetProductMixSummaryTotalPerEmployee($sumid, $_SESSION["employeeid"]) ;
-			}
-			else{
-				$resulttemp = GetProductMixSummaryTotal($sumid);
-			}
+            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                $resulttemp = GetProductMixSummaryTotalPerEmployee($sumid, $_SESSION["employeeid"]) ;
+            }
+            else{
+                $resulttemp = GetProductMixSummaryTotal($sumid);
+            }
 
-            
+
             $row = mysql_fetch_array($resulttemp);
             $grandtotal = $row["ibramount"];
 
-			if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-				$result = GetProductMixSummaryPerEmployee($sumid, $_SESSION["employeeid"]) ;
-			}
-			else{
-				$result = GetProductMixSummary($sumid);
-			}
+            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                $result = GetProductMixSummaryPerEmployee($sumid, $_SESSION["employeeid"]) ;
+            }
+            else{
+                $result = GetProductMixSummary($sumid);
+            }
             if(mysql_num_rows($result) > 0) { // only display if there is data
 
 // ************************************************
@@ -1282,11 +1277,11 @@
                 $worksheet->write_row('D'.$rownumber, $headings, $heading);
                 $rownumber++;
 
-				if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-					$title = "Employee Name";
-					$headings = array($title, '');
-					$worksheet->write_row('B'.$rownumber, $headings, $LeftNormalTotalBold);
-				}
+                if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                    $title = "Employee Name";
+                    $headings = array($title, '');
+                    $worksheet->write_row('B'.$rownumber, $headings, $LeftNormalTotalBold);
+                }
 
                 $title = "Name";
                 $headings = array($title, '');
@@ -1321,33 +1316,30 @@
                 <h4 style="color:#757575" class="text-center"> Summary</h4>
                 <table width="74%" border="0" align="center" class="table table-condensed">
                     <tr>
-						<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="13%" bgcolor="#487CC4"><div align="left" class="style1">Employee Name</div></td>'; } ?>
-                        <td width="21%" bgcolor="#487CC4"><div align="left" class="style1">Name</div></td>
-                        <td width="19%" bgcolor="#487CC4"><div align="right" class="style1"># Sold</div></td>
-						<td width="19%" bgcolor="#487CC4"><div align="right" class="style1">Cost Price</div></td>
-                        <td width="18%" bgcolor="#487CC4"><div align="right" class="style1">Amount</div></td>
-						<td width="18%" bgcolor="#487CC4"><div align="right" class="style1">GP%</div></td>
-						<td width="18%" bgcolor="#487CC4"><div align="right" class="style1">Cost%</div></td>
-                        <td width="20%" bgcolor="#487CC4"><div align="right" class="style1">% Sales</div></td>
+                        <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#487CC4"><div align="left" class="style1">Employee Name</div></td>'; } ?>
+                        <td width="17%" bgcolor="#487CC4"><div align="left" class="style1">Name</div></td>
+                        <td width="12%" bgcolor="#487CC4"><div align="right" class="style1"># Sold</div></td>
+                        <td width="10%" bgcolor="#487CC4"><div align="right" class="style1">Cost Price</div></td>
+                        <td width="12%" bgcolor="#487CC4"><div align="right" class="style1">Amount</div></td>
+                        <td width="10%" bgcolor="#487CC4"><div align="right" class="style1">GP%</div></td>
+                        <td width="10%" bgcolor="#487CC4"><div align="right" class="style1">Cost%</div></td>
+                        <td width="10%" bgcolor="#487CC4"><div align="right" class="style1">% Sales</div></td>
                     </tr>
                     <?php
                     $soldtotal = 0;
                     $amounttotal = 0;
                     $salestotal = 0;
-					$costitemtotal = 0;
+                    $costitemtotal = 0;
                     while($row = mysql_fetch_array($result)) { ?>
                         <tr>
-							<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td class="NormalText"><strong>'.$row["eibemployeename"].'</strong></td>'; } ?>
-                            <td class="NormalText"><strong><?php echo ucfirst($row["ibrcategoryname"]); ?></strong></td>
-                            <td class="NormalText"><div align="right"><?php echo $row["ibrnumsold"]; ?></div></td>
-							<td class="NormalText"><div align="right"><?php echo $row["ibritemcost"]; ?></div></td>
-							<td class="NormalText"><div align="right"><?php echo $row["ibramount"]; ?></div></td>
-
-							<td class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]) * 100, 2, '.', ''); ?></div></td>
-							<td class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"] / $row["ibramount"]) * 100, 2, '.', ''); ?></div></td>
-
-                            
-                            <td class="NormalText"><div align="right">
+                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" class="NormalText"><strong>'.$row["eibemployeename"].'</strong></td>'; } ?>
+                            <td width="17%" class="NormalText"><strong><?php echo ucfirst($row["ibrcategoryname"]); ?></strong></td>
+                            <td width="12%" class="NormalText"><div align="right"><?php echo $row["ibrnumsold"]; ?></div></td>
+                            <td width="10%" class="NormalText"><div align="right"><?php echo $row["ibritemcost"]; ?></div></td>
+                            <td width="12%" class="NormalText"><div align="right"><?php echo $row["ibramount"]; ?></div></td>
+                            <td width="10%" class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]) * 100, 2, '.', ''); ?></div></td>
+                            <td width="10%" class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"] / $row["ibramount"]) * 100, 2, '.', ''); ?></div></td>
+                            <td width="10%" class="NormalText"><div align="right">
                                     <?php
                                     echo number_format(($row["ibramount"] / $grandtotal) * 100, 2, '.', '') ; $salestotal = $salestotal + $perctotal;
 
@@ -1358,15 +1350,15 @@
                         <?php
                         $soldtotal = $soldtotal + $row["ibrnumsold"];
                         $amounttotal = $amounttotal + $row["ibramount"];
-						$costitemtotal = $costitemtotal + $row["ibritemcost"];
+                        $costitemtotal = $costitemtotal + $row["ibritemcost"];
 
 // EXCEL *************************************
                         $rownumber ++;
-						if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-							$title = ucfirst($row["eibemployeename"]);
-							$headings = array($title, '');
-							$worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);
-						}
+                        if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                            $title = ucfirst($row["eibemployeename"]);
+                            $headings = array($title, '');
+                            $worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);
+                        }
 
                         $title = ucfirst($row["ibrcategoryname"]);
                         $headings = array($title, '');
@@ -1430,14 +1422,14 @@
 
                     ?>
                     <tr>
-                        <td class="NormalText bold"><div align="right"><strong>Total</strong></div></td>
-						<?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td class="NormalText bold"><div align="right"><strong></strong></div></td>'; } ?>
-                        <td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($soldtotal, 2, '.', '');?></strong></div></td>
-						<td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($costitemtotal, 2, '.', '');?></strong></div></td>
-                        <td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($amounttotal, 2, '.', '');?></strong></div></td>
-						<td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format((($amounttotal - $costitemtotal) / $amounttotal), 2, '.', '');?></strong></div></td>
-						<td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format(($costitemtotal / $amounttotal), 2, '.', '');?></strong></div></td>
-                        <td bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong>100.00</strong></div></td>
+                        <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2" class="NormalText bold"><div align="right"><strong></strong></div></td>'; } ?>
+                        <td width="17%" bgcolor="#F2F2F2" class="NormalText bold"><div align="right"><strong>Total</strong></div></td>
+                        <td width="12%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($soldtotal, 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($costitemtotal, 2, '.', '');?></strong></div></td>
+                        <td width="12%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($amounttotal, 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format((($amounttotal - $costitemtotal) / $amounttotal), 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format(($costitemtotal / $amounttotal), 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong>100.00</strong></div></td>
                     </tr>
                 </table>
                 <br />
@@ -1522,7 +1514,7 @@
 
         $("#chkemployees").prop('disabled', true);
         $("#cmbemployee").prop('disabled', true);
-        $("#chkemployees").parent().parent().parent().parent().addClass('disabled');
+        $("#chkemployees").parent().addClass('disabled');
         $("#cmbemployee").parent().addClass('disabled');
     }
 
@@ -1536,7 +1528,7 @@
     function SetEmployeeFocus() {
         $("#chkemployees").prop('disabled', true);
         $("#cmbemployee").prop('disabled', false);
-        $("#chkemployees").parent().parent().parent().addClass('disabled');
+        $("#chkemployees").parent().addClass('disabled');
         $("#cmbemployee").parent().removeClass('disabled');
     }
 
@@ -1544,7 +1536,10 @@
         $("#cmbemployee").prop('disabled', true);
         $("#chkemployees").prop('disabled', false);
         $("#cmbemployee").parent().addClass('disabled');
-        $("#chkemployees").parent().parent().parent().removeClass('disabled');
+        $("#chkemployees").parent().removeClass('disabled');
+        $('.dropdown-toggle').removeClass('disabled');
+        $('.dropdown-toggle').parent().parent().removeClass('disabled');
+        $('.dropdown-toggle').prop('disabled', false);
     }
 
 <?php 
@@ -1569,48 +1564,6 @@ if($radStores == Null) {
        echo "SetStoreFocus(); document.frmparameters.radStores[0].checked = true;";
 }
 ?>
-
-function CheckDateRange(somevar) {
-
-	 var result = true;
-
-
-// CHECK DATE RANGE
-if(document.frmparameters.radDate[1].checked == true) {
-	if (document.frmparameters.datefromyear.value > document.frmparameters.datetoyear.value) { //1. FromYear cannot be bigger than ToYear
-	  result = false;
-	}
-	
-    if (document.frmparameters.datefromyear.value == document.frmparameters.datetoyear.value && document.frmparameters.datefrommonth.value > document.frmparameters.datetomonth.value) { //2. FromMonth cannot be bigger than ToMonth if FromYear = ToYear
-		  result = false;
-	}
-	
-    if (document.frmparameters.datefromyear.value == document.frmparameters.datetoyear.value && document.frmparameters.datefrommonth.value == document.frmparameters.datetomonth.value && document.frmparameters.datefromday.value >= document.frmparameters.datetoday.value) {//3. FromDay cannot be bigger than ToDay when FromMonth = ToMonth and FromYear = ToYear.
-         result = false;
-	}		   
-
- // CHECK FROM DATE COMPARED TO LAST DATA DATE
- 
- 	if (document.frmparameters.datefromyear.value > document.frmparameters.hiddenyesteryear.value) { 
-	  result = false;
-	}
-	
-    if (document.frmparameters.datefromyear.value == document.frmparameters.hiddenyesteryear.value && document.frmparameters.datefrommonth.value > document.frmparameters.hiddenyestermonth.value) {
-		  result = false;
-	}
-	
-    if (document.frmparameters.datefromyear.value == document.frmparameters.hiddenyesteryear.value && document.frmparameters.datefrommonth.value == document.frmparameters.hiddenyestermonth.value && document.frmparameters.datefromday.value > document.frmparameters.hiddenyesterday.value) {
-         result = false;
-	}
- 
-	 if(result == false) {
-	    alert('Please ensure that your From Date is before your To Date and that your From date is not later than yesterday');
-	 } 
-
-}
-	 return result;
- 
- }
  
 function CheckTimeRanges() {
 
@@ -1621,8 +1574,19 @@ var result = true;
 	    result = false;
 	}
 return result;
-} 
-
+}
+function CheckEmployeesSelected() {
+        if ($('[name="radEmployee"]:checked').val() == 'employees') {
+            if(!$('#chkemployees').val()[0]) {
+                alert('Please select one or more employees');
+                return false;
+            }else {
+                return true;
+            }
+        }else {
+            return true;
+        }
+    }
 
 
 

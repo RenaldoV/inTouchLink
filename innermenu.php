@@ -179,6 +179,52 @@
         cursor: no-drop;
     }
     .input-group-addon {
+        z-index: 20;
+        border: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background-color: rgba(234,234,234,0.61);
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+    .radio-addon {
+        z-index: 40;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: 37px;
+        float: left;
+        height: 100%;
+        background-color: inherit;
+        position: absolute;
+    }
+    .radio-addon.disabled {
+        background-color: #d6d6d6;!important;
+    }
+    .radio-addon input.empRadBtns {
+        margin-top: 17px;
+        margin-left: 12px;
+    }
+    .employeesMulti {
+        border-radius: 5px;
+        background-color: rgba(234,234,234,0.61);
+        height: 50px;
+        width: 100%;
+        position: relative;
+    }
+    .employeesMulti.disabled {
+        background-color: #d6d6d6;!important;
+    }
+    .employeesMulti > div.btn-group.bootstrap-select {
+        padding-left: 37px;
+        border-radius: 5px;
+    }
+    .employeesMulti > div.btn-group.bootstrap-select.disabled {
+        background-color: #d6d6d6;!important;
+    }
+    .btn.dropdown-toggle.disabled {
+        background-color: #d6d6d6;!important;
+    }
+    .input-group-addon {
         border: none;
         -webkit-box-shadow: none;
         box-shadow: none;
