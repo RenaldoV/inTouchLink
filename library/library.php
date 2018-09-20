@@ -776,12 +776,14 @@ return $result;
 
 
 function GetEmployeesItemSalesSpecificDate($date, $strid) {
+mysql_query('SET CHARACTER SET utf8');
 $SQL = "select eibemployeeid, eibemployeename from summary s, empitemsbreakdown emp where s.sumid = emp.sumid and s.strid in ($strid) and sumdate = '$date' group by emp.eibemployeeid,emp.eibemployeename";
 $result = db_execsql($SQL);
 return $result;
 }
 
 function GetEmployeesItemSalesDateRange($startDate, $endDate, $strid) {
+mysql_query('SET CHARACTER SET utf8');
 $SQL = "select eibemployeeid, eibemployeename from summary s, empitemsbreakdown emp where s.sumid = emp.sumid and s.strid in ($strid) and sumdate >= '$startDate' and sumdate <= '$endDate' group by emp.eibemployeeid,emp.eibemployeename";
 $result = db_execsql($SQL);
 return $result;
