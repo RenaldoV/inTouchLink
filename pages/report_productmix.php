@@ -177,6 +177,15 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top: 5px;">
+                    <div class="col-sm-4">
+                        <label for="daterange2">Date Range Comparison</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" name="daterange2" id="daterange2"
+                               value="<?php echo $_SESSION['daterange2'] ?>" placeholder="Date Range 2"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 5px;">
                     <div class="col-sm-4"><label for="time">Time Range</label></div>
                     <div class="col-sm-3" style="padding-right: 0px;">
                         <select name="timefrom" class="form-control" id="timefrom">
@@ -587,7 +596,7 @@
                         <label for="cmbdayofweek">Day of Week</label>
                     </div>
                     <div class="col-sm-4">
-                        <select name="cmbdayofweek" class="form-control" id="cmbdayofweek">
+                        <select name="cmbdayofweek" class="form-control selectpicker form-group dropdown" id="cmbdayofweek" data-width="100%" multiple data-actions-box="true">
                             <option <?php if ($_SESSION["dayofweek"] == "All Days") {
                                 echo "selected='selected'";
                             } ?> value="All Days">All Days
@@ -638,7 +647,6 @@
                         </select>
                     </div>
                 </div>
-
 				<div class="row" style="margin-top: 5px;">
                     <div class="col-12">
                         <input name="btnShowEmployees" type="button" class="btn btn-default" value="Get Employees"
@@ -652,7 +660,6 @@
                     <div class="row" style="margin-top: 5px;">
                         <div class="col-sm-4"><label for="cmbemployee">Employee</label></div>
                         <div class="col-sm-8">
-
                             <div class="input-group">
                             <span class="input-group-addon">
                                 <input name="radEmployee" type="radio" value="employee" id="radEmployeeSelect"
@@ -1481,15 +1488,19 @@
     function SetSpecificDateFocus() {
         $("#date").prop('disabled', false);
         $("#daterange").prop('disabled', true);
+        $("#daterange2").prop('disabled', true);
         $("#date").parent().removeClass('disabled');
         $("#daterange").parent().addClass('disabled');
+        $("#daterange2").parent().addClass('disabled');
     }
 
     function SetSpecificDateRangeFocus() {
         $("#date").prop('disabled', true);
         $("#daterange").prop('disabled', false);
+        $("#daterange2").prop('disabled', false);
         $("#date").parent().addClass('disabled');
         $("#daterange").parent().removeClass('disabled');
+        $("#daterange2").parent().removeClass('disabled');
     }
 
     function SetStoreFocus() {

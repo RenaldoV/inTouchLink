@@ -500,7 +500,7 @@ function openNewWindow(windowaddress,windowname) {
             }*/
         ?>
     </div>
-    <div style="width: 100%; height: 30px; bottom: 0px; background-color: #007BC4; position:fixed; color: white">
+    <div style="z-index: 100;width: 100%; height: 30px; bottom: 0px; background-color: #007BC4; position:fixed; color: white">
         <div class="row" style="padding-top:5px">
             <div class="col-sm-8 col-sm-offset-2 text-center">
                 <span> Tel: <b>+27 82 855 8024</b> </span><span> Email: <b>info@intouchlink.co.za</b> </span>
