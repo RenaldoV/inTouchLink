@@ -402,26 +402,51 @@ return $protocol."://".$_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI'];
 } function strleft($s1, $s2) { return substr($s1, 0, strpos($s1, $s2));
 }
 
-function ReturnDayOfWeekSUMIDs($sumID) {
-$SQL = "select sumid,sumdate from summary where sumid in (".$sumID.")";
+function ReturnDayOfWeekSUMIDs($sumID)
+{
+    $SQL = "select sumid,sumdate from summary where sumid in (" . $sumID . ")";
 // echo $SQL;
-$result = db_execsql($SQL);
+    $result = db_execsql($SQL);
 
-while($row = mysql_fetch_array($result)) {
+    while ($row = mysql_fetch_array($result)) {
 //	echo substr($row["sumdate"],8,2);
 //	echo substr($row["sumdate"],5,2);
 //	echo substr($row["sumdate"],0,4);
-$day = date("l", mktime(0, 0, 0, substr($row["sumdate"], 5, 2), substr($row["sumdate"], 8, 2), substr($row["sumdate"], 0, 4)));
+
+        $day = date("l", mktime(0, 0, 0, substr($row["sumdate"], 5, 2), substr($row["sumdate"], 8, 2), substr($row["sumdate"], 0, 4)));
 // 	echo $day;
-if($_SESSION["dayofweek"] != $day) { // Delete day
-$sumID = str_replace($row["sumid"], "", $sumID);
+        if ($_SESSION["dayofweek"] != $day) { // Delete day
+            $sumID = str_replace($row["sumid"], "", $sumID);
+        }
+    }
+    $sumID = str_replace(",''", "", $sumID);
+    $sumID = str_replace("'',", "", $sumID);
+    $sumID = str_replace(",", "", $sumID);
+    $sumID = str_replace("''", "','", $sumID);
+    return $sumID;
 }
-}
-$sumID = str_replace(",''", "", $sumID);
-$sumID = str_replace("'',", "", $sumID);
-$sumID = str_replace(",", "", $sumID);
-$sumID = str_replace("''", "','", $sumID);
-return $sumID;
+function ReturnDayOfWeekRangeSUMIDs($sumID)
+{
+    $SQL = "select sumid,sumdate from summary where sumid in (" . $sumID . ")";
+// echo $SQL;
+    $result = db_execsql($SQL);
+
+    while ($row = mysql_fetch_array($result)) {
+//	echo substr($row["sumdate"],8,2);
+//	echo substr($row["sumdate"],5,2);
+//	echo substr($row["sumdate"],0,4);
+
+        $day = date("l", mktime(0, 0, 0, substr($row["sumdate"], 5, 2), substr($row["sumdate"], 8, 2), substr($row["sumdate"], 0, 4)));
+// 	echo $day;
+        if (strpos($_SESSION["dayofweekrange"], $day) == false) { // Delete day
+            $sumID = str_replace($row["sumid"], "", $sumID);
+        }
+    }
+    $sumID = str_replace(",''", "", $sumID);
+    $sumID = str_replace("'',", "", $sumID);
+    $sumID = str_replace(",", "", $sumID);
+    $sumID = str_replace("''", "','", $sumID);
+    return $sumID;
 }
 
 function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message) {

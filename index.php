@@ -30,6 +30,7 @@ $timeto = str_replace(":","",$_REQUEST["timeto"]);
 $salestype = $_REQUEST["salestype"]; // GROSS or NETT
 $totaltype = $_REQUEST["totaltype"]; // FOR GROWTH COMPARISON FIGURE TYPE
 $dayofweek = $_REQUEST["cmbdayofweek"];
+$dayofweekrange = $_REQUEST["cmbdayofweekrange"];
 $strid = $_REQUEST["str"];
 
 
@@ -146,7 +147,6 @@ if ($_REQUEST["radEmployee"] == "employee"){
 	$_SESSION["employeeid"] = $_REQUEST["cmbemployee"];
 }
 else if ($_REQUEST["radEmployee"] == "employees"){
-	
 	$employeeList = $_REQUEST["chkemployees"];
 	$_SESSION["employeeid"] = "'".$employeeList[0]."'"; // Set the first ID.
 
@@ -154,6 +154,21 @@ else if ($_REQUEST["radEmployee"] == "employees"){
 		if ($employeeList[0] != $val)
 			$_SESSION["employeeid"] = $_SESSION["employeeid"] . ",'" . $val . "'";
 	}
+}
+if ($_REQUEST["cmbdayofweekrange"]) {
+    if (count($_REQUEST["cmbdayofweekrange"]) == 7) {
+        echo "<script> console.log('all days selected')</script>";
+        $_SESSION["dayofweekrange"] = "All Days";
+    }else {
+        $daylist = $_REQUEST["cmbdayofweekrange"];
+        $_SESSION["dayofweekrange"] = "'".$daylist[0]."'"; // Set the first ID.
+        while (list ($key, $val) = @each($daylist)) {
+            if ($daylist[0] != $val)
+                $_SESSION["dayofweekrange"] = $_SESSION["dayofweekrange"] . ",'" . $val . "'";
+        }
+    }
+}else if ($_REQUEST["cmbdayofweekrange"] == null) {
+    $_SESSION["dayofweekrange"] = "All Days";
 }
 
 // Update Data Exception Report Pref

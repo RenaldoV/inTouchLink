@@ -60,6 +60,16 @@
         }, function (start, end, label) {
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
+        $('input[name="daterange2"]').daterangepicker({
+            opens: 'right',
+            "maxDate": yesterday,
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        }, function (start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
 
         $('input[name="date"]').daterangepicker({
             opens: 'right',
@@ -76,6 +86,17 @@
 
         $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
             $(this).val('');
+        });
+        $('input[name="daterange2"]').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            $("#btnShowEmployees").prop('disabled', true);
+            DisableAllEmployeeSelections();
+            HideEmployees();
+        });
+
+        $('input[name="daterange2"]').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+            $("#btnShowEmployees").prop('disabled', false);
         });
     });
 </script>
@@ -593,39 +614,35 @@
                 </div>
                 <div class="row" style="margin-top: 5px;">
                     <div class="col-sm-2" style="padding-right: 0px;">
-                        <label for="cmbdayofweek">Day of Week</label>
+                        <label for="cmbdayofweekrange">Day of Week</label>
                     </div>
                     <div class="col-sm-4">
-                        <select name="cmbdayofweek" class="form-control selectpicker form-group dropdown" id="cmbdayofweek" data-width="100%" multiple data-actions-box="true">
-                            <option <?php if ($_SESSION["dayofweek"] == "All Days") {
-                                echo "selected='selected'";
-                            } ?> value="All Days">All Days
-                            </option>
-                            <option <?php if ($_SESSION["dayofweek"] == "Monday") {
+                        <select name="cmbdayofweekrange[]" class="form-control selectpicker form-group dropdown" id="cmbdayofweekrange" data-width="100%" multiple data-actions-box="true">
+                            <option <?php if (strpos($_SESSION["dayofweekrange"], "Monday") !== false) {
                                 echo "selected='selected'";
                             } ?> value="Monday">Monday
                             </option>
-                            <option <?php if ($_SESSION["dayofweek"] == "Tuesday") {
+                            <option <?php if (strpos($_SESSION["dayofweekrange"], "Tuesday") !== false) {
                                 echo "selected='selected'";
                             } ?> value="Tuesday">Tuesday
                             </option>
-                            <option <?php if ($_SESSION["dayofweek"] == "Wednesday") {
+                            <option <?php if (strpos($_SESSION["dayofweekrange"], "Wednesday") !== false) {
                                 echo "selected='selected'";
                             } ?> value="Wednesday">Wednesday
                             </option>
-                            <option <?php if ($_SESSION["dayofweek"] == "Thursday") {
+                            <option <?php if (strpos($_SESSION["dayofweekrange"], "Thursday") !== false) {
                                 echo "selected='selected'";
                             } ?> value="Thursday">Thursday
                             </option>
-                            <option <?php if ($_SESSION["dayofweek"] == "Friday") {
+                            <option <?php if (strpos($_SESSION["dayofweekrange"], "Friday") !== false) {
                                 echo "selected='selected'";
                             } ?> value="Friday">Friday
                             </option>
-                            <option <?php if ($_SESSION["dayofweek"] == "Saturday") {
+                            <option <?php if (strpos($_SESSION["dayofweekrange"], "Saturday") !== false) {
                                 echo "selected='selected'";
                             } ?> value="Saturday">Saturday
                             </option>
-                            <option <?php if ($_SESSION["dayofweek"] == "Sunday") {
+                            <option <?php if (strpos($_SESSION["dayofweekrange"], "Sunday") !== false) {
                                 echo "selected='selected'";
                             } ?> value="Sunday">Sunday
                             </option>
@@ -648,15 +665,17 @@
                     </div>
                 </div>
 				<div class="row" style="margin-top: 5px;">
-                    <div class="col-12">
-                        <input name="btnShowEmployees" type="button" class="btn btn-default" value="Get Employees"
-                               style="color: white; background-color: #007CC4" onclick="getEmployeesAjax();"/>
+                    <div class="col-sm-12 text-right">
+                        <button name="btnShowEmployees" type="button" class="btn btn-default" id="btnShowEmployees"
+                                style="color: white; background-color: #007CC4; height: 34px; width: 122px; float:right" onclick="getEmployeesAjax();">
+                            Get Employees
+                        </button>
+
                     </div>
 				</div>
 
 				<span class='NormalRed' id="getEmployeeResultText"></span>
-
-                <div class="employeesSection">
+                <div class="employeeContainer">
                     <div class="row" style="margin-top: 5px;">
                         <div class="col-sm-4"><label for="cmbemployee">Employee</label></div>
                         <div class="col-sm-8">
@@ -691,9 +710,12 @@
                         </div>
                     </div>
                 </div>
-
-                <input name="Submit" type="submit" class="btn btn-default" value="Submit"
-                       style="color: white; background-color: #007CC4"/>
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-sm-12 text-right">
+                        <button name="Submit" type="submit" class="btn btn-default" value="Submit"
+                                style="color: white; background-color: #007CC4;height: 34px; width: 122px; float:right">Submit Report</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -813,10 +835,10 @@
             }
 
             // Trim SUMID's if day of week selected
-            //echo $_SESSION["dayofweek"];
-            if($radDate == "daterange" && $_SESSION["dayofweek"] != "All Days") {
+            // echo $_SESSION["dayofweek"];
+            if($radDate == "daterange" && $_SESSION["dayofweekrange"] != "All Days") {
                 //echo "here";
-                $sumid = ReturnDayOfWeekSUMIDs($sumid);
+                $sumid = ReturnDayOfWeekRangeSUMIDs($sumid);
             }
 
             //$row = mysql_fetch_array($result);
@@ -858,8 +880,8 @@
                 $worksheet->write_row('D6', $headings, $heading);
                 // Report Specs
                 $$excelreport_title = $excelreport_title;
-                if($_SESSION["dayofweek"] != "All Days") {
-                    echo " (".$_SESSION["dayofweek"]."s only)";
+                if($_SESSION["dayofweekrange"] != "All Days") {
+                    echo " (".$_SESSION["dayofweekrange"]."s only)";
                     $excelreport_title = $excelreport_title." (".$_SESSION["dayofweek"]."s only)";
                 }
                 $headings = array($excelreport_title, '');
@@ -1492,6 +1514,7 @@
         $("#date").parent().removeClass('disabled');
         $("#daterange").parent().addClass('disabled');
         $("#daterange2").parent().addClass('disabled');
+        $("#btnShowEmployees").prop('disabled', false);
     }
 
     function SetSpecificDateRangeFocus() {
@@ -1501,6 +1524,9 @@
         $("#date").parent().addClass('disabled');
         $("#daterange").parent().removeClass('disabled');
         $("#daterange2").parent().removeClass('disabled');
+        if ($("#daterange2").val()) {
+            $("#btnShowEmployees").prop('disabled', true);
+        }
     }
 
     function SetStoreFocus() {
@@ -1527,6 +1553,7 @@
         $("#cmbemployee").prop('disabled', true);
         $("#chkemployees").parent().addClass('disabled');
         $("#cmbemployee").parent().addClass('disabled');
+        $(".radio-addon").addClass('disabled');
     }
 
     function EnableAllEmployeeSelections() {
@@ -1534,6 +1561,7 @@
         $("#radEmployeesSelect").prop('disabled', false);
         $("#radEmployeeSelect").parent().removeClass('disabled');
         $("#radEmployeesSelect").parent().removeClass('disabled');
+        $(".radio-addon").removeClass('disabled');
     }
 
     function SetEmployeeFocus() {
@@ -1541,6 +1569,7 @@
         $("#cmbemployee").prop('disabled', false);
         $("#chkemployees").parent().addClass('disabled');
         $("#cmbemployee").parent().removeClass('disabled');
+        $(".radio-addon").addClass('disabled')
     }
 
     function SetEmployeesFocus() {
@@ -1551,6 +1580,13 @@
         $('.dropdown-toggle').removeClass('disabled');
         $('.dropdown-toggle').parent().parent().removeClass('disabled');
         $('.dropdown-toggle').prop('disabled', false);
+        $(".radio-addon").removeClass('disabled')
+    }
+    function HideEmployees() {
+        $(".employeeContainer").prop('hidden', true);
+    }
+    function ShowEmployees() {
+        $(".employeeContainer").prop('hidden', false);
     }
 
 <?php 
@@ -1617,7 +1653,6 @@ $(document).ready(function () {
 		  employeeRadio = this;
 		  
 		}
-
 		if (this.value == "employee")
 		{
 			SetEmployeeFocus();
@@ -1627,6 +1662,16 @@ $(document).ready(function () {
 		}
 	  };
 	}
+    // check when original form changes, clear employee controls and hide
+    $("form :input").change(function() {
+        var inputName = $(this)[0].name;
+        if (inputName != "radEmployee" && inputName != "cmbemployee" && inputName != "chkemployees[]") {
+            if (!$(".employeeContainer").prop('hidden')) {
+                HideEmployees();
+                DisableAllEmployeeSelections();
+            }
+        }
+    });
 
 
 	<?php if ($_SESSION["radEmployee"] == "employee"){
@@ -1642,10 +1687,9 @@ $(document).ready(function () {
 });
 
 
-
-
 	function getEmployeesAjax(){
 
+        $('#btnShowEmployees').html('<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>');
 		EnableAllEmployeeSelections();
 
 		//Clear Employee Selections
@@ -1676,14 +1720,15 @@ $(document).ready(function () {
 
 
 		//alert("gaan nou ajax na : " + "index.php?p=report_productmixgetemployeesAjax&date=" + date.value + "&radStore=" + radStoreSelected + "&radStoreValue=" + radStoreValue + "&radDate=" + radDateSelected + "&radDateValue=" + radDateValue);
-		$("#getEmployeeResultText").html("Loading...");
+		//$("#getEmployeeResultText").html("Loading...");
 		$.ajax({
 			method: "GET", url: "index.php?p=report_productmixgetemployeesAjax&date=" + date.value + "&radStore=" + radStoreSelected + "&radStoreValue=" + radStoreValue + "&radDate=" + radDateSelected + "&radDateValue=" + radDateValue, 
 			}).done(function( data ) {
 		
 				var result = $.parseJSON(data);
 				if( !$.isArray(result) ||  !result.length ) {
-					$("#getEmployeeResultText").html("No Data");	
+					$("#getEmployeeResultText").html("No Data");
+                    $('#btnShowEmployees').html('Get Employees');
 				}
 				else{
 					$("#getEmployeeResultText").html("");	
@@ -1715,14 +1760,18 @@ $(document).ready(function () {
 					?>
 		
 				$('.selectpicker').selectpicker('refresh');
+                $('#btnShowEmployees').html('Get Employees');
+				ShowEmployees();
 			}
 		});
 	};
 
 
-	<?php if ($_SESSION["radEmployee"] != ""){
-		echo "getEmployeesAjax();";	
-	} ?>
+    <?php if ($_SESSION["radEmployee"] != ""){
+        echo "getEmployeesAjax();";
+    }else {
+        echo 'HideEmployees();';
+    } ?>
 
 
 </script>

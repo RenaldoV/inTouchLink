@@ -10,6 +10,12 @@
 ***********************************************/
 </script>
 <style>
+    button.btn {
+        border-radius: 0px;
+    }
+    button.btn.btn-default:active:focus, button.btn.btn-default:active, button.btn.btn-default:focus {
+        outline: none;
+    }
     ul.dropdown-menu {
         overflow: auto;
         max-height: 75vh;
@@ -211,6 +217,7 @@
         width: 100%;
         position: relative;
     }
+    button
     .employeesMulti.disabled {
         background-color: #d6d6d6;!important;
     }
@@ -220,6 +227,10 @@
     }
     .employeesMulti > div.btn-group.bootstrap-select.disabled {
         background-color: #d6d6d6;!important;
+    }
+    div.btn-group.bootstrap-select.disabled > button {
+        background-color: #d6d6d6;!important;
+        cursor: no-drop;
     }
     .btn.dropdown-toggle.disabled {
         background-color: #d6d6d6;!important;
