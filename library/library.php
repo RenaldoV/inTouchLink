@@ -265,6 +265,7 @@ function GetProductMix($sumid, $orderby) {
 $SQL = "select lcase(ibrcategoryname) as 'ibrcategoryname', ibritenplu ,ibritemname, ibritemcost , sum(ibrnumsold) as 'ibrnumsold',ibrpricesold as 'ibrpricesold',sum(ibramount) as 'ibramount',sum(ibrsalespercent) as 'ibrsalespercent' from itemsbreakdown where sumid in (".$sumid.") and ibrtimesold >= '".$_SESSION["timefrom"]."' and ibrtimesold < '".$_SESSION["timeto"]."' group by lcase(ibrcategoryname),ibritemname order by ibrcategoryname,".$orderby;
 //echo $SQL;
 $result = db_execsql($SQL);
+echo "<script>console.log('product mix report'+".json_encode($sumid).")</script>";
 return $result;
 }
 

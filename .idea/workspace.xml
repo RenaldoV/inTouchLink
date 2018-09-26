@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0c04f46-1563-4a59-843a-fcaeedd626f2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/php.log" beforeDir="false" afterPath="$PROJECT_DIR$/pages/php.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/report_productmix.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/report_productmix.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/library.php" beforeDir="false" afterPath="$PROJECT_DIR$/library/library.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,112 +13,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="report_productmix.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="report_productmix.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/report_productmix.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1447">
-              <caret line="1953" column="16" selection-start-line="1953" selection-start-column="16" selection-end-line="1953" selection-end-column="16" />
+            <state relative-caret-position="2000">
+              <caret line="2258" column="55" selection-start-line="2258" selection-start-column="35" selection-end-line="2258" selection-end-column="55" />
               <folding>
-                <element signature="n#style#0;n#!!top" />
-                <element signature="n#script#4;n#!!top" />
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-                <element signature="n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-                <element signature="n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-                <element signature="n#style#0;n#div#5;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#5;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-                <element signature="n#div#6;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-                <element signature="n#style#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-                <element signature="n#style#0;n#button#0;n#div#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-                <element signature="n#style#0;n#button#0;n#div#0;n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#h3#0;n#div#1;n#!!top" />
-                <element signature="n#style#0;n#h5#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h5#1;n#div#1;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h5#1;n#div#1;n#!!top" expanded="true" />
-                <element signature="e#50777#101915#0#PHP" />
-                <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
-                <element signature="n#tr#0;n#table#0;n#!!top" />
-                <element signature="n#td#0;n#tr#0;n#table#0;n#!!top" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#2;n#tr#0;n#table#0;n#!!top" expanded="true" />
-                <element signature="n#tr#1;n#table#0;n#!!top" />
-                <element signature="n#style#0;n#td#5;n#tr#1;n#table#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#9;n#tr#1;n#table#0;n#!!top" expanded="true" />
-                <element signature="n#table#1;n#!!top" />
-                <element signature="n#style#0;n#td#4;n#tr#0;n#table#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#8;n#tr#0;n#table#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#12;n#tr#0;n#table#1;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#table#2;n#!!top" expanded="true" />
-                <element signature="n#table#2;n#!!top" />
-                <element signature="n#tr#0;n#table#2;n#!!top" />
-                <element signature="n#td#0;n#tr#0;n#table#2;n#!!top" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#table#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#0;n#table#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#2;n#tr#0;n#table#2;n#!!top" expanded="true" />
-                <element signature="n#tr#1;n#table#2;n#!!top" />
-                <element signature="n#style#0;n#td#5;n#tr#1;n#table#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#9;n#tr#1;n#table#2;n#!!top" expanded="true" />
-                <element signature="e#72814#82083#0#PHP" />
-                <element signature="n#style#0;n#td#5;n#tr#0;n#table#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#9;n#tr#0;n#table#3;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-                <element signature="e#82138#101901#0#PHP" />
-                <element signature="n#style#0;n#table#4;n#!!top" expanded="true" />
-                <element signature="n#table#0;n#!!top" />
                 <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#table#4;n#!!top" expanded="true" />
-                <element signature="n#table#1;n#!!top" />
-                <element signature="n#tr#0;n#table#5;n#!!top" />
-                <element signature="e#88430#88436#1#HTML" expanded="true" />
-                <element signature="n#style#0;n#table#6;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#table#6;n#!!top" expanded="true" />
-                <element signature="n#table#3;n#!!top" />
-                <element signature="n#table#8;n#!!top" />
-                <element signature="n#style#0;n#td#4;n#tr#0;n#table#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#8;n#tr#0;n#table#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#12;n#tr#0;n#table#8;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-                <element signature="n#table#8;n#!!top" />
-                <element signature="e#102571#102577#1#HTML" expanded="true" />
-                <element signature="e#110443#122590#0#PHP" />
-                <element signature="n#table#0;n#div#0;n#div#1;n#!!top" />
-                <element signature="e#109291#113158#0#PHP" />
-                <element signature="n#tr#2;n#table#0;n#div#2;n#!!top" />
-                <element signature="n#style#0;n#td#4;n#tr#0;n#table#1;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#8;n#tr#0;n#table#1;n#div#2;n#!!top" expanded="true" />
-                <element signature="e#124408#128000#0#PHP" />
-                <element signature="n#script#5;n#!!top" />
-                <element signature="e#85130#85345#0#HTML" />
-                <element signature="e#85380#85710#0#HTML" />
-                <element signature="e#86484#88880#0#HTML" />
+                <element signature="n#table#9;n#!!top" />
+                <element signature="n#table#0;n#div#2;n#!!top" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.php">
+      <file leaf-file-name="library.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/library/library.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="591">
-              <caret line="251" column="54" selection-start-line="251" selection-start-column="54" selection-end-line="251" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="innermenu.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/innermenu.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="516">
-              <caret line="232" column="23" selection-start-line="232" selection-start-column="23" selection-end-line="232" selection-end-column="23" />
+            <state relative-caret-position="140">
+              <caret line="267" column="45" selection-start-line="267" selection-start-column="45" selection-end-line="267" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -136,7 +54,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>total</find>
       <find>style3</find>
       <find>voids Gr</find>
       <find>Total Summ</find>
@@ -166,6 +83,7 @@
       <find>dayofweek</find>
       <find>daterangestring</find>
       <find>finalsoldtotal</find>
+      <find>getproduc</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -211,10 +129,10 @@
         <option value="$PROJECT_DIR$/pages/setStore.php" />
         <option value="$PROJECT_DIR$/pages/form_exceptions.php" />
         <option value="$PROJECT_DIR$/pages/report_exceptions.php" />
-        <option value="$PROJECT_DIR$/library/library.php" />
         <option value="$PROJECT_DIR$/innermenu.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/pages/report_productmix.php" />
+        <option value="$PROJECT_DIR$/library/library.php" />
       </list>
     </option>
   </component>
@@ -249,6 +167,11 @@
             <path>
               <item name="inTouchLink" type="b2602c69:ProjectViewProjectNode" />
               <item name="inTouchLink" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="inTouchLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="inTouchLink" type="462c0819:PsiDirectoryNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="inTouchLink" type="b2602c69:ProjectViewProjectNode" />
@@ -330,46 +253,36 @@
       <workItem from="1536209802697" duration="6843000" />
       <workItem from="1537250805689" duration="7790000" />
       <workItem from="1537424001848" duration="3028000" />
+      <workItem from="1537963848250" duration="1022000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="305631000" />
+    <option name="totallyTimeSpent" value="306653000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.22213247" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32905984" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3291536" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.22213247" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" sideWeight="0.5015674" side_tool="true" weight="0.25820896" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3291536" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39973262" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984326" visible="true" weight="0.21890146" />
-      <window_info id="Structure" order="1" sideWeight="0.5015674" side_tool="true" weight="0.25820896" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32905984" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39973262" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3291536" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -685,10 +598,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-15669">
           <caret line="311" column="22" selection-start-line="311" selection-start-column="22" selection-end-line="311" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#h5#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h5#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -699,27 +608,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/library/library.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="449" column="1" lean-forward="true" selection-start-line="449" selection-start-column="1" selection-end-line="449" selection-end-column="1" />
-          <folding>
-            <element signature="e#19300#20207#0#PHP" />
-            <element signature="e#20117#21032#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
+        <state relative-caret-position="3765">
           <caret line="251" column="54" selection-start-line="251" selection-start-column="54" selection-end-line="251" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/innermenu.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
+        <state relative-caret-position="3480">
           <caret line="232" column="23" selection-start-line="232" selection-start-column="23" selection-end-line="232" selection-end-column="23" />
         </state>
       </provider>
@@ -733,91 +631,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/report_productmix.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1447">
-          <caret line="1953" column="16" selection-start-line="1953" selection-start-column="16" selection-end-line="1953" selection-end-column="16" />
+        <state relative-caret-position="2000">
+          <caret line="2258" column="55" selection-start-line="2258" selection-start-column="35" selection-end-line="2258" selection-end-column="55" />
           <folding>
-            <element signature="n#style#0;n#!!top" />
-            <element signature="n#script#4;n#!!top" />
-            <element signature="n#div#0;n#!!top" />
-            <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#style#0;n#div#5;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#5;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#div#6;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#style#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#7;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#9;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#h3#0;n#div#1;n#!!top" />
-            <element signature="n#style#0;n#h5#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h5#1;n#div#1;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h5#1;n#div#1;n#!!top" expanded="true" />
-            <element signature="e#50777#101915#0#PHP" />
-            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#tr#0;n#table#0;n#!!top" />
-            <element signature="n#td#0;n#tr#0;n#table#0;n#!!top" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#2;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#tr#1;n#table#0;n#!!top" />
-            <element signature="n#style#0;n#td#5;n#tr#1;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#9;n#tr#1;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#table#1;n#!!top" />
-            <element signature="n#style#0;n#td#4;n#tr#0;n#table#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#8;n#tr#0;n#table#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#12;n#tr#0;n#table#1;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#table#2;n#!!top" expanded="true" />
-            <element signature="n#table#2;n#!!top" />
-            <element signature="n#tr#0;n#table#2;n#!!top" />
-            <element signature="n#td#0;n#tr#0;n#table#2;n#!!top" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#table#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#0;n#table#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#2;n#tr#0;n#table#2;n#!!top" expanded="true" />
-            <element signature="n#tr#1;n#table#2;n#!!top" />
-            <element signature="n#style#0;n#td#5;n#tr#1;n#table#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#9;n#tr#1;n#table#2;n#!!top" expanded="true" />
-            <element signature="e#72814#82083#0#PHP" />
-            <element signature="n#style#0;n#td#5;n#tr#0;n#table#3;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#9;n#tr#0;n#table#3;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="e#82138#101901#0#PHP" />
-            <element signature="n#style#0;n#table#4;n#!!top" expanded="true" />
-            <element signature="n#table#0;n#!!top" />
             <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#table#4;n#!!top" expanded="true" />
-            <element signature="n#table#1;n#!!top" />
-            <element signature="n#tr#0;n#table#5;n#!!top" />
-            <element signature="e#88430#88436#1#HTML" expanded="true" />
-            <element signature="n#style#0;n#table#6;n#!!top" expanded="true" />
             <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#table#6;n#!!top" expanded="true" />
-            <element signature="n#table#3;n#!!top" />
-            <element signature="n#table#8;n#!!top" />
-            <element signature="n#style#0;n#td#4;n#tr#0;n#table#8;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#8;n#tr#0;n#table#8;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#12;n#tr#0;n#table#8;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#table#8;n#!!top" />
-            <element signature="e#102571#102577#1#HTML" expanded="true" />
-            <element signature="e#110443#122590#0#PHP" />
-            <element signature="n#table#0;n#div#0;n#div#1;n#!!top" />
-            <element signature="e#109291#113158#0#PHP" />
-            <element signature="n#tr#2;n#table#0;n#div#2;n#!!top" />
-            <element signature="n#style#0;n#td#4;n#tr#0;n#table#1;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#8;n#tr#0;n#table#1;n#div#2;n#!!top" expanded="true" />
-            <element signature="e#124408#128000#0#PHP" />
-            <element signature="n#script#5;n#!!top" />
-            <element signature="e#85130#85345#0#HTML" />
-            <element signature="e#85380#85710#0#HTML" />
-            <element signature="e#86484#88880#0#HTML" />
+            <element signature="n#table#9;n#!!top" />
+            <element signature="n#table#0;n#div#2;n#!!top" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/library.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="267" column="45" selection-start-line="267" selection-start-column="45" selection-end-line="267" selection-end-column="45" />
         </state>
       </provider>
     </entry>
