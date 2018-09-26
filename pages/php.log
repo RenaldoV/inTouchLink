@@ -2771,3 +2771,9 @@
 [19-Jul-2018 12:18:17 Africa/Johannesburg] PHP Warning:  Division by zero in /usr/www/users/intoucf/report.intouchlink.co.za/pages/report_salessummary_print.php on line 316
 [02-Aug-2018 19:04:58 Africa/Johannesburg] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /usr/www/users/intoucf/report.intouchlink.co.za/library/library.php on line 16
 [02-Aug-2018 19:04:58 Africa/Johannesburg] PHP Notice:  Undefined index: daterangestring in /usr/www/users/intoucf/report.intouchlink.co.za/pages/report_salessummary_print.php on line 26
+[25-Sep-2018 17:27:02 Europe/Berlin] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /Applications/MAMP/htdocs/inTouchLink/library/library.php on line 22
+[25-Sep-2018 17:27:08 Europe/Berlin] PHP Notice:  Undefined variable: finalsoldtotal in /Applications/MAMP/htdocs/inTouchLink/pages/report_productmix_print.php on line 227
+[25-Sep-2018 17:27:08 Europe/Berlin] PHP Notice:  Undefined variable: finalgrandtotal in /Applications/MAMP/htdocs/inTouchLink/pages/report_productmix_print.php on line 229
+[25-Sep-2018 17:27:09 Europe/Berlin] PHP Notice:  Undefined variable: perctotal in /Applications/MAMP/htdocs/inTouchLink/pages/report_productmix_print.php on line 340
+[25-Sep-2018 17:27:09 Europe/Berlin] PHP Notice:  Undefined variable: perctotal in /Applications/MAMP/htdocs/inTouchLink/pages/report_productmix_print.php on line 340
+[25-Sep-2018 17:27:09 Europe/Berlin] PHP Notice:  Undefined variable: perctotal in /Applications/MAMP/htdocs/inTouchLink/pages/report_productmix_print.php on line 340

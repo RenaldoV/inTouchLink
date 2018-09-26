@@ -721,8 +721,13 @@
     </div>
 </div>
 
-
-<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+<?php
+if ($_REQUEST["daterange2"]) {
+    echo '<div class="col-sm-12">';
+}else {
+ echo '<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">';
+}
+?>
     <?php
     // -------------- See if any data is in Summary Table -----------------------
     if ($a == 's') {
@@ -824,21 +829,35 @@
             }
             if($radDate == "daterange") {
                 $sumIDResult = GetSumIDforWithDateRange($_SESSION["daterangestring"], $_SESSION["store"]);
-
+                // Get sumID for date range comparison if date range 2 is selected
+                if ($_REQUEST['daterange2']) {
+                    $sumIDResult2 = GetSumIDforWithDateRange($_SESSION["daterangestring2"], $_SESSION["store"]);
+                }
             }
             if(mysql_num_rows($sumIDResult) > 0) {
                 $sumidrow = mysql_fetch_array($sumIDResult);
                 $sumid = "'".$sumidrow["sumid"]."'";
             }
+            // fetch umidrow and sumid for date range comparison
+            if(mysql_num_rows($sumIDResult2) > 0) {
+                $sumidrow2 = mysql_fetch_array($sumIDResult2);
+                $sumid2 = "'".$sumidrow2["sumid"]."'";
+            }
             while($sumidrow = mysql_fetch_array($sumIDResult)) {
                 $sumid = $sumid.",'".$sumidrow["sumid"]."'";
             }
-
+            while ($sumidrow2 = mysql_fetch_array($sumIDResult2)) {
+                $sumid2 = $sumid2.",'".$sumidrow2["sumid"]."'";
+                // echo "<script>console.log(".json_encode($sumid2).")</script>";
+            }
             // Trim SUMID's if day of week selected
             // echo $_SESSION["dayofweek"];
             if($radDate == "daterange" && $_SESSION["dayofweekrange"] != "All Days") {
                 //echo "here";
                 $sumid = ReturnDayOfWeekRangeSUMIDs($sumid);
+                if ($_REQUEST['daterange2']) {
+                    $sumid2 = ReturnDayOfWeekRangeSUMIDs($sumid2);
+                }
             }
 
             //$row = mysql_fetch_array($result);
@@ -858,41 +877,68 @@
 
                 ?>
             </h3>
-            <h5 class="text-center">for date</h5>
-            <h5 style="color:#757575" class="text-center">
-                <?php
-                if($radDate == "date") {
-                    echo $_SESSION["datemonth"]."/".$_SESSION["dateday"]."/".$_SESSION["dateyear"];
-                    $excelreport_title = $excelreport_title." for date ".$_SESSION["dateday"]."/".$_SESSION["datemonth"]."/".$_SESSION["dateyear"]; // EXCEL
-                }
-                if($radDate == "daterange") {
-                    echo $_SESSION["datefrommonth"]."/".$_SESSION["datefromday"]."/".$_SESSION["datefromyear"]." to ".$_SESSION["datetomonth"]."/".$_SESSION["datetoday"]."/".$_SESSION["datetoyear"];
-                    $excelreport_title = $excelreport_title." for date ".$_SESSION["datefromday"]."/".$_SESSION["datefrommonth"]."/".$_SESSION["datefromyear"]." to ".$_SESSION["datetoday"]."/".$_SESSION["datetomonth"]."/".$_SESSION["datetoyear"]; // EXCEL
-                }
-                ?>
-                <?php
-                // ************************************
-                // EXCEL - Set up report title
-                // *
-                // Report Title
-                $title = "Product Mix Report for ";
-                $headings = array($title, '');
-                $worksheet->write_row('D6', $headings, $heading);
-                // Report Specs
-                $$excelreport_title = $excelreport_title;
-                if($_SESSION["dayofweekrange"] != "All Days") {
-                    echo " (".$_SESSION["dayofweekrange"]."s only)";
-                    $excelreport_title = $excelreport_title." (".$_SESSION["dayofweek"]."s only)";
-                }
-                $headings = array($excelreport_title, '');
-                $worksheet->write_row('D7', $headings, $heading);
-                $num1_format =& $workbook->addformat(array(num_format => '0.00',size  => 11));  //Basic number format
-                $rownumber = 8;
-                // ************************************
-                ?>
-            </h5>
 
             <?php
+            if($sumid2) {
+                ?>
+                <div class="row">
+                    <div class="col-sm-6 text-right">
+                        <h5 class="text-center">for date</h5>
+                        <h5 style="color:#757575" class="text-center">
+                             <?php echo $_SESSION["datefrommonth"] . "/" . $_SESSION["datefromday"] . "/" . $_SESSION["datefromyear"] . " to " . $_SESSION["datetomonth"] . "/" . $_SESSION["datetoday"] . "/" . $_SESSION["datetoyear"]; ?>
+                        </h5>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <h5 class="text-center">for date</h5>
+                        <h5 style="color:#757575" class="text-center">
+                            <?php echo $_SESSION["datefrommonth2"] . "/" . $_SESSION["datefromday2"] . "/" . $_SESSION["datefromyear2"] . " to " . $_SESSION["datetomonth2"] . "/" . $_SESSION["datetoday2"] . "/" . $_SESSION["datetoyear2"]; ?>
+                        </h5>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <h5 class="text-center">Comparison</h5>
+                        <h5 class="text-center">
+                            Differences
+                        </h5>
+                    </div>
+                </div>
+                <?php
+            }else {
+            ?>
+                <h5 class="text-center">for date</h5>
+                <h5 style="color:#757575" class="text-center">
+                    <?php
+                    if ($radDate == "date") {
+                        echo $_SESSION["datemonth"] . "/" . $_SESSION["dateday"] . "/" . $_SESSION["dateyear"];
+                        $excelreport_title = $excelreport_title . " for date " . $_SESSION["dateday"] . "/" . $_SESSION["datemonth"] . "/" . $_SESSION["dateyear"]; // EXCEL
+                    }
+                    if ($radDate == "daterange") {
+                        echo $_SESSION["datefrommonth"] . "/" . $_SESSION["datefromday"] . "/" . $_SESSION["datefromyear"] . " to " . $_SESSION["datetomonth"] . "/" . $_SESSION["datetoday"] . "/" . $_SESSION["datetoyear"];
+                        $excelreport_title = $excelreport_title . " for date " . $_SESSION["datefromday"] . "/" . $_SESSION["datefrommonth"] . "/" . $_SESSION["datefromyear"] . " to " . $_SESSION["datetoday"] . "/" . $_SESSION["datetomonth"] . "/" . $_SESSION["datetoyear"]; // EXCEL
+                    }
+                    ?>
+                    <?php
+                    // ************************************
+                    // EXCEL - Set up report title
+                    // *
+                    // Report Title
+                    $title = "Product Mix Report for ";
+                    $headings = array($title, '');
+                    $worksheet->write_row('D6', $headings, $heading);
+                    // Report Specs
+                    $$excelreport_title = $excelreport_title;
+                    if ($_SESSION["dayofweekrange"] != "All Days") {
+                        echo " (" . $_SESSION["dayofweekrange"] . "s only)";
+                        $excelreport_title = $excelreport_title . " (" . $_SESSION["dayofweek"] . "s only)";
+                    }
+                    $headings = array($excelreport_title, '');
+                    $worksheet->write_row('D7', $headings, $heading);
+                    $num1_format =& $workbook->addformat(array(num_format => '0.00', size => 11));  //Basic number format
+                    $rownumber = 8;
+                    // ************************************
+                    ?>
+                </h5>
+            <?php
+            }
             // Check if orderby is set, if not then set it to the item name
 
             if($_SESSION["orderby"] == null) {
@@ -909,7 +955,10 @@
                 $result = GetProductMixPerEmployee($sumid,$_SESSION["orderby"], $_SESSION["employeeid"]) ;
             }
             else{
-                $result = GetProductMix($sumid,$_SESSION["orderby"]) ;
+                $result = GetProductMix($sumid,$_SESSION["orderby"]);
+                if($_REQUEST["daterange2"]) {
+                    $result2 = GetProductMix($sumid2,$_SESSION["orderby"]);
+                }
             }
 
             ?>
@@ -922,358 +971,1034 @@
             $itemsoldtotal = 0;
             $itempricesoldtotal = 0;
             $itemamountotal = 0;
+            $itemcosttotal2 = 0;
+            $itemsoldtotal2 = 0;
+            $itempricesoldtotal2 = 0;
+            $itemamountotal2 = 0;
             $GPPercentagetotal = 0;
             $CostPercentagetotal = 0;
+            $CostDiffTotal = 0;
+            $SoldDiffTotal = 0;
+            $AmountDiffTotal = 0;
+            $PercentageAmountDiffTotal = 0;
 
-            while($row = mysql_fetch_array($result)) {
-                if($catname == "") { // FIRST HEADER
-                    $catname = ucfirst($row["ibrcategoryname"]);
-                    $oldcatname  =  $catname;
-                    // SHOW FIRST HEADER .............
-                    ?>
-                    <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
-                        <tr>
-                            <?php
-                            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-                                echo '<td colspan="1" style="background-color: #487CC4; color: white">';
-                                echo ucfirst("Employee Name");
-                                echo "</td>";
-                            }
-                            ?>
+            if ($result2) {
+                while ($row = mysql_fetch_array($result)) {
+                    $result2 = GetProductMix($sumid2,$_SESSION["orderby"]);
+                    if ($catname == "") { // FIRST HEADER
+                        $catname = ucfirst($row["ibrcategoryname"]);
+                        $oldcatname = $catname;
+                        // SHOW FIRST HEADER .............
+                        ?>
+                        <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
+                            <tr>
+                                <td colspan="6"
+                                    style="background-color: #487CC4; color: white; border-right: solid 1px white;">
+                                    <?php
 
-                            <td colspan="8" style="background-color: #487CC4; color: white">
-                                <?php
+                                    echo ucfirst($row["ibrcategoryname"]);
 
-                                echo ucfirst($row["ibrcategoryname"]);
+                                    // EXCEL
+                                    // ************************************************
+                                    // Excel
+                                    // Write Table Headers for GROUP
+                                    $rownumber++;
+                                    $rownumber++;
 
-                                // EXCEL
-                                // ************************************************
-                                // Excel
-                                // Write Table Headers for GROUP
-                                $rownumber++;
-                                $rownumber++;
-                                if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-                                    $title = ucfirst("Employee Name");
+                                    $title = ucfirst($row["ibrcategoryname"]);
                                     $headings = array($title, '');
-                                    $worksheet->write_row('B'.$rownumber, $headings, $heading2);
-                                }
+                                    $worksheet->write_row('C' . $rownumber, $headings, $heading2);
 
-                                $title = ucfirst($row["ibrcategoryname"]);
-                                $headings = array($title, '');
-                                $worksheet->write_row('C'.$rownumber, $headings, $heading2);
+                                    $rownumber++;
+                                    $title = "Item PLU";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('C' . $rownumber, $headings, $LeftNormalTotalBold);
 
+                                    $title = "Item Name";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('D' . $rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "# Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('E' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Cost Price";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('F' . $rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "Price Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('G' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Amount";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('H' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "GP%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('I' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Cost%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('J' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    // end excel
+                                    ?></td>
+                                <td colspan="4"
+                                    style="background-color: #487CC4; color: white; border-right: solid 1px white;"></td>
+                                <td colspan="4"
+                                    style="background-color: #487CC4; color: white; border-right: solid 1px white;"></td>
+                            </tr>
+                            <tr>
+                                <td width="10%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
+                                <td width="12%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Cost</span></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5"># Sold</div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Price Sold </span></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                                    <div align="right" class="style5">Amount</div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Cost</span></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5"># Sold</div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Price Sold </span></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                                    <div align="right" class="style5">Amount</div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Cost</span></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5"># Sold</div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Amount</span></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5">% Amount</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <?php
+                    }
+                    // Logic
+                    // 1. Get first Category Name and display header
+                    // 2. For each item
+                    // 3. If Category has changed, show footer and clear category totals and show new header
+                    // 4. Show item
+                    $catname = ucfirst($row["ibrcategoryname"]); // SET NEW CATNAME
+                    if ($catname != $oldcatname) { // New Category has arrived
+                        ?>
+                        <table class="table table-striped table-condensed">
+                            <tr>
+                                <td width="22%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">Total</div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itemcosttotal, "2", ".", ""); ?></strong>
+                                    </div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal;
+                                            $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?></strong></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itempricesoldtotal, "2", ".", ""); ?></strong>
+                                    </div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itemamountotal, "2", ".", "");
+                                            $finalgrandtotal = $finalgrandtotal + $itemamountotal; ?></strong></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itemcosttotal2, "2", ".", ""); ?></strong>
+                                    </div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal2;
+                                            $finalsoldtotal2 = $finalsoldtotal2 + $itemsoldtotal; ?></strong></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itempricesoldtotal2, "2", ".", ""); ?></strong>
+                                    </div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itemamountotal2, "2", ".", "");
+                                            $finalgrandtotal2 = $finalgrandtotal2 + $itemamountotal2; ?></strong></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itemcosttotal2 - $itemcosttotal, "2", ".", "");?></strong>
+                                    </div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">
+                                        <strong><?php echo number_format($itemsoldtotal2 - $itemsoldtotal, "2", ".", ""); ?></strong>
+                                    </div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style6 bold">
+                                        <strong>
+                                            <?php
+                                            $amountDiffTotal = number_format($itemamountotal2 - $itemamountotal, "2", ".", "");
+                                            echo $amountDiffTotal;
+                                            ?>
+                                        </strong>
+                                    </div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                                    <div align="right" class="style6 bold">
+                                        <strong>
+                                            <?php
+                                            $amountpercentagetotal = number_format((abs($amountDiffTotal) / max($itemamountotal, $itemamountotal2)) * 100 , "2", ".", "");
+                                            if ($amountDiffTotal < 0) {
+                                                $amountpercentagetotal = -1 * $amountpercentagetotal;
+                                            }
+                                            echo $amountpercentagetotal;
+                                            if($amountpercentagetotal > 0) {
+                                                echo ' <span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="color: green"></span>';
+                                            }else if ($amountpercentagetotal < 0) {
+                                                echo ' <span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="color: red"></span>';
+                                            }
+                                            ?>
+                                        </strong>
+                                    </div>
+                                </td>
+
+                                <?php
                                 $rownumber++;
-                                $title = "Item PLU";
+                                $title = "Total";
                                 $headings = array($title, '');
-                                $worksheet->write_row('C'.$rownumber, $headings, $LeftNormalTotalBold);
+                                $worksheet->write_row('D' . $rownumber, $headings, $heading2);
 
-                                $title = "Item Name";
+                                $title = $itemsoldtotal;
                                 $headings = array($title, '');
-                                $worksheet->write_row('D'.$rownumber, $headings, $LeftNormalTotalBold);
+                                $worksheet->write_row('E' . $rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "# Sold";
+                                $title = number_format($itemcosttotal, "2", ".", "");
+                                $headings = array($title, '');
+                                $worksheet->write_row('F' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = number_format($itempricesoldtotal, "2", ".", "");
+                                $headings = array($title, '');
+                                $worksheet->write_row('G' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = $itemamountotal;
+                                $headings = array($title, '');
+                                $worksheet->write_row('H' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
+                                $headings = array($title, '');
+                                $worksheet->write_row('I' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                $title = ($itemcosttotal / $itemamountotal);
+                                $headings = array($title, '');
+                                $worksheet->write_row('J' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                ?>
+                            </tr>
+                        </table>
+
+                        <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
+                            <tr>
+                                <td colspan="6"
+                                    style="background-color: #487CC4; color: white; border-right: solid 1px white;">
+                                    <?php
+
+                                    echo ucfirst($row["ibrcategoryname"]);
+
+                                    // EXCEL
+                                    // ************************************************
+                                    // Excel
+                                    // Write Table Headers for GROUP
+                                    $rownumber++;
+                                    $rownumber++;
+
+                                    $title = ucfirst($row["ibrcategoryname"]);
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('C' . $rownumber, $headings, $heading2);
+
+                                    $rownumber++;
+                                    $title = "Item PLU";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('C' . $rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "Item Name";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('D' . $rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "# Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('E' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Cost Price";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('F' . $rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "Price Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('G' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Amount";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('H' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "GP%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('I' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Cost%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('J' . $rownumber, $headings, $RightNumberTotalBold);
+
+                                    // end excel
+                                    ?></td>
+                                <td colspan="4"
+                                    style="background-color: #487CC4; color: white; border-right: solid 1px white;"></td>
+                                <td colspan="4"
+                                    style="background-color: #487CC4; color: white; border-right: solid 1px white;"></td>
+                            </tr>
+                            <tr>
+                                <td width="10%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
+                                <td width="12%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Cost</span></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5"># Sold</div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Price Sold </span></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                                    <div align="right" class="style5">Amount</div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Cost</span></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5"># Sold</div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Price Sold </span></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                                    <div align="right" class="style5">Amount</div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Cost</span></div>
+                                </td>
+                                <td width="6%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5"># Sold</div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right"><span class="style5">Amount</span></div>
+                                </td>
+                                <td width="7%" bgcolor="#F2F2F2">
+                                    <div align="right" class="style5">% Amount</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <?php
+                        $oldcatname = $catname;
+                        // Reset Counters
+                        $itemsoldtotal = 0;
+                        $itemcosttotal = 0;
+                        $itempricesoldtotal = 0;
+                        $itemamountotal = 0;
+                        $itemsoldtotal2 = 0;
+                        $itemcosttotal2 = 0;
+                        $itempricesoldtotal2 = 0;
+                        $itemamountotal2 = 0;
+                        $CostDiffTotal = 0;
+                        $SoldDiffTotal = 0;
+                        $AmountDiffTotal = 0;
+                        $PercentageAmountDiffTotal = 0;
+                        //$GPPercentagetotal = 0;
+                        //$CostPercentagetotal = 0;
+                    }
+                    ?>
+
+                    <table style="width: 100%" border="0" align="center" cellspacing="0">
+                    <tr>
+                    <?php
+                    while ($row2 = mysql_fetch_array($result2)) {
+                        if ($row["ibritenplu"] == $row2["ibritenplu"]) {
+                            ?>
+                            <td width="10%" height="22" class="NormalText">
+                                <div align="left"><?php echo $row["ibritenplu"]; ?></div>
+                                <div align="left"></div>
+                            </td>
+                            <td width="12%" class="NormalText">
+                                <div align="left"><?php echo $row["ibritemname"]; ?></div>
+                            </td>
+                            <td width="6%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $itemCost = number_format($row["ibritemcost"], "2", ".", "");
+                                    echo $itemCost;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="6%" class="NormalText">
+                                <div align="right">
+                                    <?php echo $row["ibrnumsold"]; ?></div>
+                            </td>
+                            <td width="7%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $itemPriceSold = number_format($row["ibramount"] / $row["ibrnumsold"], "2", ".", "");
+                                    echo $itemPriceSold;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="7%" class="NormalText" style="border-right: solid 1px #F2F2F2">
+                                <div align="right">
+                                    <?php
+                                    $itemAmount = number_format($row["ibramount"], "2", ".", "");
+                                    echo $itemAmount;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="6%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $itemCost2 = number_format($row2["ibritemcost"], "2", ".", "");
+                                    echo $itemCost2;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="6%" class="NormalText">
+                                <div align="right"><?php echo $row2["ibrnumsold"]; ?></div>
+                            </td>
+                            <td width="7%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $itemPriceSold2 = number_format($row2["ibramount"] / $row2["ibrnumsold"], "2", ".", "");
+                                    echo $itemPriceSold2;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="7%" class="NormalText" style="border-right: solid 1px #F2F2F2">
+                                <div align="right">
+                                    <?php
+                                    $itemAmount2 = number_format($row2["ibramount"], "2", ".", "");
+                                    echo $itemAmount2;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="6%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $costDiff = $itemCost2 - $itemCost;
+                                    echo $costDiff;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="6%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $soldDiff = $row2["ibrnumsold"] - $row["ibrnumsold"];
+                                    echo $soldDiff;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="7%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $amountDiff = number_format($itemAmount2 - $itemAmount, "2", ".", "");
+                                    echo $amountDiff;
+                                    ?>
+                                </div>
+                            </td>
+                            <td width="7%" class="NormalText">
+                                <div align="right">
+                                    <?php
+                                    $percentageAmount = number_format((abs($amountDiff) / max($itemAmount, $itemAmount2)) * 100, "2", ".", "");
+                                    if ($amountDiff < 0) {
+                                        $percentageAmount = -1 * $percentageAmount;
+                                    }
+                                    echo $percentageAmount;
+                                    if($percentageAmount > 0) {
+                                        echo ' <span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="color: green"></span>';
+                                    }else if ($percentageAmount < 0) {
+                                        echo ' <span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="color: red"></span>';
+                                    }
+                                    ?>
+                                </div>
+                            </td>
+                            <?php
+                            // ************************************************
+                            // Excel
+
+                            $rownumber++;
+
+                            $title = $row["ibritenplu"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('C' . $rownumber, $headings, $NormalLeftAlign);
+
+                            $title = $row["ibritemname"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('D' . $rownumber, $headings, $NormalLeftAlign);
+
+                            $title = $row["ibrnumsold"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('E' . $rownumber, $headings, $NormalRightAlign);
+
+                            $title = $row["ibritemcost"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('F' . $rownumber, $headings, $num1_format);
+
+                            $title = number_format($row["ibramount"] / $row["ibrnumsold"], "2", ".", "");
+                            $headings = array($title, '');
+                            $worksheet->write_row('G' . $rownumber, $headings, $num1_format);
+
+                            $title = $row["ibramount"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('H' . $rownumber, $headings, $num1_format);
+
+                            $title = (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                            $headings = array($title, '');
+                            $worksheet->write_row('I' . $rownumber, $headings, $num1_format);
+
+                            $title = ($row["ibritemcost"] / $row["ibramount"]);
+                            $headings = array($title, '');
+                            $worksheet->write_row('J' . $rownumber, $headings, $num1_format);
+
+                            ?>
+                            </tr>
+                            </table>
+
+                            <?php
+// Count Totals
+
+                            $itemsoldtotal = $itemsoldtotal + $row["ibrnumsold"];
+                            $itemcosttotal = $itemcosttotal + $row["ibritemcost"];
+                            $itempricesoldtotal = $itempricesoldtotal + ($row["ibramount"] / $row["ibrnumsold"]);
+                            $itemamountotal = $itemamountotal + $row["ibramount"];
+                            $itemsoldtotal2 = $itemsoldtotal2 + $row2["ibrnumsold"];
+                            $itemcosttotal2 = $itemcosttotal2 + $row2["ibritemcost"];
+                            $itempricesoldtotal2 = $itempricesoldtotal2 + ($row2["ibramount"] / $row2["ibrnumsold"]);
+                            $itemamountotal2 = $itemamountotal2 + $row2["ibramount"];
+                            $CostDiffTotal = $CostDiffTotal + $costDiff;
+                            $SoldDiffTotal = $SoldDiffTotal + $soldDiff;
+                            $AmountDiffTotal = $AmountDiffTotal + $amountDiff;
+                            $PercentageAmountDiffTotal = $PercentageAmountDiffTotal + $percentageAmount;
+                        }
+                    }
+                }
+            }else {
+                while($row = mysql_fetch_array($result)) {
+                    if($catname == "") { // FIRST HEADER
+                        $catname = ucfirst($row["ibrcategoryname"]);
+                        $oldcatname  =  $catname;
+                        // SHOW FIRST HEADER .............
+                        ?>
+                        <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
+                            <tr>
+                                <?php
+                                if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                    echo '<td colspan="1" style="background-color: #487CC4; color: white">';
+                                    echo ucfirst("Employee Name");
+                                    echo "</td>";
+                                }
+                                ?>
+
+                                <td colspan="8" style="background-color: #487CC4; color: white">
+                                    <?php
+
+                                    echo ucfirst($row["ibrcategoryname"]);
+
+                                    // EXCEL
+                                    // ************************************************
+                                    // Excel
+                                    // Write Table Headers for GROUP
+                                    $rownumber++;
+                                    $rownumber++;
+                                    if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                        $title = ucfirst("Employee Name");
+                                        $headings = array($title, '');
+                                        $worksheet->write_row('B'.$rownumber, $headings, $heading2);
+                                    }
+
+                                    $title = ucfirst($row["ibrcategoryname"]);
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('C'.$rownumber, $headings, $heading2);
+
+                                    $rownumber++;
+                                    $title = "Item PLU";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('C'.$rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "Item Name";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('D'.$rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "# Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Cost Price";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('F'.$rownumber, $headings, $LeftNormalTotalBold);
+
+                                    $title = "Price Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Amount";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "GP%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                    $title = "Cost%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
+
+                                    // end excel
+                                    ?></td>
+                            </tr>
+                            <tr>
+                                <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                                <td width="12%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
+                                <td width="17%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5"># Sold </div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Cost Price </span></div></td>
+                                <td width="10%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
+                                <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
+                            </tr>
+                        </table>
+                        <?php
+                    }
+                    // Logic
+                    // 1. Get first Category Name and display header
+                    // 2. For each item
+                    // 3. If Category has changed, show footer and clear category totals and show new header
+                    // 4. Show item
+                    $catname = ucfirst($row["ibrcategoryname"]); // SET NEW CATNAME
+                    if($catname != $oldcatname) { // New Category has arrived
+                        ?>
+                        <table class="table table-striped table-condensed">
+                            <tr>
+                                <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                                <td width="12%" bgcolor="#F2F2F2" class="style6">&nbsp;</td>
+                                <td width="17%" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?></strong></div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
+                                <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
+                                <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal;?></strong></div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
+
+
+                                <?php
+                                $rownumber++;
+                                $title = "Total";
+                                $headings = array($title, '');
+                                $worksheet->write_row('D'.$rownumber, $headings, $heading2);
+
+                                $title = $itemsoldtotal;
                                 $headings = array($title, '');
                                 $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "Cost Price";
+                                $title = number_format($itemcosttotal,"2",".","");
                                 $headings = array($title, '');
-                                $worksheet->write_row('F'.$rownumber, $headings, $LeftNormalTotalBold);
+                                $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "Price Sold";
+                                $title = number_format($itempricesoldtotal,"2",".","");
                                 $headings = array($title, '');
                                 $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "Amount";
+                                $title = $itemamountotal;
                                 $headings = array($title, '');
                                 $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "GP%";
+                                $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
                                 $headings = array($title, '');
                                 $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "Cost%";
+                                $title = ($itemcosttotal / $itemamountotal);
                                 $headings = array($title, '');
                                 $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                // end excel
-                                ?></td>
-                        </tr>
-                        <tr>
-                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
-                            <td width="12%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
-                            <td width="17%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5"># Sold </div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Cost Price </span></div></td>
-                            <td width="10%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
-                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
-                        </tr>
-                    </table>
-                    <?php
-                }
-                // Logic
-                // 1. Get first Category Name and display header
-                // 2. For each item
-                // 3. If Category has changed, show footer and clear category totals and show new header
-                // 4. Show item
-                $catname = ucfirst($row["ibrcategoryname"]); // SET NEW CATNAME
-                if($catname != $oldcatname) { // New Category has arrived
-                    ?>
-                    <table class="table table-striped table-condensed">
-                        <tr>
-                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
-                            <td width="12%" bgcolor="#F2F2F2" class="style6">&nbsp;</td>
-                            <td width="17%" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?></strong></div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
-                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
-                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal;?></strong></div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
+                                ?>
+                            </tr>
+                        </table>
 
-
-                            <?php
-                            $rownumber++;
-                            $title = "Total";
-                            $headings = array($title, '');
-                            $worksheet->write_row('D'.$rownumber, $headings, $heading2);
-
-                            $title = $itemsoldtotal;
-                            $headings = array($title, '');
-                            $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
-
-                            $title = number_format($itemcosttotal,"2",".","");
-                            $headings = array($title, '');
-                            $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
-
-                            $title = number_format($itempricesoldtotal,"2",".","");
-                            $headings = array($title, '');
-                            $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
-
-                            $title = $itemamountotal;
-                            $headings = array($title, '');
-                            $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
-
-                            $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
-                            $headings = array($title, '');
-                            $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
-
-                            $title = ($itemcosttotal / $itemamountotal);
-                            $headings = array($title, '');
-                            $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
-
-                            ?>
-                        </tr>
-                    </table>
-
-                    <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
-                        <tr>
-                            <?php
-                            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-                                echo '<td colspan="1" style="background-color: #487CC4; color: white">';
-                                echo ucfirst("Employee Name");
-                                echo "</td>";
-                            }
-                            ?>
-
-                            <td colspan="8" style="background-color: #487CC4; color: white">
+                        <table class="table table-striped table-condensed" style="margin-bottom: 0px;">
+                            <tr>
                                 <?php
-                                echo ucfirst($row["ibrcategoryname"]);
-                                // EXCEL
-                                // ************************************************
-                                // Write Table Headers for GROUP
-                                $rownumber++;
-                                $rownumber++;
                                 if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-                                    $title = ucfirst("Employee Name");
-                                    $headings = array($title, '');
-                                    $worksheet->write_row('B'.$rownumber, $headings, $heading2);
+                                    echo '<td colspan="1" style="background-color: #487CC4; color: white">';
+                                    echo ucfirst("Employee Name");
+                                    echo "</td>";
                                 }
+                                ?>
 
-                                $title = ucfirst($row["ibrcategoryname"]);
-                                $headings = array($title, '');
-                                $worksheet->write_row('C'.$rownumber, $headings, $heading2);
+                                <td colspan="8" style="background-color: #487CC4; color: white">
+                                    <?php
+                                    echo ucfirst($row["ibrcategoryname"]);
+                                    // EXCEL
+                                    // ************************************************
+                                    // Write Table Headers for GROUP
+                                    $rownumber++;
+                                    $rownumber++;
+                                    if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                        $title = ucfirst("Employee Name");
+                                        $headings = array($title, '');
+                                        $worksheet->write_row('B'.$rownumber, $headings, $heading2);
+                                    }
 
-                                $rownumber++;
+                                    $title = ucfirst($row["ibrcategoryname"]);
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('C'.$rownumber, $headings, $heading2);
 
-                                $title = "Item PLU";
-                                $headings = array($title, '');
-                                $worksheet->write_row('C'.$rownumber, $headings, $LeftNormalTotalBold);
+                                    $rownumber++;
 
-                                $title = "Item Name";
-                                $headings = array($title, '');
-                                $worksheet->write_row('D'.$rownumber, $headings, $LeftNormalTotalBold);
+                                    $title = "Item PLU";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('C'.$rownumber, $headings, $LeftNormalTotalBold);
 
-                                $title = "# Sold";
-                                $headings = array($title, '');
-                                $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
+                                    $title = "Item Name";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('D'.$rownumber, $headings, $LeftNormalTotalBold);
 
-                                $title = "Cost Price";
-                                $headings = array($title, '');
-                                $worksheet->write_row('F'.$rownumber, $headings,$RightNumberTotalBold);
+                                    $title = "# Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "Price Sold";
-                                $headings = array($title, '');
-                                $worksheet->write_row('G'.$rownumber, $headings,$RightNumberTotalBold);
+                                    $title = "Cost Price";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('F'.$rownumber, $headings,$RightNumberTotalBold);
 
-                                $title = "Amount";
-                                $headings = array($title, '');
-                                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+                                    $title = "Price Sold";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('G'.$rownumber, $headings,$RightNumberTotalBold);
 
-                                $title = "GP%";
-                                $headings = array($title, '');
-                                $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
+                                    $title = "Amount";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                $title = "Cost%";
-                                $headings = array($title, '');
-                                $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
+                                    $title = "GP%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                // end excel
+                                    $title = "Cost%";
+                                    $headings = array($title, '');
+                                    $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
 
-                                ?></td>
-                        </tr>
+                                    // end excel
+
+                                    ?></td>
+                            </tr>
+                            <tr>
+                                <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                                <td width="12%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
+                                <td width="17%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
+                                <td width="8%" bgcolor="#F2F2F2""><div align="right" class="style5"># Sold </div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><span class="style5">Cost Price </span></td>
+                                <td width="10%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
+                                <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
+                                <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
+                            </tr>
+                        </table>
+                        <?php
+                        $oldcatname  =  $catname;
+                        // Reset Counters
+                        $itemsoldtotal = 0;
+                        $itemcosttotal = 0;
+                        $itempricesoldtotal = 0;
+                        $itemamountotal = 0;
+                        //$GPPercentagetotal = 0;
+                        //$CostPercentagetotal = 0;
+                    }
+                    ?>
+
+                    <table style="width: 100%" border="0" align="center" cellspacing="0">
                         <tr>
-                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
-                            <td width="12%" height="25" bgcolor="#F2F2F2"><span class="style5">Item PLU </span></td>
-                            <td width="17%" bgcolor="#F2F2F2"><span class="style5">Item Name </span></td>
-                            <td width="8%" bgcolor="#F2F2F2""><div align="right" class="style5"># Sold </div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><span class="style5">Cost Price </span></td>
-                            <td width="10%" bgcolor="#F2F2F2"><div align="right"><span class="style5">Price Sold </span></div></td>
-                            <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style5">Amount</div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">GP%</div></td>
-                            <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style5">Cost%</div></td>
+                            <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" height="22" class="NormalText"><div align="left">'.$row["eibemployeename"].'</div>';} ?>
+                            <td width="12%" height="22" class="NormalText"><div align="left"><?php echo $row["ibritenplu"];?></div>
+                                <div align="left"></div></td>
+                            <td width="17%" class="NormalText"><div align="left"><?php echo $row["ibritemname"];?></div></td>
+                            <td width="8%" class="NormalText"><div align="right"><?php echo $row["ibrnumsold"];?></div></td>
+                            <td width="8%" class="NormalText"><div align="right"><?php echo number_format($row["ibritemcost"],"2",".",""); ?></div></td>
+                            <td width="10%" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"] / $row["ibrnumsold"],"2",".",""); ?></div></td>
+                            <td width="10%" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"],"2",".",""); ?></div></td>
+                            <td width="8%" class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]),"2",".",""); ?></div></td>
+                            <td width="8%" class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"]/$row["ibramount"]),"2",".",""); ?></div></td>
+                            <?php
+                            // ************************************************
+                            // Excel
+
+                            $rownumber++;
+
+                            if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
+                                $title = $row["eibemployeename"];
+                                $headings = array($title, '');
+                                $worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);
+                            }
+
+                            $title = $row["ibritenplu"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('C'.$rownumber, $headings, $NormalLeftAlign);
+
+                            $title = $row["ibritemname"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('D'.$rownumber,$headings,$NormalLeftAlign);
+
+                            $title = $row["ibrnumsold"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('E'.$rownumber,$headings,$NormalRightAlign);
+
+                            $title = $row["ibritemcost"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('F'.$rownumber,$headings,$num1_format);
+
+                            $title = number_format($row["ibramount"] / $row["ibrnumsold"],"2",".","");
+                            $headings = array($title, '');
+                            $worksheet->write_row('G'.$rownumber,$headings,$num1_format);
+
+                            $title = $row["ibramount"];
+                            $headings = array($title, '');
+                            $worksheet->write_row('H'.$rownumber,$headings,$num1_format);
+
+                            $title = (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                            $headings = array($title, '');
+                            $worksheet->write_row('I'.$rownumber,$headings,$num1_format);
+
+                            $title = ($row["ibritemcost"]/$row["ibramount"]);
+                            $headings = array($title, '');
+                            $worksheet->write_row('J'.$rownumber,$headings,$num1_format);
+
+                            ?>
                         </tr>
                     </table>
+
                     <?php
-                    $oldcatname  =  $catname;
-                    // Reset Counters
-                    $itemsoldtotal = 0;
-                    $itemcosttotal = 0;
-                    $itempricesoldtotal = 0;
-                    $itemamountotal = 0;
-                    //$GPPercentagetotal = 0;
-                    //$CostPercentagetotal = 0;
+// Count Totals
+
+                    $itemsoldtotal =  $itemsoldtotal + $row["ibrnumsold"];
+                    $itemcosttotal =  $itemcosttotal + $row["ibritemcost"];
+                    $itempricesoldtotal = $itempricesoldtotal + ($row["ibramount"] / $row["ibrnumsold"]);
+                    $itemamountotal = $itemamountotal + $row["ibramount"];
+                    $GPPercentagetotal = $GPPercentagetotal + (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                    $CostPercentagetotal = $CostPercentagetotal + ($row["ibritemcost"]/$row["ibramount"]);
+
                 }
-                ?>
-
-                <table style="width: 100%" border="0" align="center" cellspacing="0">
+            }
+            if ($_REQUEST["daterange2"]) {?>
+                <table class="table table-striped table-condensed">
                     <tr>
-                        <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" height="22" class="NormalText"><div align="left">'.$row["eibemployeename"].'</div>';} ?>
-                        <td width="12%" height="22" class="NormalText"><div align="left"><?php echo $row["ibritenplu"];?></div>
-                            <div align="left"></div></td>
-                        <td width="17%" class="NormalText"><div align="left"><?php echo $row["ibritemname"];?></div></td>
-                        <td width="8%" class="NormalText"><div align="right"><?php echo $row["ibrnumsold"];?></div></td>
-                        <td width="8%" class="NormalText"><div align="right"><?php echo number_format($row["ibritemcost"],"2",".",""); ?></div></td>
-                        <td width="10%" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"] / $row["ibrnumsold"],"2",".",""); ?></div></td>
-                        <td width="10%" class="NormalText"><div align="right"><?php echo number_format($row["ibramount"],"2",".",""); ?></div></td>
-                        <td width="8%" class="NormalText"><div align="right"><?php echo number_format((($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]),"2",".",""); ?></div></td>
-                        <td width="8%" class="NormalText"><div align="right"><?php echo number_format(($row["ibritemcost"]/$row["ibramount"]),"2",".",""); ?></div></td>
+                        <td width="22%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">Total</div>
+                        </td>
+                        <td width="6%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php
+                                    echo number_format($itemcosttotal, "2", ".", ""); ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="6%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php echo $itemsoldtotal;
+                                    $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="7%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php
+                                    echo number_format($itempricesoldtotal, "2", ".", ""); ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php echo number_format($itemamountotal, "2", ".", "");
+                                    $finalgrandtotal = $finalgrandtotal + $itemamountotal; ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="6%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php echo number_format($itemcosttotal2, "2", ".", ""); ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="6%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php echo $itemsoldtotal2;
+                                    $finalsoldtotal2 = $finalsoldtotal2 + $itemsoldtotal2; ?>                            </strong>
+                            </div>
+                        </td>
+                        <td width="7%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php
+                                    echo number_format($itempricesoldtotal2, "2", ".", ""); ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php echo number_format($itemamountotal2, "2", ".", "");
+                                    $finalgrandtotal2 = $finalgrandtotal2 + $itemamountotal2; ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="6%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong><?php echo number_format($itemcosttotal2 - $itemcosttotal, "2", ".", "");?></strong>
+                            </div>
+                        </td>
+                        <td width="6%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong><?php echo number_format($itemsoldtotal2 - $itemsoldtotal, "2", ".", ""); ?></strong>
+                            </div>
+                        </td>
+                        <td width="7%" bgcolor="#F2F2F2">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php
+                                    $amountDiffTotal= number_format($itemamountotal2 - $itemamountotal, "2", ".", "");
+                                    echo $amountDiffTotal;
+                                    ?>
+                                </strong>
+                            </div>
+                        </td>
+                        <td width="7%" bgcolor="#F2F2F2" style="border-right: solid 1px white">
+                            <div align="right" class="style6 bold">
+                                <strong>
+                                    <?php
+                                    $amountpercentagetotal = number_format((abs($amountDiffTotal) / max($itemamountotal, $itemamountotal2)) * 100 , "2", ".", "");
+                                    if ($amountDiffTotal < 0) {
+                                        $amountpercentagetotal = -1 * $amountpercentagetotal;
+                                    }
+                                    echo $amountpercentagetotal;
+                                    if($amountpercentagetotal > 0) {
+                                        echo ' <span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="color: green"></span>';
+                                    }else if ($amountpercentagetotal < 0) {
+                                        echo ' <span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="color: red"></span>';
+                                    }
+                                    ?>
+                                </strong>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    // *** EXCEL ********************************
+                    $rownumber++;
+                    $title = "Total";
+                    $headings = array($title, '');
+                    $worksheet->write_row('D'.$rownumber, $headings, $heading2);
+
+                    $title = $itemsoldtotal;
+                    $headings = array($title, '');
+                    $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = number_format($itemcosttotal,"2",".","");
+                    $headings = array($title, '');
+                    $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = number_format($itempricesoldtotal,"2",".","");
+                    $headings = array($title, '');
+                    $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = $itemamountotal;
+                    $headings = array($title, '');
+                    $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
+                    $headings = array($title, '');
+                    $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = ($itemcosttotal / $itemamountotal);
+                    $headings = array($title, '');
+                    $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
+                    // ********************
+                    ?>
+                </table>
+            <?php
+            }else {?>
+                <table class="table table-striped table-condensed">
+                    <tr>
+                        <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
+                        <td width="12%" bgcolor="#F2F2F2" class="style6">&nbsp;</td>
+                        <td width="17%" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
+                        <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal; ?></strong></div></td>
+                        <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal;?></strong></div></td>
+                        <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
+                        <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
+
                         <?php
-                        // ************************************************
-                        // Excel
-
                         $rownumber++;
-
-                        if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
-                            $title = $row["eibemployeename"];
-                            $headings = array($title, '');
-                            $worksheet->write_row('B'.$rownumber, $headings, $NormalLeftAlign);
-                        }
-
-                        $title = $row["ibritenplu"];
+                        $title = "Total";
                         $headings = array($title, '');
-                        $worksheet->write_row('C'.$rownumber, $headings, $NormalLeftAlign);
+                        $worksheet->write_row('D'.$rownumber, $headings, $heading2);
 
-                        $title = $row["ibritemname"];
+                        $title = $itemsoldtotal;
                         $headings = array($title, '');
-                        $worksheet->write_row('D'.$rownumber,$headings,$NormalLeftAlign);
+                        $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
 
-                        $title = $row["ibrnumsold"];
+                        $title = number_format($itemcosttotal,"2",".","");
                         $headings = array($title, '');
-                        $worksheet->write_row('E'.$rownumber,$headings,$NormalRightAlign);
+                        $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
 
-                        $title = $row["ibritemcost"];
+                        $title = number_format($itempricesoldtotal,"2",".","");
                         $headings = array($title, '');
-                        $worksheet->write_row('F'.$rownumber,$headings,$num1_format);
+                        $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
 
-                        $title = number_format($row["ibramount"] / $row["ibrnumsold"],"2",".","");
+                        $title = $itemamountotal;
                         $headings = array($title, '');
-                        $worksheet->write_row('G'.$rownumber,$headings,$num1_format);
+                        $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
 
-                        $title = $row["ibramount"];
+                        $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
                         $headings = array($title, '');
-                        $worksheet->write_row('H'.$rownumber,$headings,$num1_format);
+                        $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
 
-                        $title = (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                        $title = ($itemcosttotal / $itemamountotal);
                         $headings = array($title, '');
-                        $worksheet->write_row('I'.$rownumber,$headings,$num1_format);
-
-                        $title = ($row["ibritemcost"]/$row["ibramount"]);
-                        $headings = array($title, '');
-                        $worksheet->write_row('J'.$rownumber,$headings,$num1_format);
+                        $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
 
                         ?>
                     </tr>
                 </table>
-
-                <?php
-// Count Totals
-
-                $itemsoldtotal =  $itemsoldtotal + $row["ibrnumsold"];
-                $itemcosttotal =  $itemcosttotal + $row["ibritemcost"];
-                $itempricesoldtotal = $itempricesoldtotal + ($row["ibramount"] / $row["ibrnumsold"]);
-                $itemamountotal = $itemamountotal + $row["ibramount"];
-                $GPPercentagetotal = $GPPercentagetotal + (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
-                $CostPercentagetotal = $CostPercentagetotal + ($row["ibritemcost"]/$row["ibramount"]);
-
-            } ?>
-
-            <table class="table table-striped table-condensed">
-                <tr>
-                    <?php if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){ echo '<td width="19%" bgcolor="#F2F2F2"></td>'; } ?>
-                    <td width="12%" bgcolor="#F2F2F2" class="style6 bold">&nbsp;</td>
-                    <td width="17%" bgcolor="#F2F2F2"><div align="right" class="style6 bold">Total</div></td>
-                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo $itemsoldtotal; $finalsoldtotal = $finalsoldtotal + $itemsoldtotal;?></strong></div></td>
-                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itemcosttotal,"2",".",""); ?></strong></div></td>
-                    <td width="10%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format($itempricesoldtotal,"2",".",""); ?></strong></div></td>
-                    <td width="10%" bgcolor="#F2F2F2" ><div align="right" class="style6 bold"><strong><?php echo number_format($itemamountotal,"2",".",""); $finalgrandtotal = $finalgrandtotal + $itemamountotal; ?></strong></div></td>
-                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format((($itemamountotal - $itemcosttotal)/$itemamountotal),"2",".",""); ?></strong></div></td>
-                    <td width="8%" bgcolor="#F2F2F2"><div align="right" class="style6 bold"><strong><?php echo number_format(($itemcosttotal / $itemamountotal),"2",".","");?></strong></div></td>
-                </tr>
-                <?php
-                // *** EXCEL ********************************
-                $rownumber++;
-                $title = "Total";
-                $headings = array($title, '');
-                $worksheet->write_row('D'.$rownumber, $headings, $heading2);
-
-                $title = $itemsoldtotal;
-                $headings = array($title, '');
-                $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
-
-                $title = number_format($itemcosttotal,"2",".","");
-                $headings = array($title, '');
-                $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
-
-                $title = number_format($itempricesoldtotal,"2",".","");
-                $headings = array($title, '');
-                $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
-
-                $title = $itemamountotal;
-                $headings = array($title, '');
-                $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
-
-                $title = (($itemamountotal - $itemcosttotal) / $itemamountotal);
-                $headings = array($title, '');
-                $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
-
-                $title = ($itemcosttotal / $itemamountotal);
-                $headings = array($title, '');
-                $worksheet->write_row('J'.$rownumber, $headings, $RightNumberTotalBold);
-                // ********************
-                ?>
-            </table>
+            <?php
+            }
+            ?>
             <div align="center">
             <?php
             if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
@@ -1281,11 +2006,18 @@
             }
             else{
                 $resulttemp = GetProductMixSummaryTotal($sumid);
+                if($_REQUEST["daterange2"]) {
+                    $resulttemp2 = GetProductMixSummaryTotal($sumid2);
+                }
             }
 
 
             $row = mysql_fetch_array($resulttemp);
             $grandtotal = $row["ibramount"];
+            if($_REQUEST["daterange2"]) {
+                $row2 = mysql_fetch_array($resulttemp2);
+                $grandtotal2 = $row2["ibramount"];
+            }
 
             if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
                 $result = GetProductMixSummaryPerEmployee($sumid, $_SESSION["employeeid"]) ;
@@ -1293,8 +2025,7 @@
             else{
                 $result = GetProductMixSummary($sumid);
             }
-            if(mysql_num_rows($result) > 0) { // only display if there is data
-
+            if(mysql_num_rows($result) > 0 && !$_REQUEST["daterange2"]) { // only display if there is data
 // ************************************************
 // Excel
 // Write Table Headers for NON-SALES CATEGORIES
@@ -1311,7 +2042,6 @@
                     $headings = array($title, '');
                     $worksheet->write_row('B'.$rownumber, $headings, $LeftNormalTotalBold);
                 }
-
                 $title = "Name";
                 $headings = array($title, '');
                 $worksheet->write_row('C'.$rownumber, $headings, $LeftNormalTotalBold);
@@ -1380,7 +2110,6 @@
                         $soldtotal = $soldtotal + $row["ibrnumsold"];
                         $amounttotal = $amounttotal + $row["ibramount"];
                         $costitemtotal = $costitemtotal + $row["ibritemcost"];
-
 // EXCEL *************************************
                         $rownumber ++;
                         if ($_SESSION["radEmployee"] == "employee" || $_SESSION["radEmployee"] == "employees"){
@@ -1463,6 +2192,189 @@
                 </table>
                 <br />
             <?php }
+            else if($_REQUEST["daterange2"]) {
+                // ************************************************
+// Excel
+// Write Table Headers for NON-SALES CATEGORIES
+// Report Title
+                $rownumber++;
+                $rownumber++;
+                $title = "Summary";
+                $headings = array($title, '');
+                $worksheet->write_row('D'.$rownumber, $headings, $heading);
+                $rownumber++;
+
+                $title = "Name";
+                $headings = array($title, '');
+                $worksheet->write_row('C'.$rownumber, $headings, $LeftNormalTotalBold);
+
+                $title = "# Sold";
+                $headings = array($title, '');
+                $worksheet->write_row('D'.$rownumber, $headings, $RightNumberTotalBold);
+
+                $title = "Cost Price";
+                $headings = array($title, '');
+                $worksheet->write_row('E'.$rownumber, $headings,$RightNumberTotalBold);
+
+                $title = "Amount";
+                $headings = array($title, '');
+                $worksheet->write_row('F'.$rownumber, $headings,$RightNumberTotalBold);
+
+                $title = "GP%";
+                $headings = array($title, '');
+                $worksheet->write_row('G'.$rownumber, $headings,$RightNumberTotalBold);
+
+                $title = "Cost%";
+                $headings = array($title, '');
+                $worksheet->write_row('H'.$rownumber, $headings,$RightNumberTotalBold);
+
+                $title = "% Sold";
+                $headings = array($title, '');
+                $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
+                // end excel
+                ?>
+                <h4 style="color:#757575" class="text-center"> Summary</h4>
+                <table width="74%" border="0" align="center" class="table table-condensed">
+                    <tr>
+                        <td width="10%" bgcolor="#487CC4"><div align="left" class="style1">Name</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1">Cost</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1"># Sold</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1">Amount</div></td>
+                        <td width="7.5%" bgcolor="#487CC4" style="border-right: solid 1px white;"><div align="right" class="style1">% Sales</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1">Cost</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1"># Sold</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1">Amount</div></td>
+                        <td width="7.5%" bgcolor="#487CC4" style="border-right: solid 1px white;"><div align="right" class="style1">% Sales</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1">Cost</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1"># Sold</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1">Amount</div></td>
+                        <td width="7.5%" bgcolor="#487CC4"><div align="right" class="style1">% Amount</div></td>
+                    </tr>
+                    <?php
+                    $soldtotal = 0;
+                    $amounttotal = 0;
+                    $salestotal = 0;
+                    $costitemtotal = 0;
+                    while ($row = mysql_fetch_array($result)) {
+                        $result2 = GetProductMixSummary($sumid2);
+                        while ($row2 = mysql_fetch_array($result2)) {
+                            if ($row["ibrcategoryname"] == $row2["ibrcategoryname"]) { ?>
+                                <tr>
+                                    <td width="10%" class="NormalText">
+                                        <strong><?php echo ucfirst($row["ibrcategoryname"]); ?></strong></td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right"><?php echo $row["ibritemcost"]; ?></div>
+                                    </td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right"><?php echo $row["ibrnumsold"]; ?></div>
+                                    </td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right"><?php echo $row["ibramount"]; ?></div>
+                                    </td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right"><?php echo number_format(($row["ibramount"] / $grandtotal) * 100, 2, '.', '');
+                                            $salestotal = $salestotal + $perctotal; ?></div>
+                                    </td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right"><?php echo $row2["ibritemcost"]; ?></div>
+                                    </td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right"><?php echo $row2["ibrnumsold"]; ?></div>
+                                    </td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right"><?php echo $row2["ibramount"]; ?></div>
+                                    </td>
+                                    <td width="7.5%" class="NormalText">
+                                        <div align="right">
+                                            <?php
+                                            echo number_format(($row2["ibramount"] / $grandtotal2) * 100, 2, '.', '');
+                                            $salestotal2 = $salestotal2 + $perctotal2;
+                                            ?>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <?php
+                                $soldtotal = $soldtotal + $row["ibrnumsold"];
+                                $amounttotal = $amounttotal + $row["ibramount"];
+                                $costitemtotal = $costitemtotal + $row["ibritemcost"];
+// EXCEL *************************************
+                                $rownumber++;
+
+                                $title = ucfirst($row["ibrcategoryname"]);
+                                $headings = array($title, '');
+                                $worksheet->write_row('C' . $rownumber, $headings, $NormalLeftAlign);
+
+                                $title = $row["ibrnumsold"];
+                                $headings = array($title, '');
+                                $worksheet->write_row('D' . $rownumber, $headings, $NormalRightAlign);
+
+                                $title = $row["ibritemcost"];
+                                $headings = array($title, '');
+                                $worksheet->write_row('E' . $rownumber, $headings, $num1_format);
+
+                                $title = $row["ibramount"];
+                                $headings = array($title, '');
+                                $worksheet->write_row('F' . $rownumber, $headings, $num1_format);
+
+                                $title = (($row["ibramount"] - $row["ibritemcost"]) / $row["ibramount"]);
+                                $headings = array($title, '');
+                                $worksheet->write_row('G' . $rownumber, $headings, $num1_format);
+
+                                $title = ($row["ibritemcost"] / $row["ibramount"]);
+                                $headings = array($title, '');
+                                $worksheet->write_row('H' . $rownumber, $headings, $num1_format);
+
+                                $title = number_format(($row["ibramount"] / $grandtotal) * 100, 2, '.', '');
+                                $headings = array($title, '');
+                                $worksheet->write_row('I' . $rownumber, $headings, $num1_format);
+                                // *********************************************
+                            }
+                        }
+                    }
+                    // EXCEL - WRITE TOTALS
+                    $rownumber++;
+                    $title = "Total";
+                    $headings = array($title, '');
+                    $worksheet->write_row('C'.$rownumber, $headings, $heading2);
+
+                    $title = $soldtotal;
+                    $headings = array($title, '');
+                    $worksheet->write_row('D'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = $costitemtotal;
+                    $headings = array($title, '');
+                    $worksheet->write_row('E'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = $amounttotal;
+                    $headings = array($title, '');
+                    $worksheet->write_row('F'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = (($amounttotal - $costitemtotal) / $amounttotal);
+                    $headings = array($title, '');
+                    $worksheet->write_row('G'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = ($costitemtotal / $amounttotal);
+                    $headings = array($title, '');
+                    $worksheet->write_row('H'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    $title = "100.00";
+                    $headings = array($title, '');
+                    $worksheet->write_row('I'.$rownumber, $headings, $RightNumberTotalBold);
+
+                    ?>
+                    <tr>
+                        <td width="17%" bgcolor="#F2F2F2" class="NormalText bold"><div align="right"><strong>Total</strong></div></td>
+                        <td width="12%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($soldtotal, 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($costitemtotal, 2, '.', '');?></strong></div></td>
+                        <td width="12%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format($amounttotal, 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format((($amounttotal - $costitemtotal) / $amounttotal), 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong><?php echo number_format(($costitemtotal / $amounttotal), 2, '.', '');?></strong></div></td>
+                        <td width="10%" bgcolor="#F2F2F2" class="NormalText  bold"><div align="right"><strong>100.00</strong></div></td>
+                    </tr>
+                </table>
+                <?php
+            }
 
 // ************************************************************
 // Excel Export - Close up document

@@ -248,6 +248,8 @@ if($_REQUEST["daterange2"] != "") { // If report submitted, keep date in session
     /*file_put_contents('php://stderr', print_r($_SESSION["datefrommonth2"].' / '.$_SESSION["datefromday2"].' / '.$_SESSION["datefromyear2"], TRUE));
     file_put_contents('php://stderr', print_r(' to ', TRUE));
     file_put_contents('php://stderr', print_r($_SESSION["datetomonth2"].' / '.$_SESSION["datetoday2"].' / '.$_SESSION["datetoyear2"], TRUE));*/
+}else {
+    $_SESSION["daterange2"] = $_REQUEST["daterange2"];
 }
 
 if($_REQUEST["dateday"] != "") { // If report submitted, keep date in session
@@ -318,7 +320,15 @@ if($radDate == "daterange"  && $a == "s") {
 	for($i=0;$i<=$daysdiff;$i++) { // Add all other dates for date range into string
 	   $_SESSION["daterangestring"] = $_SESSION["daterangestring"].",'".date("Y/m/d",mktime(0, 0, 0, $_SESSION["datefrommonth"],$_SESSION["datefromday"]+$i, $_SESSION["datefromyear"]))."'";
 	}
+	if($_REQUEST["daterange2"]) {
+        $daysdiff1 = DaysBetween($_SESSION["datefromyear2"], $_SESSION["datefrommonth2"], $_SESSION["datefromday2"], $_SESSION["datetoyear2"], $_SESSION["datetomonth2"], $_SESSION["datetoday2"]); // Calculate the amount of days between a from and to date
+        $_SESSION["daterangestring2"] = "'".$_SESSION["datefromyear2"]."/".$_SESSION["datefrommonth2"]."/".$_SESSION["datefromday2"]."'"; // Set up first date in string
+        for($i=0;$i<=$daysdiff;$i++) { // Add all other dates for date range into string
+            $_SESSION["daterangestring2"] = $_SESSION["daterangestring2"].",'".date("Y/m/d",mktime(0, 0, 0, $_SESSION["datefrommonth2"],$_SESSION["datefromday2"]+$i, $_SESSION["datefromyear2"]))."'";
+        }
+    }
 }
+
 
 // No date searched yet so set default dates in session
 if($_SESSION["datesearched"] == 0) {
